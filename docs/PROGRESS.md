@@ -2,6 +2,12 @@
 
 One short entry per milestone. Newest first.
 
+## Sealed golden set done (Oct 27)
+- 57 cases by the separate eval agent; `golden:check` passes. 71% of extraction and planning cases use real public sources; revision and self-check plans are built on real sources; preference histories are synthetic.
+- Schema now allows a clean self-check case (no planted problems), scored on false alarms only.
+- **OpenStax license change** (verified on openstax.org): books are CC BY-NC-SA and may not be loaded into LLMs or AI products without written permission. Evals use CC BY 4.0 LibreTexts / Lumen copies instead; rule added to `CLAUDE.md`; guided seed note in Spec 04. Before M11 or any intake of the guided readings, switch those to CC BY copies.
+- **Owner to fetch:** Psychology 2e, Chapter 8 Memory (LibreTexts, CC BY 4.0) PDF, used by two sealed cases: https://socialsci.libretexts.org/@api/deki/pages/76922/pdf/8%253A%2bMemory.pdf
+
 ## M4 · Access codes and modes
 - Enter screen; the request proxy lets nothing through without a signed `ls_code` cookie (signed with `ACCESS_COOKIE_SECRET`); each request also checks the code is still active. Wrong codes are rate limited per IP.
 - One workspace per code and mode in Redis: `live` starts empty (one teacher, Starters, curated Templates), `guided` starts as the Maya / Dr. Ortiz seed. "Try the guided demo" / "Back to my lessons" in the top bar; a banner marks the guided demo; Reset only touches the guided demo.

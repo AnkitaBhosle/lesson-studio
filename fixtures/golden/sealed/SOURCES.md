@@ -1,0 +1,73 @@
+# Sealed golden set: sources
+
+Every URL below was fetched and read in October 2026 before the case was written. Nothing from these pages is pasted into the repo; expectations are in our own words, with section names as locators. The runner fetches `url` sources at eval time.
+
+## Owner to fetch
+1. **Psychology 2e, Chapter 8: Memory (OpenStax, LibreTexts copy), whole-chapter PDF.** https://socialsci.libretexts.org/@api/deki/pages/76922/pdf/8%253A%2bMemory.pdf. LibreTexts rate-limited the automated download (HTTP 429). Download the PDF (about 30 pages, CC BY 4.0) and attach it in the chat so it can go in `sealed/files/` and the two cases can point at the file instead of the URL. Used by se-109 and pl-116. If the PDF link fails, the four section pages also work: `.../Introductory_Psychology_2e_(OpenStax)/08%3A_Memory/8.02%3A_How_Memory_Functions` through `8.05%3A_Ways_to_Enhance_Memory`.
+
+## License note: OpenStax
+openstax.org now shows CC BY-NC-SA 4.0 on these books and says they **may not be ingested into large language models or generative AI offerings without OpenStax's written permission**. An eval run feeds sources to models, so no case points at openstax.org. Cases use the LibreTexts and Lumen copies of the earlier editions, which are CC BY 4.0. One self-check plan (sc-103) cites Biology 2e section numbers by title only; nothing is fetched.
+
+## Swaps and replacements
+- Five replacements for the dev examples, each with new material and a new persona: se-101 (heat illness, CDC), pl-101 (Bill of Rights lecture with a recap), rv-101 (heat-safety hook plus an example), sc-101 (an uncited heat statistic), pf-101 (a removed photo preference, plus learning-goal edits).
+- se-103: the creator's outline was swapped for the CFPB emergency-fund guide (a public source).
+- se-105: the trainer's slide notes were swapped for the FTC phishing page (a public source).
+- se-108: the lab handout was swapped for the USGS density reading. The handout itself appears in pl-106.
+- pl-118: the pharmacology topic moved from beta blockers to ACE inhibitors, so it doesn't overlap with se-113.
+- OpenStax hosting: the LibreTexts and Lumen copies replace openstax.org (see the license note).
+
+## By case
+| Case | Source | URL | License | How used | Note |
+|---|---|---|---|---|---|
+| se-101-heat-illness-signs | CDC NIOSH: Heat-related Illnesses | https://www.cdc.gov/niosh/heat-stress/about/illnesses.html | Public domain (CDC) | Read live by URL | Six illnesses, each with signs and first aid |
+| se-102-yoga-breathing-notes | Teacher notes | n/a | Synthetic (written for this case) | Inline | Messy one-page notes |
+| se-103-emergency-fund-guide | CFPB: An essential guide to building an emergency fund | https://www.consumerfinance.gov/an-essential-guide-to-building-an-emergency-fund/ | Public domain (CFPB) | Read live by URL | Gives no target amount; tests whether one gets invented |
+| se-104-mole-concept | Chemistry 2e 3.1 (OpenStax, LibreTexts copy) | https://chem.libretexts.org/Bookshelves/General_Chemistry/Chemistry_2e_(OpenStax)/03%3A_Composition_of_Substances_and_Solutions/3.01%3A_Formula_Mass_and_the_Mole_Concept | CC BY 4.0 | Read live by URL | Worked examples are the locators |
+| se-105-phishing-signs | FTC: How To Recognize and Avoid Phishing Scams | https://consumer.ftc.gov/articles/how-recognize-avoid-phishing-scams | Public domain (FTC) | Read live by URL | Site blocks plain curl; WebFetch works |
+| se-106-first-new-deal | US History, The First New Deal (OpenStax, Lumen/LibreTexts copy) | https://chem.libretexts.org/Courses/Lumen_Learning/Book%3A_US_History_II_(OS_Collection)_(Lumen)/13%3A_Franklin_Roosevelt_and_the_New_Deal_1932-1941/13.3%3A_The_First_New_Deal | CC BY 4.0 | Read live by URL | Source dates the CWA to "early 1933" (it began in November 1933) |
+| se-107-knife-safety-memo | Voice-memo transcript | n/a | Synthetic | Inline | Rambling, with repeats |
+| se-108-water-density | USGS Water Science School: Water Density | https://www.usgs.gov/water-science-school/science/water-density | Public domain (USGS) | Read live by URL | robots.txt blocks curl; WebFetch works |
+| se-109-memory-chapter-pdf | Psychology 2e Ch. 8 Memory (OpenStax, LibreTexts copy), PDF | https://socialsci.libretexts.org/@api/deki/pages/76922/pdf/8%253A%2bMemory.pdf | CC BY 4.0 | Owner to fetch | Read section by section; dense chapter |
+| se-110-supply-demand-rambling | Teacher notes | n/a | Synthetic | Inline | Out of order, with one planted conceptual mix-up |
+| se-111-water-intake-conflict | Teacher notes summarizing National Academies (2004) and CDC | Real sources behind the notes: https://www.nationalacademies.org/news/report-sets-dietary-intake-levels-for-water-salt-and-potassium-to-maintain-health-and-reduce-chronic-disease-risk ; https://www.cdc.gov/healthy-weight-growth/water-healthy-drinks/index.html | Synthetic notes (the newsletter is invented) | Inline | The conflict is real between the two pages and the popular rule |
+| se-112-pvalue-gap | Teacher notes | n/a | Synthetic | Inline | Null hypothesis never defined; coin p-value checked (0.035) |
+| se-113-beta-blocker-fragments | Old slide text | n/a | Synthetic | Inline | Abbreviations; dosing left blank on purpose |
+| se-114-vaccine-blog-wrong-claim | Blog-style post | n/a | Synthetic | Inline | Accurate measles/MMR facts plus one planted false claim |
+| se-115-present-perfect-notes | Teacher notes | n/a | Synthetic | Inline | Example sentences are original |
+| pl-101-bill-of-rights-recap | National Archives: The Bill of Rights: What Does it Say? + teacher notes | https://www.archives.gov/founding-docs/bill-of-rights/what-does-it-say | Public domain (NARA); notes synthetic | Read live by URL + inline | Recap expected |
+| pl-102-emergency-fund-explainer | CFPB emergency-fund guide | https://www.consumerfinance.gov/an-essential-guide-to-building-an-emergency-fund/ | Public domain (CFPB) | Read live by URL | |
+| pl-103-yoga-nose-breathing | NCCIH: Yoga: What You Need To Know + teacher notes | https://www.nccih.nih.gov/health/yoga-what-you-need-to-know | Public domain (NIH); notes synthetic | Read live by URL + inline | NCCIH backs only the general safety points |
+| pl-104-cell-membranes-lecture | Biology 5.1 Components and Structure (OpenStax, LibreTexts copy) | https://bio.libretexts.org/Bookshelves/Introductory_and_General_Biology/General_Biology_1e_(OpenStax)/2%3A_The_Cell/5%3A_Structure_and_Function_of_Plasma_Membranes/5.1%3A_Components_and_Structure | CC BY 4.0 | Read live by URL | |
+| pl-105-phishing-explainer | FTC phishing page | https://consumer.ftc.gov/articles/how-recognize-avoid-phishing-scams | Public domain (FTC) | Read live by URL | |
+| pl-106-density-lab-lesson | USGS Water Density + teacher lab handout | https://www.usgs.gov/water-science-school/science/water-density | Public domain (USGS); handout synthetic | Read live by URL + inline | |
+| pl-107-compound-interest-teens | Investor.gov: What is Compound Interest? (teacher resource) | https://www.investor.gov/additional-resources/information/youth/teachers-classroom-resources/what-compound-interest | Public domain (SEC) | Read live by URL | Source math checked |
+| pl-108-hand-hygiene-nursing | CDC: Clinical Safety: Hand Hygiene for Healthcare Workers | https://www.cdc.gov/clean-hands/hcp/clinical-safety/index.html | Public domain (CDC) | Read live by URL | Recap expected |
+| pl-109-mole-lecture | Chemistry 2e 3.1 (LibreTexts copy) + teacher notes | https://chem.libretexts.org/Bookshelves/General_Chemistry/Chemistry_2e_(OpenStax)/03%3A_Composition_of_Substances_and_Solutions/3.01%3A_Formula_Mass_and_the_Mole_Concept | CC BY 4.0; notes synthetic | Read live by URL + inline | |
+| pl-110-knife-safety-explainer | OSHA Young Worker Safety in Restaurants: Food Preparation + voice memo | https://www.osha.gov/etools/young-workers-restaurant-safety/food-prep | Public domain (OSHA); memo synthetic | Read live by URL + inline | OSHA doesn't describe the claw grip; the memo does |
+| pl-111-present-perfect-esl | Wikipedia: Present perfect + teacher notes | https://en.wikipedia.org/wiki/Present_perfect | CC BY-SA 4.0; notes synthetic | Read live by URL + inline | |
+| pl-112-new-deal-lecture | US History, The First New Deal + The Second New Deal (Lumen/LibreTexts copies) | https://chem.libretexts.org/Courses/Lumen_Learning/Book%3A_US_History_II_(OS_Collection)_(Lumen)/13%3A_Franklin_Roosevelt_and_the_New_Deal_1932-1941/13.3%3A_The_First_New_Deal ; https://chem.libretexts.org/Courses/Lumen_Learning/Book%3A_US_History_II_(OS_Collection)_(Lumen)/13%3A_Franklin_Roosevelt_and_the_New_Deal_1932-1941/13.4%3A_The_Second_New_Deal | CC BY 4.0 | Read live by URL | Recap expected |
+| pl-113-pvalues-gap | Teacher notes | n/a | Synthetic | Inline | Gap by design |
+| pl-114-water-intake-conflict | National Academies 2004 news release + CDC About Water and Healthier Drinks + teacher notes | https://www.nationalacademies.org/news/report-sets-dietary-intake-levels-for-water-salt-and-potassium-to-maintain-health-and-reduce-chronic-disease-risk ; https://www.cdc.gov/healthy-weight-growth/water-healthy-drinks/index.html | NAS release copyrighted, referenced by URL only; CDC public domain; notes synthetic | Read live by URL + inline | Real disagreement between sources |
+| pl-115-inflation-90s | Federal Reserve FAQ: What is inflation? + teacher notes | https://www.federalreserve.gov/faqs/economy_14419.htm | US government work (Federal Reserve Board); notes synthetic | Read live by URL + inline | |
+| pl-116-memory-chapter-lecture | Psychology 2e Ch. 8 Memory PDF (LibreTexts copy) | https://socialsci.libretexts.org/@api/deki/pages/76922/pdf/8%253A%2bMemory.pdf | CC BY 4.0 | Owner to fetch | |
+| pl-117-black-holes-fun | NASA: What Is a Black Hole? (Grades K-4) | https://www.nasa.gov/learning-resources/for-kids-and-students/what-is-a-black-hole-grades-k-4/ | NASA content, generally not copyrighted | Read live by URL | A thin source on purpose |
+| pl-118-ace-inhibitor-fragments | Old slide text | n/a | Synthetic | Inline | Topic swapped from beta blockers |
+| pl-119-no-math-compound-interest | Investor.gov teacher resource + Compound Interest Calculator | https://www.investor.gov/additional-resources/information/youth/teachers-classroom-resources/what-compound-interest ; https://www.investor.gov/financial-tools-calculators/calculators/compound-interest-calculator | Public domain (SEC) | Read live by URL | Neither page gives the formula |
+| pl-120-tectonics-no-recap | USGS This Dynamic Earth: Understanding plate motions | https://pubs.usgs.gov/gip/dynamic/understanding.html | Public domain (USGS) | Read live by URL | No recap expected |
+| rv-101-heat-safety-hook-example | Base plan built on CDC NIOSH Heat-related Illnesses | https://www.cdc.gov/niosh/heat-stress/about/illnesses.html | Public domain; plan and note synthetic | Base plan cites by title | |
+| rv-102-bill-of-rights-shorter | Base plan built on National Archives | https://www.archives.gov/founding-docs/bill-of-rights/what-does-it-say | Public domain; plan synthetic | Base plan cites by title | |
+| rv-103-coffee-example-slide4 | Base plan built on Investor.gov teacher resource | https://www.investor.gov/additional-resources/information/youth/teachers-classroom-resources/what-compound-interest | Public domain; plan synthetic | Base plan cites by title | Coffee math in notes |
+| rv-104-questions-each-section | Base plan built on USGS Understanding plate motions | https://pubs.usgs.gov/gip/dynamic/understanding.html | Public domain; plan synthetic | Base plan cites by title | |
+| rv-105-eighth-grade | Base plan built on Biology 5.1 (LibreTexts copy) | https://bio.libretexts.org/Bookshelves/Introductory_and_General_Biology/General_Biology_1e_(OpenStax)/2%3A_The_Cell/5%3A_Structure_and_Function_of_Plasma_Membranes/5.1%3A_Components_and_Structure | CC BY 4.0; plan synthetic | Base plan cites by title | |
+| rv-106-make-it-better | Base plan built on Psychology 2e 8.4 Ways to Enhance Memory (LibreTexts copy) | https://socialsci.libretexts.org/Bookshelves/Psychology/Introductory_Psychology/Introductory_Psychology_2e_(OpenStax)/08%3A_Memory/8.05%3A_Ways_to_Enhance_Memory | CC BY 4.0; plan synthetic | Base plan cites by title | |
+| rv-107-drop-disclaimer | Base plan built on CFPB emergency-fund guide | https://www.consumerfinance.gov/an-essential-guide-to-building-an-emergency-fund/ | Public domain; plan synthetic | Base plan cites by title | |
+| rv-108-dictated-ramble | Base plan built on CDC Hand Hygiene for Healthcare Workers | https://www.cdc.gov/clean-hands/hcp/clinical-safety/index.html | Public domain; plan and dictation synthetic | Base plan cites by title | |
+| sc-101-heat-uncited-stat | Plan built on CDC NIOSH Heat-related Illnesses | https://www.cdc.gov/niosh/heat-stress/about/illnesses.html | Public domain; planted error synthetic | Plan cites by title | |
+| sc-102-scene-model-name | Plan built on CFPB emergency-fund guide | https://www.consumerfinance.gov/an-essential-guide-to-building-an-emergency-fund/ | Public domain; planted error synthetic | Plan cites by title | |
+| sc-103-mitochondria-photosynthesis | Plan cites Biology 2e 4.3 and 4.4 (OpenStax) | https://openstax.org/books/biology-2e/pages/4-3-eukaryotic-cells (cited by title only, not fetched) | CC BY-NC-SA 4.0 on openstax.org; cited by title only | Plan cites by title | Planted wrong fact |
+| sc-104-missing-disclaimer | Plan built on Investor.gov teacher resource | https://www.investor.gov/additional-resources/information/youth/teachers-classroom-resources/what-compound-interest | Public domain; planted error synthetic | Plan cites by title | |
+| sc-105-grad-jargon-density | Plan built on USGS Water Density | https://www.usgs.gov/water-science-school/science/water-density | Public domain; planted error synthetic | Plan cites by title | |
+| sc-106-new-deal-27-slides | Plan built on The First and The Second New Deal (Lumen/LibreTexts copies) | see pl-112 | CC BY 4.0; planted errors synthetic | Plan cites by title | Every claim checked against the pages |
+| sc-107-clean-hand-hygiene | Plan built on CDC Hand Hygiene for Healthcare Workers | https://www.cdc.gov/clean-hands/hcp/clinical-safety/index.html | Public domain | Plan cites by title | Clean plan; empty planted_problems |
+| sc-108-citation-mismatch-water | Plan built on National Academies 2004 release and CDC water page | see pl-114 | As pl-114; planted error synthetic | Plan cites by title | The citation contradicts its source |
+| pf-101 to pf-106 | Edit histories | n/a | Synthetic (private by nature) | Inline in the case | Each has at least one edit that must not become a preference |

@@ -38,6 +38,7 @@ If two of these disagree, the higher one wins. If something isn't covered, choos
 - **Spend messages** to visitors never show amounts or the words cost, credits or budget.
 - **Secrets:** never read, print, commit or log API keys. Never create `.env` files with real values. Keys exist only in Vercel.
 - **Content:** no copied text from books, articles or websites in fixtures or prompts. Write original content or reference by URL.
+- **OpenStax:** openstax.org books are now CC BY-NC-SA and forbid loading them into LLMs or AI products without written permission. Never fetch openstax.org content into a model (intake, evals, suggested sources). Use CC BY 4.0 copies of earlier editions (LibreTexts, Lumen) or other sources.
 - Keep files small and named for what they do. No dead code, no TODO comments left behind; put open items in `docs/PROGRESS.md`.
 
 ## Working style

@@ -39,7 +39,7 @@ export const CaseSchema = z.discriminatedUnion("task", [
   z.object({ ...common, task: z.literal("revision"), starter, note: text, via: z.enum(["typed", "dictated"]), scope_slide: z.number().int().nullable(),
     expect: z.object({ should_change: z.array(z.number().int()).min(1), must_keep_unchanged: z.array(z.number().int()), must_include: list, must_not: list }) }),
   z.object({ ...common, task: z.literal("self_check"), starter, guidelines: list,
-    planted_problems: z.array(z.object({ slide: z.number().int(), kind: z.enum(["uncited_claim", "wrong_fact", "guideline_broken", "jargon", "off_audience"]), description: text })).min(1),
+    planted_problems: z.array(z.object({ slide: z.number().int(), kind: z.enum(["uncited_claim", "wrong_fact", "guideline_broken", "jargon", "off_audience"]), description: text })), // empty = a clean plan: scored on false alarms only
     clean_slides: z.array(z.number().int()) }),
   z.object({ ...common, task: z.literal("preference_learning"), existing_preferences: list, removed_preferences: list,
     edits: z.array(z.object({ lesson: text, did: text })).min(1),

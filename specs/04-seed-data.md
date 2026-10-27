@@ -1,6 +1,6 @@
 # Spec 04 — Seed Data
 
-> The content the **guided demo** opens with. Live workspaces start empty (§10). Lives in `fixtures/seed/` as JSON files that validate against Spec 02. All teacher-written text below is original to this project. Readings are openly licensed (OpenStax, CC BY 4.0) and referenced by URL and section; the seed stores our own digests of them, never copied passages. Locators use section numbers (e.g. "§8.2"), not page numbers.
+> The content the **guided demo** opens with. Note (Oct 27): openstax.org now forbids loading its books into AI products without permission; the guided seed only cites OpenStax by URL and section and is never fetched into a model. If the guided demo ever runs real intake (M11 cache), switch these readings to the CC BY 4.0 LibreTexts copies first. Live workspaces start empty (§10). Lives in `fixtures/seed/` as JSON files that validate against Spec 02. All teacher-written text below is original to this project. Readings are openly licensed (OpenStax, CC BY 4.0) and referenced by URL and section; the seed stores our own digests of them, never copied passages. Locators use section numbers (e.g. "§8.2"), not page numbers.
 
 ## 1. Users and courses
 | User | Persona | Course | Audience | Template |
