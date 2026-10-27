@@ -16,7 +16,7 @@ Everything else is Claude's, split so the builder can't grade its own work (belo
 - **Your 15 blind ratings** are drawn mostly from sealed hard cases and decide whether the judge can be trusted.
 
 ## Sources: public first
-- Readings, lecture notes, transcripts and handouts come from public, openly licensed or public-domain material wherever possible: OpenStax (CC BY), US government pages (public domain, e.g. CDC, NIH, Investor.gov), MIT OpenCourseWare and similar (real lecture notes; stored by URL when the license isn't CC BY).
+- Readings, lecture notes, transcripts and handouts come from public, openly licensed or public-domain material wherever possible: CC BY 4.0 textbook copies on LibreTexts and Lumen (not openstax.org, whose terms now forbid AI use), US government pages (public domain, e.g. CDC, NIH, Investor.gov), MIT OpenCourseWare and similar (real lecture notes; stored by URL when the license isn't CC BY).
 - Synthetic only where the material is private by nature or constructed by design: voice-memo transcripts, revision notes, preference edit histories, and planted errors (applied to real material).
 - `sealed/SOURCES.md` lists every source with its license. Files Claude can't download (mostly PDFs) are marked "owner to fetch": download them and attach them in the chat.
 
