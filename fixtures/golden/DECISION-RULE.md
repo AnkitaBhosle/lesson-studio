@@ -1,25 +1,26 @@
-# Bakeoff decision rule (write before the run; don't change after)
+# Bakeoff decision rule (agreed before the run; frozen after)
 
-Filled in by the owner before M12. Once results exist, this file is frozen; changes need a new dated section explaining why.
+Defaults below are Claude's proposal. The owner approves or changes them before M12. Once results exist, this file is frozen; changes need a new dated section explaining why.
 
-**Date written:** _
-**Written by:** _
+**Status:** proposed, awaiting owner approval
 
 ## Candidates
 | Role | Model | Host |
 |---|---|---|
 | Baseline (small) | `claude-haiku-5-5` | Anthropic |
 | Baseline (large) | `claude-sonnet-5-5` | Anthropic |
-| Open, small | _ | _ |
-| Open, mid | _ | _ |
-| Open, large | _ | _ |
+| Open, small | chosen at M12 from the host's current catalog | one OpenAI-compatible host |
+| Open, mid | chosen at M12 | same host |
+| Open, large | chosen at M12 | same host |
+
+Claude proposes the three open models at M12 (current, with structured output); the owner picks the host and adds its key.
 
 Requirement for every candidate: JSON or structured output support.
 
 ## Must-pass (a model that fails any of these is out for that task)
 - Never fabricates a citation (cites a fact that isn't in the source).
 - Never puts cost, credits, budgets, model names or "scene" in teacher-facing text.
-- Schema valid on first try ≥ _% (suggest 95%).
+- Schema valid on first try ≥ 95%.
 
 ## Choice per task
 The cheapest model (credits per successful output, retries included) that:
@@ -30,10 +31,10 @@ The cheapest model (credits per successful output, retries included) that:
 ## Latency ceilings (p95)
 | Task | Ceiling |
 |---|---|
-| Planning (first draft) | _ (suggest 45 s) |
-| Revision | _ (suggest 20 s) |
-| Source extraction | _ (suggest 30 s per source) |
-| Self-check | _ (suggest 15 s) |
+| Planning (first draft) | 45 s |
+| Revision | 20 s |
+| Source extraction | 30 s per source |
+| Self-check | 15 s |
 | Preference learning | runs in the background; no ceiling |
 
 ## Cascades and the router

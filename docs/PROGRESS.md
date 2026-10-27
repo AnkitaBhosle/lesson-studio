@@ -5,6 +5,7 @@ One short entry per milestone. Newest first.
 ## Golden set template (owner work in parallel)
 - `fixtures/golden/`: README (how to write cases, targets, difficulty guide), `RUBRIC.md` (draft), `DECISION-RULE.md` (to fill in before the bakeoff), templates for the five tasks, and one original example case per task.
 - `npm run golden:check` validates every case and prints coverage against targets (15 / 20 / 8 / 8 / 6); it also runs in `npm test`.
+- Simplified: Claude writes all 57 cases from `CASES.md` (a one-line-per-case list the owner skims), the decision rule has defaults for the owner to approve, and calibration is the owner rating 15 blind outputs Good / OK / Bad (judge must agree on 12+). Owner time about 45 minutes.
 
 ## Scope change · live product by default (Oct 26)
 - The shared link becomes the real product behind access codes: one code per recipient, one workspace per code, start from scratch with live planning and media. The seeded Maya / Dr. Ortiz flows become an optional guided demo from the top bar (zero live calls).

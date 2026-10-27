@@ -1,8 +1,8 @@
-# Rubric (draft for the owner to edit)
+# Rubric
 
-The judge model scores every output against this, 1–5 per criterion. The owner spot-checks about 20% blind. If owner and judge agree less than ~80% of the time (within 1 point), fix the rubric before trusting results.
+The judge model scores every output against this, 1–5 per criterion. The owner rates a blind sample of 15 outputs Good / OK / Bad; Good maps to 4–5, OK to 3, Bad to 1–2. If the judge agrees with the owner on fewer than 12 of 15, Claude fixes the rubric and reruns before any decision.
 
-Anchors: write one sentence for 1, 3 and 5; 2 and 4 sit between.
+Anchors: one sentence for 1, 3 and 5; 2 and 4 sit between.
 
 ## All planning outputs
 | Criterion | 1 | 3 | 5 |

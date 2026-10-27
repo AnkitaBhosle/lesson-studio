@@ -1,10 +1,17 @@
 # Golden set
 
-The test cases every model is judged on: in the bakeoff (M12), and before any prompt, model or routing change ships. One file per case. A good case is a realistic teacher situation plus a short note on what a good answer must and must not do.
+The test cases every model is judged on: in the bakeoff (M12), and before any prompt, model or routing change ships.
 
-**Check your work:** `npm run golden:check` validates every case and prints a coverage table (cases per task and difficulty). It also runs as part of `npm test`.
+## The owner's part (about 45 minutes in total)
+1. **Skim `CASES.md` (15 min).** One line per case. Strike what doesn't sound real, add any real situation you know. Claude writes every case from it.
+2. **Approve `DECISION-RULE.md` (5 min).** Defaults are filled in; change a number or say yes.
+3. **After the run, rate 15 outputs (20 min).** Good / OK / Bad, model names hidden, in the Lab. That calibrates the automatic judge: if it agrees with you less than 80% of the time, Claude fixes the rubric and reruns before any decision.
 
-## How to add a case
+Everything else (writing cases, the rubric, running models, the report) is Claude's.
+
+**Validation:** `npm run golden:check` validates every case and prints a coverage table (cases per task and difficulty). It also runs as part of `npm test`.
+
+## How a case is written (reference for Claude, or if you want to add one yourself)
 1. Copy the template for the task from `_templates/` into that task's folder, e.g. `planning/`.
 2. Name the file after its id: `planning/pl-007-nursing-handwashing.md` with `id: pl-007-nursing-handwashing`.
 3. Fill in the front matter (between the `---` lines) and the sections below it.
