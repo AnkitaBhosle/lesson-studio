@@ -19,7 +19,7 @@ If two of these disagree, the higher one wins. If something isn't covered, choos
 - `apps/studio`: Next.js (App Router), React server components where natural, plain CSS modules with design tokens in `apps/studio/styles/tokens.css`. No UI kit.
 - `apps/lab`: Next.js, internal only.
 - `packages/schema` (zod), `packages/orchestrator`, `packages/agents`, `packages/models`, `packages/media`.
-- Tests: Vitest. Persistence: behind `packages/schema/repo.ts` — JSON files in `data/` locally; on Vercel, read-only seed plus a per-visitor in-memory overlay (see build plan §1).
+- Tests: Vitest. Persistence: behind `packages/schema/repo.ts` — `data/store.json` locally; on Vercel, one Redis key per workspace (an access code in live or guided mode), files in Vercel Blob (see build plan §1).
 - Anthropic SDK for Claude; `openai` SDK pointed at an OpenAI-compatible base URL for open models; Runway SDK for media.
 
 ## Commands
@@ -33,7 +33,9 @@ If two of these disagree, the higher one wins. If something isn't covered, choos
 - **Accessibility:** real buttons and links, labels on inputs, `aria-label` on icon-only buttons, decorative SVG `aria-hidden`.
 - **Agents** are called only by the orchestrator. Every LLM output is validated with zod. Every agent has a stub with the same output schema.
 - **Paid calls** go only through `packages/models` and `packages/media`, which log AgentRun and CostEvent. Never call a provider SDK from anywhere else.
-- **Demo mode** (`DEMO_MODE=true`) must make zero live provider calls.
+- **Access:** nothing but the Enter screen is reachable without a valid access code. One workspace per code.
+- **Guided demo** makes zero live provider calls, whatever the environment. **Live mode** calls providers only through `packages/models` and `packages/media`, which check the spend gate before every call (Spec 03).
+- **Spend messages** to visitors never show amounts or the words cost, credits or budget.
 - **Secrets:** never read, print, commit or log API keys. Never create `.env` files with real values. Keys exist only in Vercel.
 - **Content:** no copied text from books, articles or websites in fixtures or prompts. Write original content or reference by URL.
 - Keep files small and named for what they do. No dead code, no TODO comments left behind; put open items in `docs/PROGRESS.md`.

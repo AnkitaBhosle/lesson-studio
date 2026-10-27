@@ -2,6 +2,11 @@
 
 One short entry per milestone. Newest first.
 
+## Scope change · live product by default (Oct 26)
+- The shared link becomes the real product behind access codes: one code per recipient, one workspace per code, start from scratch with live planning and media. The seeded Maya / Dr. Ortiz flows become an optional guided demo from the top bar (zero live calls).
+- Spending limits: $15 per code, $40 per day, $200 total for the site (warning at 75%, live generation pauses at 100% until raised in Lab). Media per lesson: images, diagrams, narration, up to 2 clips.
+- Specs 01–05, `CLAUDE.md` and the architecture diagram updated. New milestone order M4–M13 in Spec 05 §3; `DEMO_MODE` retired.
+
 ## M2 + M3 · Studio screens, orchestrator, routes and stub agents
 - Built together to avoid wiring screens twice: every screen reads the repository and every action goes through an API route to the orchestrator.
 - Orchestrator (`packages/orchestrator/src/lessons.ts`, `settings.ts`): plan drafts (every change makes a new draft and keeps the old one), story angles, recap, revise from a note (whole plan or one slide), flagged-claim gate before approval, preview slide ops (re-record, visual versions, uploads, choose a version, text edits in place), final with course-knowledge update, source visibility, suggested sources, sources card, preferences (teacher edits win; removed values are remembered), apps, schedules, guidelines. 22 unit tests.
@@ -31,4 +36,4 @@ One short entry per milestone. Newest first.
 - `npm run walkthrough -- https://lesson-studio-murex.vercel.app` passes against the live site.
 
 ## Blocked
-- Nothing right now. Before M4: add `ANTHROPIC_API_KEY` and `ADMIN_TOKEN` in Vercel; before M8: `RUNWAYML_API_SECRET` and the cache-spend go-ahead.
+- Before M5: `ANTHROPIC_API_KEY`, `ADMIN_TOKEN` and `ACCESS_COOKIE_SECRET` in Vercel. Before M7: `RUNWAYML_API_SECRET` and a Vercel Blob store.

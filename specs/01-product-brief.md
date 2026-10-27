@@ -42,7 +42,7 @@ Lesson Studio brings the best practices of both to the educator **without asking
 4. **Plan before producing.** Nothing is produced until the teacher approves the plan. Final-quality media is produced only after they approve a preview.
 5. **Show your sources, and let the teacher choose what is cited.** Every slide shows where its facts came from. Anything not backed by the teacher's sources is flagged for them to confirm, never silently included. Private material (notes, voice memos) shapes the lesson but is never shown to viewers unless the teacher turns it on.
 6. **Studio, not chat.** Layout inspired by Slides/Figma/Canva: left = course & lesson tree, center = canvas, right = assistant panel. The assistant speaks in the panel and inline cards, not a chat transcript.
-7. **Cost discipline is the system's job.** The system works within an internal spend envelope per lesson and chooses cheaper visuals wherever they teach equally well. Costs are tracked in an internal ledger, never shown to or decided by the teacher.
+7. **Cost discipline is the system's job.** The system works within an internal spend envelope per lesson and chooses cheaper visuals wherever they teach equally well. Costs are tracked in an internal ledger, never shown to or decided by the teacher. The same holds for the shared link: spending caps per access code and for the whole site are enforced by the system, never surfaced as numbers.
 8. **Drafts, not decisions.** Every plan and preview is a draft the teacher can change three ways: edit it directly, describe the change in plain language, or say it out loud. Earlier drafts are kept, and nothing is final until the teacher finishes.
 9. **Know the course, not just the lesson.** The system remembers what earlier lessons in a course covered, so it never asks what students already know when it can tell, and it suggests recaps where they help.
 
@@ -82,21 +82,24 @@ Lesson Studio brings the best practices of both to the educator **without asking
 7. Final clips, PDF export, saved to the course.
 
 ## 6. Screens
+0. **Enter:** one field for the access code, shown before anything else. After a valid code the visitor lands on Home in their workspace.
 1. **Home:** "What are you teaching?" input, Starter cards, recent lessons.
 2. **Course view:** lessons list and **Course settings**: defaults (starter, audience, template), guidelines, course preferences, scheduled work.
 3. **Lesson studio (one screen, stage stepper):** `Sources → Plan → Preview → Final`. Left: sources (each with a cite/private switch). Center: canvas for the stage, with a draft banner, Edit / Ask to change / Remove on every slide, and Edit / Dictate / Explore angles on the story. Right: assistant panel ("Tell me what to change" with dictation, questions, suggestions, warnings, plain-English activity). Preview panel: Narrative (edit and re-record one slide) and Visual (versions, new version, use my own).
 4. **Templates gallery:** curated templates + "Make from my brand".
 5. **Settings:** general Preferences (real: what the system has learned, each item editable or removable, noting that course preferences override them), Integrations (icons, visual only), Scheduled tasks (visual only).
-6. **Lab (internal, separate app):** cost ledger, evals, and a Model bakeoff view (cost vs quality per task, with the chosen model marked). Never linked from the educator UI.
+6. **Lab (internal, separate app):** access codes (create, label, cap, revoke), usage per code (lessons made, how far each got, spend), site spend against the limits with pause and resume, cost ledger, evals, and a Model bakeoff view (cost vs quality per task, with the chosen model marked). Never linked from the educator UI.
+7. **Top bar on every screen:** "Try the guided demo" switches into the guided demo; inside it, a banner says it's the guided demo and offers "Back to my lessons".
 
 ## 7. MVP scope (functional requirements)
 
 | Area | Real | Mocked / visual only |
 |---|---|---|
-| Source Intake | Paste text, upload PDF/TXT/MD, URL text fetch; summary, key concepts, gap detection | Gated-content access, clip extraction from reference video, voice-memo transcription (fixture transcript) |
+| Starting a lesson | Home topic box and Starter cards create a real lesson in the visitor's workspace (a first course is created on the first lesson); Sources → Plan → Preview → Final runs live | Starters marked "Coming soon" |
+| Source Intake | Paste text, upload PDF/TXT/MD, URL text fetch; summary, key concepts, gap detection | Gated-content access, clip extraction from reference video, voice memos (guided demo only; live mode has no speech-to-text in the MVP) |
 | Planning | Fully real (LLM): structured plan, clarifying questions, plan drafts, revise from a plain-language note (whole plan or one slide), three story angles, recap suggestion from earlier lessons in the course | Dictation (speech to text) uses a fixture transcript |
-| Creation: deck | Slides rendered in React from plan + template; images via a video/image generation API; new visual versions per slide; upload your own image; PDF export | Clips from cache in demo mode; PPTX export |
-| Creation: explainer | Narration (TTS) with per-slide re-recording; in-browser preview player assembling slides; new visual versions per slide; upload your own image or clip; sources card built from cited sources only | Server-side MP4 render (later); motion clips from cache in demo mode |
+| Creation: deck | Slides rendered in React from plan + template; images via a video/image generation API; up to 2 short clips per lesson; new visual versions per slide; upload your own image; PDF and PPTX export | Clips beyond the per-lesson limit fall back to stills |
+| Creation: explainer | Narration (TTS) with per-slide re-recording; in-browser player assembling narration and slide visuals; up to 2 short clips per lesson; new visual versions per slide; upload your own image or clip; sources card built from cited sources only | Downloadable MP4 (server-side render, later) |
 | Concepts | Course (with course settings and knowledge of earlier lessons), Lesson, Starter, Template, Audience, Source (cited or private), Guideline, Artifact, Plan (with drafts), Preferences (general and course level). Starters for the two heroes: "Detailed explainer" and "Live lecture" | Integrations, Scheduled tasks. Other Starters shown as cards on the home screen (each pre-fills format, audience, structure and guidelines): **45-second explainer for social** (a dense idea, made simple, vertical, for a lay audience); **Study recap** (at-home study sheet and a 60-second recap of a lesson); **Training visual aid** (visual aids and scenario walk-throughs for live training); **Podcast explainer** (an audio file to learn or review concepts on the go; audio format is post-MVP) |
 | Cost ledger & evals | Cost events logged from day one | Lab app is a separate build |
 
@@ -106,16 +109,19 @@ Lesson Studio brings the best practices of both to the educator **without asking
 - **Cost observability:** every paid call is logged with lesson, model, units and outcome, and spend stays within each lesson's internal limit.
 - **Quality regression:** evals run on every prompt, model, or routing change, and a drop in grounding or plan quality blocks the release.
 - **Teacher-facing language:** no cost, credit or model names, and no production jargon, ever reach the teacher.
-- **Reliability:** one failed generation never blocks a whole lesson, and demo mode always plays end to end.
-- **Privacy:** teacher sources stay private to that teacher, and API keys exist only in server settings.
+- **Reliability:** one failed generation never blocks a whole lesson, and the guided demo always plays end to end.
+- **Privacy:** each workspace's sources are visible only inside that workspace, and API keys exist only in server settings.
+- **Spend safety:** no paid call runs unless the spend gate allows it (per-code cap, daily site cap, total site limit), and every paid call is logged.
 
-### Demo mode
-- `DEMO_MODE=true` (default on the shared link): all media requests served from `fixtures/cache/` keyed by request hash; LLM calls from cache when available, live only if `ALLOW_LIVE_LLM=true`.
-- Seed data: one course per hero with sources, audience, template, guidelines, and one completed lesson each, so the demo never opens empty.
-- Live mode is local-only, with API keys in `.env.local`.
+### Access and modes on the shared link
+- **Access code required.** The link opens an Enter screen; nothing else is reachable without a valid code. The owner creates **one code per recipient** in Lab, each with a label (e.g. "Runway, hiring manager").
+- **One workspace per code.** A code's lessons, sources, preferences and course history live together and follow the code across devices. A forwarded code shares that workspace and its cap.
+- **Live mode is the default.** Visitors start from scratch with their own topic and sources; planning, revisions and media are real, within media caps: images, diagrams and narration, plus up to 2 short clips per lesson.
+- **Guided demo is optional,** from the top bar. It opens a fresh copy of the Maya and Dr. Ortiz seed (per code, with Reset), serves all media from the demo cache, makes zero live calls and doesn't count toward any cap.
+- **Spending limits (internal, owner-set in Lab):** per code (default $15), per day for the whole site ($40), and a total for the site (starting at $200). At 75% of the total, Lab shows a warning. At the total, live generation pauses for everyone: visitors see a plain message ("Lesson Studio isn't making new media right now") and are offered the guided demo. Raising the limit in Lab resumes live mode immediately.
 
 ## 9. Out of scope (MVP)
-No auth or collaboration. No real integrations. One language. 16:9 only. No timeline editor. No publishing. No audio-only (podcast) output. No user-facing cost, budget, or model controls.
+No accounts or sign-in (access codes only), no collaboration. No real integrations. One language. 16:9 only. No timeline editor. No publishing. No audio-only (podcast) output. No user-facing cost, budget, or model controls.
 
 ## 10. Success metrics
 - Time from "new lesson" to approved plan (target: under 10 minutes).
@@ -133,7 +139,7 @@ No auth or collaboration. No real integrations. One language. 16:9 only. No time
 3. Real Source Intake (text/PDF/URL).
 4. Creation: deck path.
 5. Creation: explainer preview.
-6. Deploy demo link.
+6. Deploy the link with access codes, live mode by default and the guided demo as an option.
 7. Lab app (ledger + evals).
 8. **Model bakeoff:** compare open models against Claude per task (extraction, planning, self-check, preference learning) on the same golden set; set routing and cascades from the results.
 9. **Model router (conditional):** build only if the bakeoff shows a cheap model wins on easy requests but loses on hard ones. Start with simple rules; a learned router comes later, from real usage data.

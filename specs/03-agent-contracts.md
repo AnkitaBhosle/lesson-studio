@@ -9,12 +9,13 @@
 | Part | Folder | What it owns |
 |---|---|---|
 | Studio app | `apps/studio` | Every teacher-facing screen, plus the renderers (React slides, PDF export, explainer preview player) |
-| API routes + Orchestrator | `apps/studio/app/api`, `packages/orchestrator` | Lesson state machine, approval gates, plan drafts, preference resolution, spend envelope, demo mode |
-| Repository + schema | `packages/schema`, `data/` | Zod types (Spec 02) and JSON-file persistence for the MVP |
+| API routes + Orchestrator | `apps/studio/app/api`, `packages/orchestrator` | Lesson state machine, approval gates, plan drafts, preference resolution, spend envelope, background jobs |
+| Access + spend gate | `apps/studio/proxy.ts`, `packages/orchestrator` | Access codes, workspace selection (live or guided), site and per-code spending limits |
+| Repository + schema | `packages/schema`, `data/` | Zod types (Spec 02); JSON file locally, one Redis key per workspace on Vercel |
 | Agents | `packages/agents` | Source Intake, Planning, Creation, Preference learning (stub and real) |
 | Model layer | `packages/models` | One interface over Anthropic and OpenAI-compatible open-weight models; per-task routing |
-| Media client | `packages/media` | One interface over the media provider (Runway API in the MVP); gate and envelope checks, demo cache, cost logging |
-| Lab app | `apps/lab` | Internal only: spend, ledger, evals, model bakeoff, routing log |
+| Media client | `packages/media` | One interface over the media provider (Runway API in the MVP); spend gate and envelope checks, guided-demo cache, copies outputs to Blob, cost logging |
+| Lab app | `apps/lab` | Internal only: access codes, usage per code, site spend and limits, ledger, evals, model bakeoff, routing log |
 | Fixtures | `fixtures/` | Seed data, demo cache, golden set |
 
 The diagram source is `images/architecture.svg`; edit it there and re-render the PNG.
@@ -39,7 +40,7 @@ The diagram source is `images/architecture.svg`; edit it there and re-render the
    3b. **Escalation on failure:** after one failed repair, retry once on the next model up (e.g. Haiku → Sonnet, open model → Claude) before `needs_user`.
 
    3c. **Every routing decision is logged** on the AgentRun. Any change to models or routing must pass the eval suite before release.
-4. **Media calls go through one client** (`packages/media`) that checks the lesson status allows spending, checks the internal spend envelope, serves from cache in demo mode, logs a CostEvent for every call, and polls async tasks.
+4. **Media calls go through one client** (`packages/media`) that checks the lesson status allows spending, checks the spend gate (site switch, total, daily, per code) and the lesson's spend envelope, serves from cache in the guided demo, logs a CostEvent for every call, and tracks async tasks.
 5. **Everything is logged.** Each agent run writes an AgentRun with steps. Each paid call writes a CostEvent.
 6. **No production choices are pushed to the teacher.** Models, quality tiers, visual types, spend and template details are system decisions. Agents ask only about teaching (audience, goals, length, tone, emphasis). Cost, credits and model names never appear in teacher-facing text.
 7. **Drafts, not decisions.** Every change to a plan produces a new plan version; nothing is overwritten. Every visual version is kept. The teacher can always go back.
@@ -55,10 +56,33 @@ The diagram source is `images/architecture.svg`; edit it there and re-render the
 
 Clip length 5s default (allowed 2–10s). 16:9, 720p.
 
+### Access and modes
+- `proxy.ts` lets through only `/enter`, `/api/access` and static files without a valid, signed `ls_code` cookie for an active code; everything else redirects to `/enter` (pages) or returns 401 (API).
+- `POST /api/access` `{ code }` → validates against AccessCode, sets `ls_code` (signed with `ACCESS_COOKIE_SECRET`), records first/last seen. Wrong codes get one plain message and are rate limited per IP.
+- `POST /api/mode` `{ mode: "live" | "guided" }` → sets `ls_mode`. Workspace key: `live:<code>` or `guided:<code>`. The guided workspace starts as a copy of the seed; `/reset` restores it. Live workspaces are never reset by the app.
+- In guided mode every agent is the stub and every media request is served from the guided-demo cache. No paid call can run, whatever the environment says.
+
+### Spend gate (live mode)
+- Checked by `packages/models` and `packages/media` before every paid call, in this order: `LIVE_ENABLED` and `SiteLimits.liveEnabled`; total; today's daily; the code's cap. Counters are incremented after the call with its actual credits.
+- On a block the orchestrator returns `{ paused: true, reason }`; the UI shows "Lesson Studio isn't making new media right now. You can keep editing, or try the guided demo." Never a number, never "budget".
+- Per-lesson media limits: at most `SiteLimits.clipsPerLesson` generated clips; Planning plans within it and Creation downgrades extra clips to stills.
+
+### Background jobs
+- Approving a plan (or asking for a new visual or re-record) creates jobs, one per slide asset, and returns at once. Runway tasks are started and their ids stored on the pending Artifact.
+- The Preview screen polls `GET /api/lessons/:id/events`; each poll advances pending jobs (checks task status, copies finished outputs to Blob, marks failures) and returns progress in teaching words ("Making slide 3 of 7"). A failed slide gets a "Try again" on that slide only.
+- No request waits on a media task; every route returns within the function time limit.
+
+### Admin (owner only, `Authorization: Bearer ADMIN_TOKEN`, used by Lab)
+- `GET/POST /api/admin/codes` · `PATCH /api/admin/codes/:code` `{ label?, capCredits?, active? }`
+- `GET/PUT /api/admin/limits` (SiteLimits) · `GET /api/admin/usage` (counters, per-code lessons and furthest stage)
+
 ### Orchestrator API (server routes)
 Sources
 - `POST /api/lessons/:id/sources` → Source Intake on new sources
 - `PUT  /api/sources/:id/visibility` `{ visibility: "cited" | "private" }`
+
+Lessons
+- `POST /api/lessons` `{ topic, starterId?, courseId? }` → creates the lesson (and the workspace's first course if needed) in `sourcing`
 
 Plan
 - `POST /api/lessons/:id/plan` → Planning (first draft, or with answers to questions)
@@ -222,7 +246,7 @@ Preferences and polling
 
 **Failure handling:** Media task fails or times out → retry once → fallback + issue. Never block the whole lesson on one slide.
 
-**Stub / demo mode:** all media from `fixtures/cache/` by request hash; CostEvents written with `cached: true` and `originalCredits`.
+**Stub / guided demo:** all media from the guided-demo cache by request hash; CostEvents written with `cached: true` and `originalCredits`.
 
 **Eval hooks:** cost per finished minute / per deck; new-version and re-record rate per slide; fallback rate; `off_brief` rate; share of spend on motion.
 

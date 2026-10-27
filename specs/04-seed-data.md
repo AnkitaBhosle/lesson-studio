@@ -1,6 +1,6 @@
 # Spec 04 — Seed Data
 
-> The content the demo opens with. Lives in `fixtures/seed/` as JSON files that validate against Spec 02. All teacher-written text below is original to this project. Readings are openly licensed (OpenStax, CC BY 4.0) and referenced by URL and section; the seed stores our own digests of them, never copied passages. Locators use section numbers (e.g. "§8.2"), not page numbers.
+> The content the **guided demo** opens with. Live workspaces start empty (§10). Lives in `fixtures/seed/` as JSON files that validate against Spec 02. All teacher-written text below is original to this project. Readings are openly licensed (OpenStax, CC BY 4.0) and referenced by URL and section; the seed stores our own digests of them, never copied passages. Locators use section numbers (e.g. "§8.2"), not page numbers.
 
 ## 1. Users and courses
 | User | Persona | Course | Audience | Template |
@@ -92,3 +92,8 @@ Recap suggestion (pending, 2 slides, from Week 5): "Remember ATP?" and "Today: t
 
 ## 9. Ledger and Lab sample data
 Seed CostEvents and EvalRuns that reproduce the mock Lab's sample numbers, flagged `sample: true` in a seed note so the Lab labels them "Sample data" until real runs replace them.
+
+## 10. Live workspaces (start from scratch)
+- Created on first entry with a code: one User ("You"), the six Starters, the four curated Templates (no "Maya's brand"), empty general Preferences, no courses or lessons.
+- The first lesson creates the first Course, named from the topic ("My lessons" if unclear), with the Starter's default audience and template.
+- Integrations and Scheduled tasks show as "not connected" / off.

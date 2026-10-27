@@ -1,12 +1,13 @@
 # Spec 02 — Domain Model
 
-> Implement exactly as `packages/schema/src/index.ts` using **zod**; export both schemas and inferred TS types. Every agent input/output in Spec 03 references these types. Persistence for MVP: JSON files under `data/` (seeded from `fixtures/seed/`) behind a tiny repository layer, so it can later be swapped for a DB without touching UI or agents.
+> Implement exactly as `packages/schema/src/index.ts` using **zod**; export both schemas and inferred TS types. Every agent input/output in Spec 03 references these types. Persistence: behind a tiny repository layer, so storage can change without touching UI or agents. Locally, JSON in `data/`; on Vercel, one Redis key per workspace (Spec 05 §1). A **workspace** is everything one access code sees in one mode: the whole `Store` below, live or guided.
 
 ## 1. User-facing vs internal
 - **User-facing:** User, Course (with course settings), Lesson, Starter, Template, Audience, Source, Guideline, TeachingPlan (shown as a lesson outline, with drafts), Slide, Artifact (with visual versions), Integration, ScheduledTask.
 - **Learned and editable:** Preferences, at two levels: general (Settings) and course (that course's settings). Teacher edits override what was learned; a course preference overrides a general one for that course.
 - **Derived:** CourseKnowledge (what earlier lessons in a course covered), recomputed when a lesson becomes `ready`.
 - **Internal only (never rendered in the educator UI):** SpendEnvelope, costEstimate on plans, CostEvent, AgentRun (including routing decisions), Approval (audit log), model choices, EvalCase, EvalRun, BakeoffResult. The Lab app reads these.
+- **Site-level, outside any workspace (owner only, managed in Lab):** AccessCode, SiteLimits, SpendCounters.
 
 ## 2. Conventions
 - IDs: string with prefix, e.g. `crs_…`, `lsn_…`, `src_…`, `art_…`, `str_…`, `tpl_…`, `pln_…`, `sld_…` (use `nanoid`).
@@ -379,6 +380,36 @@ export const BakeoffResult = Base.extend({
 });
 ```
 
+### Access and spend (site-level, stored outside workspaces)
+```ts
+// One per recipient. The code string is also the workspace key.
+export const AccessCode = z.object({
+  code: z.string(),                   // e.g. "RW-PANEL-Q2"; case-insensitive on entry, stored upper-case
+  label: z.string(),                  // "Runway, hiring manager"
+  capCredits: z.number().int(),       // per-code cap; default 1500 (= $15)
+  active: z.boolean(),
+  createdAt: z.string(),
+  firstSeenAt: z.string().optional(),
+  lastSeenAt: z.string().optional(),
+});
+
+export const SiteLimits = z.object({
+  totalCredits: z.number().int(),     // 20000 (= $200) to start
+  dailyCredits: z.number().int(),     // 4000 (= $40)
+  warnAtFraction: z.number(),         // 0.75
+  liveEnabled: z.boolean(),           // owner's pause switch; also LIVE_ENABLED env
+  clipsPerLesson: z.number().int(),   // 2
+});
+
+// Running totals, incremented after every paid call (the CostEvent is the detailed record).
+export const SpendCounters = z.object({
+  totalCredits: z.number(),
+  byDay: z.record(z.string(), z.number()),   // "2026-10-27" → credits
+  byCode: z.record(z.string(), z.number()),  // code → credits
+});
+```
+CostEvent gains `code: z.string().optional()` so Lab can show spend per code. A live workspace's User is created on first entry (name "You", persona from the first Starter used); its first Course is created with its first lesson.
+
 ## 4. Lesson state machine (deterministic; owned by the orchestrator, not an agent)
 ```
 draft → sourcing → planning → plan_review ──approve──▶ generating_preview → preview_review ──approve──▶ finalizing → ready
@@ -392,6 +423,7 @@ Rules:
 - `finalizing` requires an `Approval{gate:"preview", decision:"approved"}`.
 - On `ready`, recompute the course's CourseKnowledge.
 - The spend envelope is enforced by the system (Spec 03), never by asking the teacher.
+- Before any paid call (LLM or media) in live mode, the spend gate checks: site live switch on, total and daily site limits not reached, the code's cap not reached. If any fails, the call doesn't run and the lesson stays in its current status (no `failed`), with a plain message to the teacher.
 
 ## 5. Preference resolution
 For a lesson in course C: Template and Starter defaults → general Preferences → course Preferences for C → edits within the lesson. Later layers win. Items with `origin: "teacher"` are never overwritten by learning; values in `removedItemValues` are never relearned.
