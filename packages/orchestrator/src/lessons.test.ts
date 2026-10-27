@@ -96,3 +96,22 @@ describe("settings", async () => {
     expect(p.removedItemValues).toContain("Prefer real photos over illustrations");
   });
 });
+
+describe("preview text edits", () => {
+  it("edit speaker notes in the preview without a new draft", () => {
+    const repo = fresh();
+    checkFlagged(repo, "lsn_photo");
+    approvePlan(repo, "lsn_photo");
+    const p = editSlide(repo, "lsn_photo", "sld_photo_3", { speakerNotes: "Pause here." });
+    expect(p.version).toBe(1);
+    expect(p.slides.find((s) => s.slideId === "sld_photo_3")?.speakerNotes).toBe("Pause here.");
+  });
+});
+
+describe("partial slide edits", () => {
+  it("fields that weren't sent stay as they were", () => {
+    const repo = fresh();
+    const p = editSlide(repo, "lsn_photo", "sld_photo_3", { speakerNotes: "Pause.", visual: undefined });
+    expect(p.slides.find((s) => s.slideId === "sld_photo_3")?.visual).toBeTruthy();
+  });
+});

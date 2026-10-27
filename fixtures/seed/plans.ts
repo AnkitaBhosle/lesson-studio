@@ -1,5 +1,9 @@
 import type { Claim, Slide, TeachingPlan } from "@ls/schema";
 import { T0 } from "./people";
+import { sources } from "./sources";
+
+const factText = (sourceId: string, factId: string) =>
+  sources.find((x) => x.id === sourceId)?.digest?.quotableFacts.find((f) => f.factId === factId)?.text;
 
 const base = (id: string) => ({ id, createdAt: T0, updatedAt: T0 });
 const cite = (sourceId: string, factId: string, locator: string): Claim["citations"][number] => ({ sourceId, factId, locator });
@@ -99,7 +103,10 @@ const ROWS: Row[] = [
 
 const ortizSlides: Slide[] = ROWS.map(([section, title, role, visual, visualType, c, flag], i) => ({
   slideId: `sld_photo_${i + 1}`, order: i + 1, section: section || undefined, role, title,
-  bullets: [title === "Photosynthesis" ? "Week 6 · BIO 101" : visual], speakerNotes: `Walk through: ${title.toLowerCase()}.`,
+  bullets: role === "title" ? ["Week 6 · BIO 101"] : [c ? factText(c[0], c[1]) ?? title : "Most biologists think chloroplasts began as free-living bacteria"],
+  speakerNotes: role === "question" ? "Give the room a minute to think, then take two or three answers before moving on."
+    : role === "title" ? "Welcome everyone and put the opening question on the board."
+    : `Explain this in plain words, then point to the figure. Check that the room is with you before the next slide.`,
   layout: role === "title" ? "title" : role === "question" ? "question" : visualType === "generated_clip" ? "clip" : "image_left",
   visual, visualType, visualPrompt: visual,
   claims: flag ? [{ text: "Chloroplasts likely descend from free-living photosynthetic bacteria.", citations: [], status: "general_knowledge_flagged" as const }]

@@ -2,6 +2,14 @@
 
 One short entry per milestone. Newest first.
 
+## M2 + M3 · Studio screens, orchestrator, routes and stub agents
+- Built together to avoid wiring screens twice: every screen reads the repository and every action goes through an API route to the orchestrator.
+- Orchestrator (`packages/orchestrator/src/lessons.ts`, `settings.ts`): plan drafts (every change makes a new draft and keeps the old one), story angles, recap, revise from a note (whole plan or one slide), flagged-claim gate before approval, preview slide ops (re-record, visual versions, uploads, choose a version, text edits in place), final with course-knowledge update, source visibility, suggested sources, sources card, preferences (teacher edits win; removed values are remembered), apps, schedules, guidelines. 22 unit tests.
+- 23 API routes per Spec 03, plus `/switch?to=` (demo user) and `/reset` (restore the seed). `proxy.ts` gives each visitor an id cookie so Vercel visitors get their own copy.
+- Screens: Home, Course (with course settings), Sources / Plan / Preview / Final for both formats, Templates, Settings. Placeholder visuals are drawn from each slide's description in the lesson's template colors until real media lands (M8).
+- `npm run walkthrough` clicks through both hero flows in a browser against a running studio (Playwright, preinstalled in the build environment). Passes.
+- Decisions: one shared stylesheet (`styles/ui.css`) instead of per-component CSS modules, since the mock uses one set of classes; clarifying-question chips on the Plan screen are local only (the domain model has no field for answers yet); "Start lesson" and "New lesson" open the in-progress hero lesson, because creating a lesson from scratch needs the real Planning agent (M4); adding new sources, brand templates and file downloads are shown but disabled or explained until their milestones.
+
 ## M1 · Schema, repository and seed
 - Spec 02 implemented as zod in `packages/schema/src/schema.ts`, with inferred types. `z.record` keys use strings (zod 4 records over enums must list every key).
 - Repository (`packages/schema/src/repo.ts`) validates every write. `packages/orchestrator/src/store.ts` picks the backend: `data/store.json` locally, a per-visitor in-memory copy on Vercel. `npm run seed:reset` restores the seed.
@@ -15,4 +23,4 @@ One short entry per milestone. Newest first.
 - Decision: no ESLint for now. `tsc --noEmit` and `next build` cover type and build errors; a linter can be added later without changing code.
 
 ## Blocked
-- Pushing to GitHub needs the Claude GitHub App installed on `AnkitaBhosle/lesson-studio`. Commits are made locally until then.
+- Vercel project creation: the Vercel connector can't reach the "ankita-bhosle" team yet (403). Needs the connector re-authorized with access to that team.

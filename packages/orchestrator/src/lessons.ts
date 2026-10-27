@@ -71,10 +71,16 @@ const lessonOf = (repo: Repo, lessonId: string) => {
   return l;
 };
 
-export function editSlide(repo: Repo, lessonId: string, slideId: string, patch: Partial<Pick<Slide, "narrative" | "visual" | "bullets" | "speakerNotes" | "title">>) {
+export function editSlide(repo: Repo, lessonId: string, slideId: string, edits: Partial<Pick<Slide, "narrative" | "visual" | "bullets" | "speakerNotes" | "title">>) {
+  // Only fields that were actually sent change; a missing field never blanks the slide.
+  const patch = Object.fromEntries(Object.entries(edits).filter(([, v]) => v !== undefined)) as typeof edits;
   const lesson = lessonOf(repo, lessonId);
   const plan = requirePlan(repo, lesson);
   if (!plan.slides.some((s) => s.slideId === slideId)) throw new FlowError("Slide not found", 404);
+  // In the preview the plan is approved: text edits land on the slide itself, with no new draft.
+  if (lesson.status === "preview_review") {
+    return repo.put("plans", { ...plan, updatedAt: now(), slides: plan.slides.map((s) => (s.slideId === slideId ? { ...s, ...patch } : s)) });
+  }
   return newVersion(repo, lesson, plan, {
     revisionRequest: undefined,
     slides: plan.slides.map((s) => (s.slideId === slideId ? { ...s, ...patch, changedInVersion: plan.version + 1, changeReason: "teacher_edit" } : s)),

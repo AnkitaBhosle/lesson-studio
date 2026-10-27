@@ -18,7 +18,8 @@
     "build": "npm run build -w apps/studio && npm run build -w apps/lab",
     "dev": "npm run dev -w apps/studio",
     "dev:lab": "npm run dev -w apps/lab",
-    "seed:reset": "tsx scripts/seed-reset.ts"
+    "seed:reset": "tsx scripts/seed-reset.ts",
+    "walkthrough": "node scripts/walkthrough.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.20.5",
