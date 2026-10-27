@@ -1,0 +1,28 @@
+{
+  "name": "lesson-studio",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Lesson Studio: turn a teacher's notes, readings and voice memos into finished explainer videos and lecture decks.",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "fixtures"
+  ],
+  "engines": {
+    "node": ">=20.9"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit && npm run typecheck -w apps/studio -w apps/lab",
+    "test": "vitest run",
+    "build": "npm run build -w apps/studio && npm run build -w apps/lab",
+    "dev": "npm run dev -w apps/studio",
+    "dev:lab": "npm run dev -w apps/lab",
+    "seed:reset": "tsx scripts/seed-reset.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "vitest": "^5.0.5"
+  }
+}

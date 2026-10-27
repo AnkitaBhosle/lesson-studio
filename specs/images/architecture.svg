@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900" width="1400" height="900" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#5A6272"></path></marker>
+  </defs>
+  <rect width="1400" height="900" fill="#FFFFFF"></rect>
+  <text x="40" y="44" font-size="24" font-weight="700" fill="#1B1F27">Lesson Studio · architecture at a glance</text>
+  <text x="40" y="70" font-size="14" fill="#5A6272">Solid arrows: requests and data. Dashed arrows: telemetry into the internal Lab.</text>
+
+  <!-- Teacher -->
+  <rect x="40" y="350" width="130" height="90" rx="12" fill="#F6F7F9" stroke="#C4C9D4"></rect>
+  <text x="105" y="390" text-anchor="middle" font-size="16" font-weight="700" fill="#1B1F27">Teacher</text>
+  <text x="105" y="412" text-anchor="middle" font-size="13" fill="#5A6272">browser</text>
+
+  <!-- Studio app -->
+  <rect x="220" y="110" width="270" height="470" rx="14" fill="#E8EAFB" stroke="#3442C9"></rect>
+  <text x="240" y="140" font-size="16" font-weight="700" fill="#26318F">Studio app (Next.js)</text>
+  <text x="240" y="160" font-size="12" fill="#3D4452">apps/studio · light mode · demo mode</text>
+  <g font-size="13" fill="#1B1F27">
+    <rect x="240" y="178" width="230" height="34" rx="8" fill="#FFFFFF"></rect><text x="252" y="200">Home · Starters</text>
+    <rect x="240" y="220" width="230" height="34" rx="8" fill="#FFFFFF"></rect><text x="252" y="242">Course view · Course settings</text>
+    <rect x="240" y="262" width="230" height="118" rx="8" fill="#FFFFFF"></rect>
+    <text x="252" y="284" font-weight="700">Lesson studio</text>
+    <text x="252" y="304">Sources (cite / private)</text>
+    <text x="252" y="324">Plan (drafts, angles, revise)</text>
+    <text x="252" y="344">Preview (re-record, versions)</text>
+    <text x="252" y="364">Final (sources card, export)</text>
+    <rect x="240" y="388" width="230" height="34" rx="8" fill="#FFFFFF"></rect><text x="252" y="410">Templates gallery</text>
+    <rect x="240" y="430" width="230" height="34" rx="8" fill="#FFFFFF"></rect><text x="252" y="452">Settings · general preferences</text>
+    <rect x="240" y="472" width="230" height="90" rx="8" fill="#FFFFFF"></rect>
+    <text x="252" y="494" font-weight="700">Renderers</text>
+    <text x="252" y="514">React slides · PDF export</text>
+    <text x="252" y="534">Explainer preview player</text>
+    <text x="252" y="552" fill="#5A6272">(MP4 render later)</text>
+  </g>
+
+  <!-- Orchestrator -->
+  <rect x="550" y="250" width="250" height="210" rx="14" fill="#FFF4E0" stroke="#B45309"></rect>
+  <text x="566" y="280" font-size="16" font-weight="700" fill="#7C4A03">API routes + Orchestrator</text>
+  <g font-size="13" fill="#1B1F27">
+    <text x="566" y="306">Lesson state machine</text>
+    <text x="566" y="328">Approval gates: plan, preview</text>
+    <text x="566" y="350">Plan drafts and versions</text>
+    <text x="566" y="372">Preference resolution</text>
+    <text x="566" y="394">Spend envelope (silent)</text>
+    <text x="566" y="416">Demo mode switch</text>
+    <text x="566" y="444" font-size="12" fill="#5A6272">deterministic, no model decides flow</text>
+  </g>
+
+  <!-- Data -->
+  <rect x="550" y="100" width="250" height="110" rx="14" fill="#F6F7F9" stroke="#8A93A5"></rect>
+  <text x="566" y="128" font-size="16" font-weight="700" fill="#1B1F27">Repository</text>
+  <text x="566" y="150" font-size="13" fill="#1B1F27">JSON files in MVP, DB later</text>
+  <text x="566" y="172" font-size="12" fill="#5A6272">packages/schema (zod): Course, Lesson,</text>
+  <text x="566" y="190" font-size="12" fill="#5A6272">Source, Plan, Slide, Artifact, Preferences…</text>
+
+  <!-- Agents -->
+  <rect x="860" y="110" width="220" height="470" rx="14" fill="#DDF3EF" stroke="#0F766E"></rect>
+  <text x="876" y="140" font-size="16" font-weight="700" fill="#0B5A53">Agents</text>
+  <text x="876" y="160" font-size="12" fill="#3D4452">packages/agents · stub + real</text>
+  <g font-size="13" fill="#1B1F27">
+    <rect x="876" y="176" width="188" height="86" rx="8" fill="#FFFFFF"></rect>
+    <text x="888" y="198" font-weight="700">Source Intake</text>
+    <text x="888" y="218">digests, facts, gaps</text>
+    <text x="888" y="238">cite / private defaults</text>
+    <text x="888" y="256" fill="#5A6272">transcription (fixture)</text>
+    <rect x="876" y="272" width="188" height="106" rx="8" fill="#FFFFFF"></rect>
+    <text x="888" y="294" font-weight="700">Planning</text>
+    <text x="888" y="314">questions, plan drafts</text>
+    <text x="888" y="334">revise, story angles</text>
+    <text x="888" y="354">recap from course</text>
+    <text x="888" y="372" fill="#5A6272">grounding, guidelines</text>
+    <rect x="876" y="388" width="188" height="106" rx="8" fill="#FFFFFF"></rect>
+    <text x="888" y="410" font-weight="700">Creation</text>
+    <text x="888" y="430">preview, then final</text>
+    <text x="888" y="450">re-record one slide</text>
+    <text x="888" y="470">visual versions, uploads</text>
+    <text x="888" y="488" fill="#5A6272">sources card, self-check</text>
+    <rect x="876" y="504" width="188" height="60" rx="8" fill="#FFFFFF"></rect>
+    <text x="888" y="526" font-weight="700">Preference learning</text>
+    <text x="888" y="546">general + course level</text>
+  </g>
+
+  <!-- Model layer -->
+  <rect x="1140" y="110" width="220" height="230" rx="14" fill="#F3EEFF" stroke="#6D4AD9"></rect>
+  <text x="1156" y="140" font-size="16" font-weight="700" fill="#4B2FA6">Model layer</text>
+  <text x="1156" y="160" font-size="12" fill="#3D4452">packages/models</text>
+  <g font-size="13" fill="#1B1F27">
+    <text x="1156" y="186">Routing per task:</text>
+    <text x="1156" y="206">fixed → cascade → router</text>
+    <text x="1156" y="226" fill="#5A6272">(router only if bakeoff says so)</text>
+    <rect x="1156" y="240" width="188" height="40" rx="8" fill="#FFFFFF"></rect>
+    <text x="1168" y="265">Anthropic (Haiku, Sonnet)</text>
+    <rect x="1156" y="288" width="188" height="40" rx="8" fill="#FFFFFF"></rect>
+    <text x="1168" y="313">Open-weight models</text>
+  </g>
+
+  <!-- Media client -->
+  <rect x="1140" y="370" width="220" height="210" rx="14" fill="#FDECEA" stroke="#C2410C"></rect>
+  <text x="1156" y="400" font-size="16" font-weight="700" fill="#7A1F12">Media client</text>
+  <text x="1156" y="420" font-size="12" fill="#3D4452">packages/media · provider interface</text>
+  <g font-size="13" fill="#1B1F27">
+    <text x="1156" y="446">checks gate + envelope</text>
+    <text x="1156" y="466">demo cache by request hash</text>
+    <text x="1156" y="486">logs every CostEvent</text>
+    <rect x="1156" y="500" width="188" height="64" rx="8" fill="#FFFFFF"></rect>
+    <text x="1168" y="522" font-weight="700">Runway API (MVP)</text>
+    <text x="1168" y="542">video · image · narration</text>
+    <text x="1168" y="558" fill="#5A6272">swappable provider</text>
+  </g>
+
+  <!-- Telemetry -->
+  <rect x="550" y="660" width="810" height="90" rx="14" fill="#F6F7F9" stroke="#8A93A5" stroke-dasharray="6 5"></rect>
+  <text x="566" y="690" font-size="16" font-weight="700" fill="#1B1F27">Telemetry</text>
+  <text x="566" y="714" font-size="13" fill="#1B1F27">AgentRun (steps + routing decision) · CostEvent ledger · Approvals (plan versions, edits)</text>
+  <text x="566" y="734" font-size="12" fill="#5A6272">never shown in the studio</text>
+
+  <!-- Lab -->
+  <rect x="220" y="640" width="270" height="200" rx="14" fill="#2B3140"></rect>
+  <text x="240" y="670" font-size="16" font-weight="700" fill="#FFFFFF">Lab app (internal)</text>
+  <text x="240" y="690" font-size="12" fill="#D7DCE6">apps/lab · separate, not linked</text>
+  <g font-size="13" fill="#FFFFFF">
+    <text x="240" y="716">Spend · ledger · downgrades</text>
+    <text x="240" y="738">Evals + golden set</text>
+    <text x="240" y="760">Model bakeoff (cost vs quality)</text>
+    <text x="240" y="782">Routing log</text>
+    <text x="240" y="804">Release check (blocks regressions)</text>
+  </g>
+
+  <!-- Arrows -->
+  <g stroke="#5A6272" stroke-width="2" fill="none">
+    <path d="M170 395 H218" marker-end="url(#a)" marker-start="url(#a)"></path>
+    <path d="M490 355 H548" marker-end="url(#a)" marker-start="url(#a)"></path>
+    <path d="M675 248 V212" marker-end="url(#a)" marker-start="url(#a)"></path>
+    <path d="M800 355 H858" marker-end="url(#a)"></path>
+    <path d="M1080 225 H1138" marker-end="url(#a)"></path>
+    <path d="M1080 440 H1138" marker-end="url(#a)"></path>
+    <path d="M876 450 C 700 520, 560 520, 492 520" marker-end="url(#a)"></path>
+  </g>
+  <g stroke="#8A93A5" stroke-width="2" fill="none" stroke-dasharray="6 5">
+    <path d="M970 582 V658" marker-end="url(#a)"></path>
+    <path d="M1250 582 V658" marker-end="url(#a)"></path>
+    <path d="M675 462 V658" marker-end="url(#a)"></path>
+    <path d="M550 705 H492" marker-end="url(#a)"></path>
+  </g>
+  <g font-size="12" fill="#3D4452">
+    <text x="496" y="328">REST +</text><text x="496" y="342">polling</text>
+    <text x="806" y="328">runs</text><text x="806" y="342">agents</text>
+    <text x="1084" y="215">LLM calls</text>
+    <text x="1084" y="430">media calls</text>
+    <text x="688" y="548">rendered slides,</text><text x="688" y="564">player manifest</text>
+  </g>
+
+  <!-- Fixtures -->
+  <rect x="40" y="480" width="130" height="100" rx="12" fill="#FFFFFF" stroke="#C4C9D4" stroke-dasharray="4 4"></rect>
+  <text x="105" y="508" text-anchor="middle" font-size="13" font-weight="700" fill="#1B1F27">fixtures/</text>
+  <text x="105" y="528" text-anchor="middle" font-size="12" fill="#5A6272">seed data</text>
+  <text x="105" y="546" text-anchor="middle" font-size="12" fill="#5A6272">demo cache</text>
+  <text x="105" y="564" text-anchor="middle" font-size="12" fill="#5A6272">golden set</text>
+</svg>

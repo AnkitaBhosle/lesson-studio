@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>How index funds work · Plan</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F6F7F9;color:#1B1F27;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+a{color:#3442C9}a:hover{color:#26318F}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:10px;font-weight:600;font-size:15px;text-decoration:none;box-sizing:border-box;border:1px solid transparent;cursor:pointer;font-family:inherit}
+.btn-primary{background:#3442C9;color:#fff}.btn-primary:hover{background:#26318F;color:#fff}
+.btn-ghost{background:#fff;color:#1B1F27;border-color:#D5D9E2}.btn-ghost:hover{background:#F0F2F6;color:#1B1F27}
+.rail{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px;color:#3D4452}
+.rail:hover{background:#EEF0F4;color:#1B1F27}
+.chip{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:999px;font:inherit;font-size:14px;cursor:pointer;border:1px solid #D5D9E2;background:#fff;color:#1B1F27}
+.act{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 12px;border-radius:8px;border:1px solid #D5D9E2;background:#fff;color:#1B1F27;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.act:hover{background:#F0F2F6}
+.field{font-family:inherit;font-size:14px;line-height:1.5;padding:10px 12px;border:1px solid #3442C9;border-radius:10px;color:#1B1F27;width:100%;box-sizing:border-box;resize:vertical}
+</style>
+</helmet>
+<div style="min-height: 100vh; display: flex; flex-direction: column">
+  <header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 20px; background: #FFFFFF; border-bottom: 1px solid #E3E6EC">
+    <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap">
+      <a href="Main.dc.html" aria-label="Lesson Studio home" style="display: inline-flex"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="8" fill="#3442C9"></rect><path d="M8 9.5c2.5-1 5-1 7 .5 2-1.5 4.5-1.5 7-.5v11c-2.5-1-5-1-7 .5-2-1.5-4.5-1.5-7-.5z" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"></path><path d="M15 10v11" stroke="#fff" stroke-width="1.8"></path></svg></a>
+      <nav aria-label="Breadcrumb" style="font-size: 14px; color: #5A6272"><a href="Main.dc.html" style="color: #5A6272; text-decoration: none">Investing 101</a> <span aria-hidden="true">/</span> <span style="color: #1B1F27; font-weight: 600">How index funds work</span></nav>
+    </div>
+    <ol aria-label="Lesson stages" style="display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0; padding: 0; font-size: 14px">
+      <li><a href="Maya-Sources.dc.html" style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px; border-radius: 999px; background: #DDF3EF; color: #0B5A53; text-decoration: none; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg>Sources</a></li>
+      <li><span style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px; border-radius: 999px; background: #3442C9; color: #FFFFFF; font-weight: 600"><span style="width: 20px; height: 20px; border-radius: 50%; background: #FFFFFF; color: #3442C9; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">2</span>Plan</span></li>
+      <li><span style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px; border-radius: 999px; background: #EEF0F4; color: #5A6272"><span style="width: 20px; height: 20px; border-radius: 50%; background: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">3</span>Preview</span></li>
+      <li><span style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px; border-radius: 999px; background: #EEF0F4; color: #5A6272"><span style="width: 20px; height: 20px; border-radius: 50%; background: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">4</span>Final</span></li>
+    </ol>
+    <span style="width: 34px; height: 34px; border-radius: 50%; background: #2A9D8F; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px" aria-label="Maya">M</span>
+  </header>
+
+  <div style="display: flex; flex-wrap: wrap; flex: 1">
+    <nav aria-label="Main" style="flex: 0 0 64px; padding: 16px 10px; background: #FFFFFF; border-right: 1px solid #E3E6EC; display: flex; flex-direction: column; align-items: center; gap: 6px">
+      <a class="rail" href="Main.dc.html" aria-label="Home"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg></a>
+      <a class="rail" href="Templates.dc.html" aria-label="Templates"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1"></rect><rect x="13" y="3" width="8" height="8" rx="1"></rect><rect x="3" y="13" width="8" height="8" rx="1"></rect><rect x="13" y="13" width="8" height="8" rx="1"></rect></svg></a>
+      <a class="rail" href="Settings.dc.html" aria-label="Settings"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"></path></svg></a>
+    </nav>
+
+    <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-wrap: wrap; align-items: flex-start">
+
+      <section aria-label="Teaching plan" style="flex: 999 1 560px; min-width: 0; padding: 28px 28px 48px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+        <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px">
+          <h1 style="margin: 0; font-size: 26px; letter-spacing: -0.3px">Teaching plan</h1>
+          <span style="font-size: 14px; color: #5A6272">{{summary}}</span>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 12px 16px; background: #E8EAFB; border-radius: 12px">
+          <span style="font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: #3442C9; color: #FFFFFF">{{draftLabel}}</span>
+          <span style="flex: 1 1 360px; font-size: 14px; line-height: 1.5; color: #1B1F27">This is a draft, not a decision. Edit any part directly, or tell me what to change on the right, by typing or talking.</span>
+          <a href="Maya-Plan.dc.html" style="font-size: 14px; font-weight: 600">Earlier drafts</a>
+        </div>
+
+        <div style="background: #FFFFFF; border: 1px solid #E3E6EC; border-radius: 14px; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px">
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px">
+              <h2 style="margin: 0; font-size: 13px; font-weight: 700; color: #5A6272; text-transform: uppercase; letter-spacing: 0.6px">The story of this lesson</h2>
+              <div style="display: flex; flex-wrap: wrap; gap: 6px">
+                <button class="act" type="button" onClick="{{toggleStoryEdit}}">{{storyEditLabel}}</button>
+                <button class="act" type="button" onClick="{{toggleListen}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg>Dictate</button>
+                <button class="act" type="button" aria-expanded="{{altExpanded}}" onClick="{{toggleAlts}}">Explore angles</button>
+              </div>
+            </div>
+            <sc-if value="{{storyEditing}}" hint-placeholder-val="{{ false }}">
+              <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: #5A6272">Edit the story
+                <textarea class="field" rows="3" value="{{storyText}}" onChange="{{onStory}}"></textarea>
+              </label>
+            </sc-if>
+            <sc-if value="{{storyViewing}}" hint-placeholder-val="{{ true }}">
+              <p style="margin: 0; font-size: 16px; line-height: 1.6">{{storyText}}</p>
+            </sc-if>
+            <sc-if value="{{listening}}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; background: #FDECEA; color: #7A1F12; font-size: 14px"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: #C2410C"></span>Listening. Talk through how you'd tell it, and I'll rewrite the story and the slides to match.<button class="act" type="button" onClick="{{toggleListen}}">Stop</button></div>
+            </sc-if>
+            <sc-if value="{{altOpen}}" hint-placeholder-val="{{ false }}">
+              <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+                <sc-for list="{{alts}}" as="a" hint-placeholder-count="3">
+                  <button type="button" onClick="{{a.pick}}" style="{{a.style}}">
+                    <span style="font-size: 13px; font-weight: 700">{{a.label}}</span>
+                    <span style="font-size: 13px; line-height: 1.5; color: #3D4452">{{a.text}}</span>
+                  </button>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{storyChanged}}" hint-placeholder-val="{{ false }}">
+              <span style="font-size: 13px; color: #0B5A53; font-weight: 600">New story picked. I'll reorder and rewrite the slides to match when you approve.</span>
+            </sc-if>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <h2 style="margin: 0; font-size: 13px; font-weight: 700; color: #5A6272; text-transform: uppercase; letter-spacing: 0.6px">By the end, viewers can</h2>
+            <ul style="margin: 0; padding-left: 20px; font-size: 15px; line-height: 1.7">
+              <li>Explain what an index fund is in one sentence</li>
+              <li>Say why fees matter more than they look</li>
+              <li>Name the most common beginner mistake</li>
+            </ul>
+          </div>
+        </div>
+
+        <sc-for list="{{scenes}}" as="s" hint-placeholder-count="7">
+          <article style="background: #FFFFFF; border: 1px solid #E3E6EC; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px">
+              <div style="display: flex; align-items: center; gap: 10px">
+                <span aria-hidden="true" style="color: #8A93A5; cursor: grab"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"></circle><circle cx="15" cy="6" r="1.6"></circle><circle cx="9" cy="12" r="1.6"></circle><circle cx="15" cy="12" r="1.6"></circle><circle cx="9" cy="18" r="1.6"></circle><circle cx="15" cy="18" r="1.6"></circle></svg></span>
+                <span style="width: 28px; height: 28px; border-radius: 8px; background: #E8EAFB; color: #26318F; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px">{{s.n}}</span>
+                <h3 style="margin: 0; font-size: 16px">{{s.part}}</h3>
+                <sc-if value="{{s.changed}}" hint-placeholder-val="{{ false }}"><span style="font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 6px; background: #DDF3EF; color: #0B5A53">{{s.changedLabel}}</span></sc-if>
+              </div>
+              <span style="font-size: 13px; color: #5A6272">{{s.time}}</span>
+            </div>
+            <sc-if value="{{s.viewing}}" hint-placeholder-val="{{ true }}">
+              <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+                <div style="display: flex; flex-direction: column; gap: 4px">
+                  <span style="font-size: 12px; font-weight: 700; color: #5A6272; text-transform: uppercase; letter-spacing: 0.6px">Narrative</span>
+                  <p style="margin: 0; font-size: 15px; line-height: 1.55">{{s.said}}</p>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 4px">
+                  <span style="font-size: 12px; font-weight: 700; color: #5A6272; text-transform: uppercase; letter-spacing: 0.6px">Visual</span>
+                  <p style="margin: 0; font-size: 15px; line-height: 1.55; color: #3D4452">{{s.sees}}</p>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{s.editing}}" hint-placeholder-val="{{ false }}">
+              <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+                <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; font-weight: 700; color: #5A6272; text-transform: uppercase; letter-spacing: 0.6px">Narrative
+                  <textarea class="field" rows="4" value="{{s.said}}" onChange="{{s.onSaid}}" style="text-transform: none; letter-spacing: 0; font-weight: 400"></textarea>
+                </label>
+                <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; font-weight: 700; color: #5A6272; text-transform: uppercase; letter-spacing: 0.6px">Visual
+                  <textarea class="field" rows="4" value="{{s.sees}}" onChange="{{s.onSees}}" style="text-transform: none; letter-spacing: 0; font-weight: 400"></textarea>
+                </label>
+              </div>
+            </sc-if>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 13px">
+              <span style="color: #5A6272">From:</span>
+              <sc-for list="{{s.from}}" as="src" hint-placeholder-count="1">
+                <span style="padding: 3px 9px; border-radius: 6px; background: #EEF0F4; color: #3D4452; font-weight: 500">{{src}}</span>
+              </sc-for>
+            </div>
+            <sc-if value="{{s.flagOpen}}" hint-placeholder-val="{{ false }}">
+              <div style="background: #FEF3C7; border-radius: 10px; padding: 12px 14px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px">
+                <span style="font-size: 14px; color: #4A2C02; line-height: 1.45"><strong>Please check:</strong> this part isn't in your sources. I drafted it from general knowledge.</span>
+                <button class="btn btn-ghost" type="button" onClick="{{s.confirm}}" style="min-height: 40px; font-size: 14px">Looks right</button>
+              </div>
+            </sc-if>
+            <sc-if value="{{s.flagDone}}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: #0B5A53; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg>Checked by you</div>
+            </sc-if>
+            <sc-if value="{{s.asking}}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; flex-wrap: wrap; gap: 8px">
+                <label style="position: absolute; left: -9999px" for="ask{{s.n}}">What should change in this slide?</label>
+                <input id="ask{{s.n}}" placeholder="What should change? e.g. “shorter, and use a coffee example”" value="{{s.askText}}" onChange="{{s.onAsk}}" style="flex: 1 1 320px; min-width: 0; font-family: inherit; font-size: 14px; padding: 10px 12px; border: 1px solid #3442C9; border-radius: 10px; min-height: 44px; box-sizing: border-box">
+                <button class="btn btn-primary" type="button" onClick="{{s.applyAsk}}" style="font-size: 14px">Rewrite slide</button>
+              </div>
+            </sc-if>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px; padding-top: 4px; border-top: 1px solid #EEF0F4">
+              <button class="act" type="button" onClick="{{s.toggleEdit}}" style="margin-top: 8px">{{s.editLabel}}</button>
+              <button class="act" type="button" onClick="{{s.toggleAsk}}" style="margin-top: 8px">Ask to change</button>
+              <button class="act" type="button" style="margin-top: 8px">Remove</button>
+            </div>
+          </article>
+        </sc-for>
+
+        <button class="btn btn-ghost" type="button" style="align-self: flex-start">Add a slide</button>
+
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 14px 18px; background: #FFFFFF; border: 1px solid #E3E6EC; border-radius: 14px; font-size: 14px">
+          <span style="font-weight: 600">Follows your guidelines:</span>
+          <span style="color: #0B5A53">No individual investment advice</span><span aria-hidden="true" style="color: #C4C9D4">·</span>
+          <span style="color: #0B5A53">Every term defined on first use</span><span aria-hidden="true" style="color: #C4C9D4">·</span>
+          <span style="color: #0B5A53">Ends with a disclaimer card</span>
+        </div>
+      </section>
+
+      <aside aria-label="Assistant" style="flex: 1 1 320px; max-width: 400px; padding: 24px 20px; box-sizing: border-box; background: #FFFFFF; border-left: 1px solid #E3E6EC; align-self: stretch; display: flex; flex-direction: column; gap: 20px">
+        <h2 style="margin: 0; font-size: 15px">Assistant</h2>
+
+        <div style="border: 1.5px solid #3442C9; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 10px">
+          <label for="change" style="font-size: 14px; font-weight: 700">Tell me what to change</label>
+          <textarea id="change" rows="3" placeholder="e.g. “Make the hook punchier and add an example about fees”" value="{{ask}}" onChange="{{onAsk}}" style="font-family: inherit; font-size: 14px; line-height: 1.5; padding: 10px 12px; border: 1px solid #D5D9E2; border-radius: 10px; resize: vertical; color: #1B1F27"></textarea>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px">
+            <sc-for list="{{suggestions}}" as="g" hint-placeholder-count="3">
+              <button class="chip" type="button" onClick="{{g.use}}" style="min-height: 34px; font-size: 13px">{{g.text}}</button>
+            </sc-for>
+          </div>
+          <div style="display: flex; gap: 8px">
+            <button class="btn btn-ghost" type="button" onClick="{{toggleListen}}" aria-label="Dictate your changes" style="padding: 0 14px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg></button>
+            <button class="btn btn-primary" type="button" onClick="{{revise}}" style="flex: 1">Revise the plan</button>
+          </div>
+          <sc-if value="{{revised}}" hint-placeholder-val="{{ false }}">
+            <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #0B5A53">{{revisedNote}}</p>
+          </sc-if>
+        </div>
+
+        <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #3D4452">A few quick questions. I've picked what I'd guess; change any that are wrong.</p>
+        <sc-for list="{{questions}}" as="q" hint-placeholder-count="3">
+          <fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px">
+            <legend style="font-size: 14px; font-weight: 600; padding: 0; margin-bottom: 8px">{{q.label}}</legend>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px">
+              <sc-for list="{{q.options}}" as="o" hint-placeholder-count="3">
+                <button class="chip" type="button" aria-pressed="{{o.pressed}}" onClick="{{o.pick}}" style="{{o.style}}">{{o.text}}</button>
+              </sc-for>
+            </div>
+          </fieldset>
+        </sc-for>
+        <div style="background: #F6F7F9; border-radius: 12px; padding: 12px 14px; font-size: 14px; line-height: 1.5; color: #3D4452"><strong style="color: #1B1F27">I assumed</strong> this ends with an invite to your Investing 101 course. <a href="Maya-Plan.dc.html">Change</a></div>
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <a class="btn btn-primary" href="Maya-Preview.dc.html">Approve plan and make a preview</a>
+          <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #5A6272">Nothing is made until you approve. You can still change anything in the preview.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      answers: { who: 0, len: 1, tone: 0 }, checked: false,
+      story: 0, storyText: null, storyEditing: false, altOpen: false, listening: false, storyChanged: false,
+      editing: {}, asking: {}, askText: {}, rewrites: {}, overrides: {},
+      ask: '', draft: 1, revised: false
+    };
+  }
+  renderVals() {
+    const st = this.state;
+    const qs = [
+      { key: 'who', label: "Who's watching?", options: ['Total beginners', 'Know some basics', 'Already investing'] },
+      { key: 'len', label: 'How long?', options: ['About 90 seconds', '2–3 minutes', 'About 5 minutes'] },
+      { key: 'tone', label: 'What tone?', options: ['Warm and encouraging', 'Straight to the point', 'Playful'] }
+    ];
+    const on = 'background: #E8EAFB; border-color: #3442C9; color: #26318F; font-weight: 600';
+    const off = 'background: #FFFFFF; border-color: #D5D9E2; color: #1B1F27';
+    const questions = qs.map((q) => ({
+      label: q.label,
+      options: q.options.map((text, i) => {
+        const sel = st.answers[q.key] === i;
+        return { text, pressed: sel ? 'true' : 'false', style: sel ? on : off, pick: () => this.setState({ answers: { ...st.answers, [q.key]: i } }) };
+      })
+    }));
+    const altDefs = [
+      { label: 'Flip the instinct', text: 'Start with the instinct to pick winners, then flip it: you can own the whole haystack instead. Show why low costs and staying put do the heavy lifting, and end with a clear next step into your course.' },
+      { label: 'Start with your story', text: 'Open with your first investment: one purchase, hundreds of companies. Then explain why that works, why fees matter, and why staying put is the hard part.' },
+      { label: 'Start with a question', text: 'Open with a question: what if one small purchase made you part-owner of the biggest companies? Answer it step by step, then name the one mistake that undoes it.' }
+    ];
+    const storyText = st.storyText ?? altDefs[st.story].text;
+    const alts = altDefs.map((a, i) => ({
+      label: i === st.story ? a.label + ' (current)' : a.label,
+      text: a.text,
+      style: 'display: flex; flex-direction: column; gap: 6px; text-align: left; padding: 12px; border-radius: 12px; cursor: pointer; font-family: inherit; min-height: 44px; ' + (i === st.story ? 'border: 2px solid #3442C9; background: #F5F6FE' : 'border: 1px solid #D5D9E2; background: #FFFFFF'),
+      pick: () => this.setState({ story: i, storyText: null, altOpen: false, storyChanged: i !== 0 })
+    }));
+    const lens = ['5 slides · about 1 min 30 sec', '7 slides · about 2 min 35 sec', '9 slides · about 5 min'];
+    const base = [
+      { n: 1, part: 'Hook', time: '0:00–0:15', said: 'Most people think investing means finding the next big stock. What if the smarter move is to stop hunting for the needle and buy the whole haystack?', sees: 'A haystack with one glinting needle. The view pulls back to reveal the whole field.', from: ['Voice memo, Oct 24'] },
+      { n: 2, part: 'What an index fund is', time: '0:15–0:40', said: 'An index is just a list, like the biggest companies in a market. An index fund buys everything on the list, so you own a small slice of all of them.', sees: 'A diagram: company tiles flowing into one basket.', from: ['Investor.gov', 'Your outline'] },
+      { n: 3, part: 'Why low fees matter', time: '0:40–1:10', said: 'Nobody is paid to pick stocks, so index funds usually cost less to run. Small yearly costs add up over decades.', sees: 'Two growth lines that start together and slowly drift apart.', from: ['Investor.gov', 'Your outline'], draft2: 'Picture two friends who invest the same amount. One pays a little more in yearly fees. Thirty years later, that small difference is a big gap.' },
+      { n: 4, part: 'What an expense ratio is', time: '1:10–1:30', said: 'That yearly cost has a name: the expense ratio. It is a percentage of what you have invested, taken out each year.', sees: 'A receipt with one highlighted line: expense ratio.', from: ['General knowledge'], flag: true },
+      { n: 5, part: 'A real example', time: '1:30–1:55', said: 'When I bought my first index fund, one purchase made me a part-owner of hundreds of companies.', sees: 'A phone screen where one purchase splits into many small tiles.', from: ['Voice memo, Oct 24'] },
+      { n: 6, part: 'The common mistake', time: '1:55–2:15', said: 'The most common mistake? Selling when the market drops. Index investing works because you stay in for the long run.', sees: 'A bumpy line that still climbs, with a “hold on” marker at the dip.', from: ['Your outline'], draft2: 'The biggest mistake? Panicking when the market drops. The people who do well are usually the ones who did nothing.' },
+      { n: 7, part: 'Recap and next step', time: '2:15–2:35', said: 'Buy the haystack, keep costs low, stay in. My Investing 101 course walks you through your first purchase.', sees: 'Your logo, a three-point recap, then the disclaimer card: education, not individual investment advice.', from: ['Your outline'] }
+    ];
+    const scenes = base.map((s) => {
+      const ov = st.overrides[s.n] || {};
+      const fromDraft = st.revised && s.draft2;
+      const said = ov.said ?? (fromDraft ? s.draft2 : s.said);
+      const sees = ov.sees ?? s.sees;
+      const editing = !!st.editing[s.n];
+      const rewritten = st.rewrites[s.n];
+      return {
+        n: s.n, part: s.part, time: s.time, from: s.from, said, sees,
+        editing, viewing: !editing, editLabel: editing ? 'Done editing' : 'Edit',
+        changed: !!(rewritten || fromDraft || ov.said || ov.sees),
+        changedLabel: rewritten ? 'Rewritten from your note' : (fromDraft ? 'Changed in draft ' + st.draft : 'Edited by you'),
+        flagOpen: !!s.flag && !st.checked, flagDone: !!s.flag && st.checked,
+        confirm: () => this.setState({ checked: true }),
+        onSaid: (e) => this.setState({ overrides: { ...st.overrides, [s.n]: { ...ov, said: e.target.value } } }),
+        onSees: (e) => this.setState({ overrides: { ...st.overrides, [s.n]: { ...ov, sees: e.target.value } } }),
+        toggleEdit: () => this.setState({ editing: { ...st.editing, [s.n]: !editing } }),
+        asking: !!st.asking[s.n],
+        askText: st.askText[s.n] || '',
+        onAsk: (e) => this.setState({ askText: { ...st.askText, [s.n]: e.target.value } }),
+        toggleAsk: () => this.setState({ asking: { ...st.asking, [s.n]: !st.asking[s.n] } }),
+        applyAsk: () => this.setState({ rewrites: { ...st.rewrites, [s.n]: true }, asking: { ...st.asking, [s.n]: false } })
+      };
+    });
+    const suggestions = ['Make it shorter', 'Add an example about fees', 'Punchier hook'].map((text) => ({ text, use: () => this.setState({ ask: st.ask ? st.ask + '. ' + text : text }) }));
+    return {
+      questions, scenes, alts, suggestions,
+      summary: lens[st.answers.len],
+      draftLabel: 'Draft ' + st.draft,
+      storyText, storyEditing: st.storyEditing, storyViewing: !st.storyEditing,
+      storyEditLabel: st.storyEditing ? 'Done' : 'Edit',
+      toggleStoryEdit: () => this.setState({ storyEditing: !st.storyEditing, storyText: storyText }),
+      onStory: (e) => this.setState({ storyText: e.target.value }),
+      altOpen: st.altOpen, altExpanded: st.altOpen ? 'true' : 'false',
+      toggleAlts: () => this.setState({ altOpen: !st.altOpen }),
+      storyChanged: st.storyChanged,
+      listening: st.listening,
+      toggleListen: () => this.setState({ listening: !st.listening }),
+      ask: st.ask,
+      onAsk: (e) => this.setState({ ask: e.target.value }),
+      revise: () => this.setState({ revised: true, draft: st.draft + 1, ask: '' }),
+      revised: st.revised,
+      revisedNote: 'Draft ' + st.draft + ' is ready. I changed slides 3 and 6 and marked them. Your earlier draft is saved.'
+    };
+  }
+}
+</script>
+</body>
+</html>

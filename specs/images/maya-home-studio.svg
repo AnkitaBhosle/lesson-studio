@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <!-- wall and floor -->
+  <rect width="800" height="450" fill="#FBF3EC"/>
+  <rect y="330" width="800" height="120" fill="#E9D8C8"/>
+  <!-- window -->
+  <rect x="70" y="50" width="190" height="170" rx="6" fill="#DCEFF0" stroke="#C9B8A6" stroke-width="8"/>
+  <line x1="165" y1="50" x2="165" y2="220" stroke="#C9B8A6" stroke-width="6"/>
+  <line x1="70" y1="135" x2="260" y2="135" stroke="#C9B8A6" stroke-width="6"/>
+  <circle cx="215" cy="90" r="18" fill="#FFE3B8"/>
+  <!-- shelf with books and plant -->
+  <rect x="520" y="110" width="220" height="10" rx="3" fill="#B98F6B"/>
+  <rect x="540" y="62" width="16" height="48" fill="#2A9D8F"/>
+  <rect x="558" y="70" width="14" height="40" fill="#F4A261"/>
+  <rect x="574" y="58" width="18" height="52" fill="#E76F51"/>
+  <rect x="594" y="74" width="12" height="36" fill="#264653"/>
+  <rect x="680" y="85" width="34" height="25" rx="4" fill="#E76F51"/>
+  <path d="M697 85 C 680 60, 670 55, 672 40 C 690 50, 695 62, 697 85 Z" fill="#3F8F6B"/>
+  <path d="M697 85 C 712 58, 725 52, 728 38 C 708 46, 700 62, 697 85 Z" fill="#57A57E"/>
+  <!-- framed course poster -->
+  <rect x="330" y="60" width="140" height="95" rx="6" fill="#ffffff" stroke="#2A9D8F" stroke-width="4"/>
+  <text x="400" y="95" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#264653" text-anchor="middle">INVESTING</text>
+  <text x="400" y="115" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#E76F51" text-anchor="middle">101</text>
+  <polyline points="350,140 375,130 395,135 420,118 450,108" fill="none" stroke="#2A9D8F" stroke-width="3"/>
+  <!-- ring light on stand -->
+  <line x1="120" y1="250" x2="120" y2="400" stroke="#8C8C8C" stroke-width="5"/>
+  <line x1="120" y1="400" x2="95" y2="425" stroke="#8C8C8C" stroke-width="4"/>
+  <line x1="120" y1="400" x2="145" y2="425" stroke="#8C8C8C" stroke-width="4"/>
+  <circle cx="120" cy="230" r="48" fill="none" stroke="#FFF7E0" stroke-width="16"/>
+  <circle cx="120" cy="230" r="48" fill="none" stroke="#E8DCC0" stroke-width="2"/>
+  <!-- desk -->
+  <rect x="210" y="320" width="520" height="18" rx="4" fill="#B98F6B"/>
+  <rect x="230" y="338" width="14" height="95" fill="#9C7656"/>
+  <rect x="696" y="338" width="14" height="95" fill="#9C7656"/>
+  <!-- Maya: chair back -->
+  <rect x="395" y="250" width="110" height="90" rx="18" fill="#264653"/>
+  <!-- Maya: body (sweater) -->
+  <path d="M385 330 C 385 270, 415 245, 450 245 C 485 245, 515 270, 515 330 Z" fill="#E76F51"/>
+  <!-- neck and head -->
+  <rect x="440" y="222" width="20" height="28" rx="8" fill="#B5764E"/>
+  <ellipse cx="450" cy="200" rx="34" ry="38" fill="#C48558"/>
+  <!-- hair -->
+  <path d="M414 205 C 405 150, 495 145, 488 205 C 490 235, 500 255, 492 270 C 478 250, 486 215, 476 185 C 455 175, 430 185, 424 200 C 420 230, 424 255, 410 270 C 402 255, 410 230, 414 205 Z" fill="#2B1B14"/>
+  <!-- face details -->
+  <circle cx="438" cy="203" r="3" fill="#2B1B14"/>
+  <circle cx="462" cy="203" r="3" fill="#2B1B14"/>
+  <path d="M440 220 Q 450 228 460 220" fill="none" stroke="#7A3E2A" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- arm on desk -->
+  <path d="M395 300 C 380 315, 385 322, 410 322 L 470 322" fill="none" stroke="#E76F51" stroke-width="22" stroke-linecap="round"/>
+  <!-- laptop (back, facing viewer) -->
+  <path d="M520 240 L 640 240 L 650 320 L 510 320 Z" fill="#D4D8DC"/>
+  <rect x="505" y="316" width="150" height="6" rx="2" fill="#A9AFB5"/>
+  <circle cx="580" cy="280" r="10" fill="#F4F6F8"/>
+  <!-- microphone on boom arm -->
+  <line x1="300" y1="320" x2="320" y2="250" stroke="#4A4A4A" stroke-width="5"/>
+  <line x1="320" y1="250" x2="378" y2="232" stroke="#4A4A4A" stroke-width="5"/>
+  <rect x="368" y="214" width="22" height="40" rx="10" fill="#333" transform="rotate(-20 379 234)"/>
+  <!-- notebook with sticky notes -->
+  <rect x="250" y="300" width="70" height="20" rx="3" fill="#ffffff" stroke="#C9B8A6"/>
+  <rect x="660" y="282" width="34" height="34" fill="#FFE27A" transform="rotate(6 677 299)"/>
+  <rect x="690" y="290" width="30" height="28" fill="#9ED9CF" transform="rotate(-8 705 304)"/>
+  <!-- coffee mug -->
+  <rect x="610" y="300" width="0" height="0"/>
+  <!-- caption-ish floor rug -->
+  <ellipse cx="460" cy="420" rx="230" ry="18" fill="#DCC6B0"/>
+</svg>

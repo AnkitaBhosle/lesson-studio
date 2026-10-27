@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>How index funds work · Final</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Nunito:wght@800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F6F7F9;color:#1B1F27;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+a{color:#3442C9}a:hover{color:#26318F}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:10px;font-weight:600;font-size:15px;text-decoration:none;box-sizing:border-box;border:1px solid transparent;cursor:pointer;font-family:inherit}
+.btn-primary{background:#3442C9;color:#fff}.btn-primary:hover{background:#26318F;color:#fff}
+.btn-ghost{background:#fff;color:#1B1F27;border-color:#D5D9E2}.btn-ghost:hover{background:#F0F2F6;color:#1B1F27}
+.rail{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px;color:#3D4452}
+.rail:hover{background:#EEF0F4;color:#1B1F27}
+.next{display:flex;flex-direction:column;gap:4px;padding:16px 18px;border-radius:12px;border:1px solid #E3E6EC;background:#fff;text-decoration:none;color:#1B1F27}
+.next:hover{border-color:#3442C9;color:#1B1F27}
+</style>
+</helmet>
+<div style="min-height: 100vh; display: flex; flex-direction: column">
+  <header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 20px; background: #FFFFFF; border-bottom: 1px solid #E3E6EC">
+    <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap">
+      <a href="Main.dc.html" aria-label="Lesson Studio home" style="display: inline-flex"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="8" fill="#3442C9"></rect><path d="M8 9.5c2.5-1 5-1 7 .5 2-1.5 4.5-1.5 7-.5v11c-2.5-1-5-1-7 .5-2-1.5-4.5-1.5-7-.5z" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"></path><path d="M15 10v11" stroke="#fff" stroke-width="1.8"></path></svg></a>
+      <nav aria-label="Breadcrumb" style="font-size: 14px; color: #5A6272"><a href="Main.dc.html" style="color: #5A6272; text-decoration: none">Investing 101</a> <span aria-hidden="true">/</span> <span style="color: #1B1F27; font-weight: 600">How index funds work</span></nav>
+    </div>
+    <ol aria-label="Lesson stages" style="display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0; padding: 0; font-size: 14px">
+      <li><a href="Maya-Sources.dc.html" style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px; border-radius: 999px; background: #DDF3EF; color: #0B5A53; text-decoration: none; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg>Sources</a></li>
+      <li><a href="Maya-Plan.dc.html" style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px; border-radius: 999px; background: #DDF3EF; color: #0B5A53; text-decoration: none; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg>Plan</a></li>
+      <li><a href="Maya-Preview.dc.html" style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px; border-radius: 999px; background: #DDF3EF; color: #0B5A53; text-decoration: none; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg>Preview</a></li>
+      <li><span style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px; border-radius: 999px; background: #3442C9; color: #FFFFFF; font-weight: 600"><span style="width: 20px; height: 20px; border-radius: 50%; background: #FFFFFF; color: #3442C9; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">4</span>Final</span></li>
+    </ol>
+    <span style="width: 34px; height: 34px; border-radius: 50%; background: #2A9D8F; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px" aria-label="Maya">M</span>
+  </header>
+
+  <div style="display: flex; flex-wrap: wrap; flex: 1">
+    <nav aria-label="Main" style="flex: 0 0 64px; padding: 16px 10px; background: #FFFFFF; border-right: 1px solid #E3E6EC; display: flex; flex-direction: column; align-items: center; gap: 6px">
+      <a class="rail" href="Main.dc.html" aria-label="Home"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg></a>
+      <a class="rail" href="Templates.dc.html" aria-label="Templates"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1"></rect><rect x="13" y="3" width="8" height="8" rx="1"></rect><rect x="3" y="13" width="8" height="8" rx="1"></rect><rect x="13" y="13" width="8" height="8" rx="1"></rect></svg></a>
+      <a class="rail" href="Settings.dc.html" aria-label="Settings"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"></path></svg></a>
+    </nav>
+
+    <main style="flex: 999 1 560px; min-width: 0; padding: 32px 32px 56px; box-sizing: border-box">
+      <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start">
+        <section aria-label="Your video" style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+          <div style="display: flex; align-items: center; gap: 10px">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0F766E" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M7 12l3.5 3.5L17 9"></path></svg>
+            <h1 style="margin: 0; font-size: 28px; letter-spacing: -0.3px">Your video is ready</h1>
+          </div>
+          <div role="img" aria-label="Video thumbnail: Stop hunting for the needle, with a haystack illustration" style="aspect-ratio: 16 / 9; border-radius: 16px; background: #F7E7CE; display: flex; align-items: center; justify-content: center; gap: 28px; padding: 32px; box-sizing: border-box; position: relative; font-family: 'Nunito', sans-serif">
+            <svg width="220" height="130" viewBox="0 0 260 150" aria-hidden="true"><path d="M30 140 Q130 -10 230 140 Z" fill="#E9C46A"></path><path d="M60 140 Q130 30 200 140" fill="none" stroke="#D4A84B" stroke-width="3"></path><line x1="150" y1="80" x2="178" y2="62" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"></line><circle cx="180" cy="61" r="4" fill="#FFFFFF"></circle></svg>
+            <div style="font-size: 38px; font-weight: 800; color: #264653; line-height: 1.1; max-width: 340px">Stop hunting for the needle.</div>
+            <span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 72px; height: 72px; border-radius: 50%; background: rgba(38,70,83,0.9); display: flex; align-items: center; justify-content: center"><svg width="28" height="28" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><path d="M8 5l11 7-11 7z"></path></svg></span>
+            <span style="position: absolute; right: 14px; bottom: 12px; padding: 4px 10px; border-radius: 6px; background: rgba(20,32,38,0.85); color: #FFFFFF; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 600">2:35</span>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px">
+            <a class="btn btn-primary" href="Maya-Final.dc.html">Download video</a>
+            <a class="btn btn-ghost" href="Maya-Final.dc.html">Add to Investing 101</a>
+            <a class="btn btn-ghost" href="Settings.dc.html">Post to YouTube</a>
+          </div>
+
+          <div style="background: #FFFFFF; border: 1px solid #E3E6EC; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px">
+            <div style="display: flex; flex-direction: column; gap: 4px">
+              <h2 style="margin: 0; font-size: 16px">Sources card at the end of the video</h2>
+              <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #5A6272">You choose what viewers see. Private notes are never shown unless you turn them on.</p>
+            </div>
+            <sc-for list="{{sources}}" as="s" hint-placeholder-count="4">
+              <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 0; border-top: 1px solid #EEF0F4">
+                <span style="display: flex; flex-direction: column; gap: 2px">
+                  <span style="font-size: 14px; font-weight: 600">{{s.name}}</span>
+                  <span style="font-size: 13px; color: {{s.color}}">{{s.label}}</span>
+                </span>
+                <button type="button" role="switch" aria-checked="{{s.checked}}" aria-label="Show {{s.name}} on the sources card" onClick="{{s.toggle}}" style="width: 44px; height: 26px; border-radius: 999px; border: 0; padding: 0; position: relative; cursor: pointer; background: {{s.track}}"><span style="position: absolute; top: 3px; left: {{s.knob}}; width: 20px; height: 20px; border-radius: 50%; background: #FFFFFF"></span></button>
+              </div>
+            </sc-for>
+            <label style="display: flex; align-items: center; gap: 10px; min-height: 44px; font-size: 14px; border-top: 1px solid #EEF0F4; padding-top: 6px"><input type="checkbox" checked="{{noCard}}" onChange="{{toggleCard}}" style="width: 18px; height: 18px">Leave the sources card out of this video</label>
+          </div>
+        </section>
+
+        <aside aria-label="Files and next steps" style="flex: 1 1 300px; max-width: 380px; display: flex; flex-direction: column; gap: 18px">
+          <div style="background: #FFFFFF; border: 1px solid #E3E6EC; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 4px">
+            <h2 style="margin: 0 0 6px; font-size: 16px">Lesson components</h2>
+            <a href="Maya-Final.dc.html" style="display: flex; justify-content: space-between; align-items: center; min-height: 44px; text-decoration: none; color: #1B1F27; border-bottom: 1px solid #EEF0F4"><span style="font-weight: 600">Video</span><span style="font-size: 13px; color: #3442C9; font-weight: 600">Download</span></a>
+            <a href="Maya-Final.dc.html" style="display: flex; justify-content: space-between; align-items: center; min-height: 44px; text-decoration: none; color: #1B1F27; border-bottom: 1px solid #EEF0F4"><span style="font-weight: 600">Captions</span><span style="font-size: 13px; color: #3442C9; font-weight: 600">Download</span></a>
+            <a href="Maya-Final.dc.html" style="display: flex; justify-content: space-between; align-items: center; min-height: 44px; text-decoration: none; color: #1B1F27; border-bottom: 1px solid #EEF0F4"><span style="font-weight: 600">Thumbnail</span><span style="font-size: 13px; color: #3442C9; font-weight: 600">Download</span></a>
+            <a href="Maya-Plan.dc.html" style="display: flex; justify-content: space-between; align-items: center; min-height: 44px; text-decoration: none; color: #1B1F27"><span style="font-weight: 600">Script and plan</span><span style="font-size: 13px; color: #3442C9; font-weight: 600">Open</span></a>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <h2 style="margin: 0; font-size: 16px">Make more from this lesson</h2>
+            <a class="next" href="Main.dc.html"><span style="font-weight: 700">A 45-second cut for Instagram</span><span style="font-size: 14px; color: #5A6272">Same sources and voice, vertical, one idea.</span></a>
+            <a class="next" href="Main.dc.html"><span style="font-weight: 700">A one-page study sheet</span><span style="font-size: 14px; color: #5A6272">For students in your course to keep.</span></a>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { on: { outline: false, memo: false, gov: true, gk: false }, noCard: false };
+  }
+  renderVals() {
+    const on = this.state.on;
+    const defs = [
+      ['gov', 'Investor.gov guide to index funds', 'Web page'],
+      ['gk', 'Expense ratios', 'General knowledge, checked by you'],
+      ['outline', 'Your outline: Index funds', 'Private note'],
+      ['memo', 'Your voice memo, Oct 24', 'Private note']
+    ];
+    const sources = defs.map(([k, name, kind]) => ({
+      name,
+      checked: on[k] ? 'true' : 'false',
+      track: on[k] ? '#3442C9' : '#C4C9D4',
+      knob: on[k] ? '21px' : '3px',
+      label: on[k] ? kind + ' · shown to viewers' : kind + ' · not shown',
+      color: on[k] ? '#26318F' : '#5A6272',
+      toggle: () => this.setState({ on: { ...on, [k]: !on[k] } })
+    }));
+    return { sources, noCard: this.state.noCard, toggleCard: () => this.setState({ noCard: !this.state.noCard }) };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Lesson Studio · Settings</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F6F7F9;color:#1B1F27;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+a{color:#3442C9}a:hover{color:#26318F}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:10px;font-weight:600;font-size:15px;text-decoration:none;box-sizing:border-box;border:1px solid transparent;cursor:pointer;font-family:inherit}
+.btn-primary{background:#3442C9;color:#fff}.btn-primary:hover{background:#26318F;color:#fff}
+.btn-ghost{background:#fff;color:#1B1F27;border-color:#D5D9E2}.btn-ghost:hover{background:#F0F2F6;color:#1B1F27}
+.lnk{min-height:44px;padding:0 10px;border:0;background:transparent;color:#3442C9;font:inherit;font-size:14px;font-weight:600;cursor:pointer;border-radius:8px}
+.lnk:hover{background:#EEF0F4}
+.navlink{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 12px;border-radius:10px;color:#3D4452;text-decoration:none;font-weight:500;font-size:15px}
+.navlink:hover{background:#EEF0F4;color:#1B1F27}
+.sw{width:52px;height:30px;border-radius:999px;border:0;cursor:pointer;position:relative;padding:0}
+</style>
+</helmet>
+<div style="min-height: 100vh; display: flex; flex-direction: column">
+  <header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 24px; background: #FFFFFF; border-bottom: 1px solid #E3E6EC">
+    <div style="display: flex; align-items: center; gap: 10px">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="8" fill="#3442C9"></rect><path d="M8 9.5c2.5-1 5-1 7 .5 2-1.5 4.5-1.5 7-.5v11c-2.5-1-5-1-7 .5-2-1.5-4.5-1.5-7-.5z" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"></path><path d="M15 10v11" stroke="#fff" stroke-width="1.8"></path></svg>
+      <span style="font-weight: 700; font-size: 18px">Lesson Studio</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px">
+      <span style="width: 34px; height: 34px; border-radius: 50%; background: #2A9D8F; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px">M</span>
+      <span style="font-size: 14px; font-weight: 600">Maya</span>
+    </div>
+  </header>
+  <div style="display: flex; flex-wrap: wrap; flex: 1">
+    <nav aria-label="Main" style="flex: 1 1 200px; max-width: 232px; padding: 20px 12px; background: #FFFFFF; border-right: 1px solid #E3E6EC; display: flex; flex-direction: column; gap: 4px">
+      <a class="navlink" href="Main.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>Home</a>
+      <a class="navlink" href="Main.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 5h7v14H4zM13 5h7v14h-7z"></path></svg>Investing 101</a>
+      <a class="navlink" href="Templates.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1"></rect><rect x="13" y="3" width="8" height="8" rx="1"></rect><rect x="3" y="13" width="8" height="8" rx="1"></rect><rect x="13" y="13" width="8" height="8" rx="1"></rect></svg>Templates</a>
+      <a class="navlink" href="Settings.dc.html" style="background: #E8EAFB; color: #26318F; font-weight: 600"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"></path></svg>Settings</a>
+    </nav>
+    <main style="flex: 999 1 560px; min-width: 0; padding: 36px 32px 64px; box-sizing: border-box">
+      <div style="max-width: 880px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px">
+        <h1 style="margin: 0; font-size: 32px; letter-spacing: -0.4px">Settings</h1>
+
+        <section aria-labelledby="prefs" style="background: #FFFFFF; border: 1px solid #E3E6EC; border-radius: 14px; padding: 22px 24px; display: flex; flex-direction: column; gap: 14px">
+          <div style="display: flex; flex-direction: column; gap: 4px">
+            <h2 id="prefs" style="margin: 0; font-size: 20px">Preferences</h2>
+            <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #5A6272">These apply to every course. I learn them from your edits and answers; change or remove anything, and what you set always wins over what I learn. You can also set preferences on the course level, overriding the general preferences.</p>
+          </div>
+          <sc-for list="{{prefs}}" as="p" hint-placeholder-count="5">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 0; border-top: 1px solid #EEF0F4">
+              <div style="display: flex; flex-direction: column; gap: 4px; flex: 1 1 360px; min-width: 0">
+                <sc-if value="{{p.editing}}" hint-placeholder-val="{{ false }}">
+                  <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: #5A6272">Edit preference
+                    <input value="{{p.draft}}" onChange="{{p.onDraft}}" style="font-family: inherit; font-size: 15px; padding: 10px 12px; border: 1px solid #3442C9; border-radius: 10px; color: #1B1F27; min-height: 44px; box-sizing: border-box">
+                  </label>
+                </sc-if>
+                <sc-if value="{{p.viewing}}" hint-placeholder-val="{{ true }}">
+                  <span style="font-size: 15px; font-weight: 600">{{p.text}}</span>
+                </sc-if>
+                <span style="font-size: 13px; color: {{p.originColor}}">{{p.origin}}</span>
+              </div>
+              <div style="display: flex; gap: 4px">
+                <sc-if value="{{p.editing}}" hint-placeholder-val="{{ false }}"><button class="lnk" type="button" onClick="{{p.save}}">Save</button></sc-if>
+                <sc-if value="{{p.viewing}}" hint-placeholder-val="{{ true }}"><button class="lnk" type="button" onClick="{{p.edit}}">Edit</button></sc-if>
+                <button class="lnk" type="button" onClick="{{p.remove}}" style="color: #9A3412">Remove</button>
+              </div>
+            </div>
+          </sc-for>
+          <sc-if value="{{hasRemoved}}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 14px; color: #3D4452; background: #F6F7F9; border-radius: 10px; padding: 8px 12px">Removed. I won't learn it again. <button class="lnk" type="button" onClick="{{undo}}">Undo</button></div>
+          </sc-if>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px; padding-top: 8px; border-top: 1px solid #EEF0F4">
+            <label for="newpref" style="position: absolute; left: -9999px">Add a preference</label>
+            <input id="newpref" placeholder="Add a preference, e.g. “Use US spelling”" value="{{newText}}" onChange="{{onNew}}" style="flex: 1 1 320px; min-width: 0; font-family: inherit; font-size: 15px; padding: 10px 12px; border: 1px solid #D5D9E2; border-radius: 10px; min-height: 44px; box-sizing: border-box">
+            <button class="btn btn-ghost" type="button" onClick="{{add}}">Add</button>
+          </div>
+        </section>
+
+        <section aria-labelledby="ints" style="background: #FFFFFF; border: 1px solid #E3E6EC; border-radius: 14px; padding: 22px 24px; display: flex; flex-direction: column; gap: 14px">
+          <div style="display: flex; flex-direction: column; gap: 4px">
+            <h2 id="ints" style="margin: 0; font-size: 20px">Connected apps</h2>
+            <p style="margin: 0; font-size: 14px; color: #5A6272">Bring in sources and send finished lessons where your students are.</p>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+            <sc-for list="{{apps}}" as="a" hint-placeholder-count="8">
+              <div style="border: 1px solid #E3E6EC; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start">
+                <span aria-hidden="true" style="width: 36px; height: 36px; border-radius: 9px; background: {{a.bg}}; color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px">{{a.initial}}</span>
+                <span style="font-size: 14px; font-weight: 600">{{a.name}}</span>
+                <button class="lnk" type="button" onClick="{{a.toggle}}" style="padding: 0; min-height: 32px">{{a.cta}}</button>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+
+        <section aria-labelledby="sched" style="background: #FFFFFF; border: 1px solid #E3E6EC; border-radius: 14px; padding: 22px 24px; display: flex; flex-direction: column; gap: 14px">
+          <div style="display: flex; flex-direction: column; gap: 4px">
+            <h2 id="sched" style="margin: 0; font-size: 20px">Scheduled tasks</h2>
+            <p style="margin: 0; font-size: 14px; color: #5A6272">Work I do on a schedule. You approve every plan before anything is made.</p>
+          </div>
+          <sc-for list="{{tasks}}" as="t" hint-placeholder-count="2">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; border-top: 1px solid #EEF0F4">
+              <div style="display: flex; flex-direction: column; gap: 2px">
+                <span style="font-size: 15px; font-weight: 600">{{t.name}}</span>
+                <span style="font-size: 13px; color: #5A6272">{{t.when}}</span>
+              </div>
+              <button class="sw" type="button" role="switch" aria-checked="{{t.checked}}" aria-label="{{t.name}}" onClick="{{t.toggle}}" style="background: {{t.track}}"><span style="position: absolute; top: 3px; left: {{t.knob}}; width: 24px; height: 24px; border-radius: 50%; background: #FFFFFF"></span></button>
+            </div>
+          </sc-for>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1300}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      prefs: [
+        { id: 1, text: 'Tone: warm and encouraging', origin: 'learned', why: 'Learned from your answers in 4 lessons' },
+        { id: 2, text: 'Keep bullets under 8 words', origin: 'learned', why: 'Learned: you shortened bullets in 3 lessons' },
+        { id: 3, text: 'Prefer real photos over illustrations', origin: 'learned', why: 'Learned: you swapped illustrations for photos in 2 lessons' },
+        { id: 4, text: 'Define every term the first time it appears', origin: 'teacher', why: 'Set by you' },
+        { id: 5, text: 'Citations: short, in the footer', origin: 'teacher', why: 'Set by you' }
+      ],
+      editing: null, draft: '', removed: null, newText: '',
+      connected: { 'Google Drive': true, YouTube: true },
+      tasks: [true, false]
+    };
+  }
+  renderVals() {
+    const s = this.state;
+    const prefs = s.prefs.map((p, i) => {
+      const editing = s.editing === p.id;
+      return {
+        text: p.text, editing, viewing: !editing,
+        draft: s.draft,
+        origin: p.why,
+        originColor: p.origin === 'teacher' ? '#26318F' : '#5A6272',
+        onDraft: (e) => this.setState({ draft: e.target.value }),
+        edit: () => this.setState({ editing: p.id, draft: p.text }),
+        save: () => this.setState({ editing: null, prefs: s.prefs.map((q) => (q.id === p.id ? { ...q, text: s.draft, origin: 'teacher', why: 'Set by you' } : q)) }),
+        remove: () => this.setState({ removed: { item: p, index: i }, prefs: s.prefs.filter((q) => q.id !== p.id), editing: null })
+      };
+    });
+    const appDefs = [['Google Drive', '#1E8E3E'], ['YouTube', '#C4302B'], ['Canvas', '#B5341F'], ['Google Classroom', '#137333'], ['Kajabi', '#2F55D4'], ['Teachable', '#1F2937'], ['Dropbox', '#0061D5'], ['Notion', '#2B2B2B']];
+    const apps = appDefs.map(([name, bg]) => {
+      const on = !!s.connected[name];
+      return { name, bg, initial: name[0], cta: on ? 'Connected · Manage' : 'Connect', toggle: () => this.setState({ connected: { ...s.connected, [name]: !on } }) };
+    });
+    const taskDefs = [
+      { name: "Draft next week's lesson", when: 'Every Friday at 9am · Investing 101' },
+      { name: 'Weekly recap video', when: 'Every Sunday at 6pm · Investing 101' }
+    ];
+    const tasks = taskDefs.map((t, i) => {
+      const on = s.tasks[i];
+      return { ...t, checked: on ? 'true' : 'false', track: on ? '#3442C9' : '#C4C9D4', knob: on ? '25px' : '3px', toggle: () => this.setState({ tasks: s.tasks.map((v, j) => (j === i ? !v : v)) }) };
+    });
+    const courseDefs = [
+      { name: 'Investing 101', prefs: [
+        { text: 'End every video with an invite to the full course', note: 'Set by you · only for this course' },
+        { text: 'Tone: playful', note: 'Overrides your general tone: warm and encouraging' }
+      ] },
+      { name: 'Free YouTube series', prefs: [
+        { text: 'Keep videos under 90 seconds', note: 'Set by you · only for this course' },
+        { text: 'No sources card at the end', note: 'Learned from 3 lessons in this course' }
+      ] }
+    ];
+    const cIdx = s.course || 0;
+    const courses = courseDefs.map((c, i) => ({
+      name: c.name, pressed: i === cIdx ? 'true' : 'false',
+      style: 'min-height: 40px; padding: 0 16px; border-radius: 999px; font: inherit; font-size: 14px; cursor: pointer; ' + (i === cIdx ? 'background: #E8EAFB; border: 1px solid #3442C9; color: #26318F; font-weight: 600' : 'background: #FFFFFF; border: 1px solid #D5D9E2; color: #1B1F27'),
+      pick: () => this.setState({ course: i })
+    }));
+    return {
+      prefs, apps, tasks, courses, coursePrefs: courseDefs[cIdx].prefs,
+      hasRemoved: !!s.removed,
+      undo: () => {
+        const r = s.removed; if (!r) return;
+        const next = s.prefs.slice(); next.splice(r.index, 0, r.item);
+        this.setState({ prefs: next, removed: null });
+      },
+      newText: s.newText,
+      onNew: (e) => this.setState({ newText: e.target.value }),
+      add: () => {
+        const text = s.newText.trim(); if (!text) return;
+        this.setState({ prefs: s.prefs.concat([{ id: Date.now(), text, origin: 'teacher', why: 'Set by you' }]), newText: '' });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

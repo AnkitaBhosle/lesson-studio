@@ -1,0 +1,8 @@
+{
+  "name": "@ls/fixtures",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "seed/index.ts",
+  "types": "seed/index.ts"
+}

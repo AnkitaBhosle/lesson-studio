@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>How index funds work · Preview</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Nunito:wght@700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F6F7F9;color:#1B1F27;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+a{color:#3442C9}a:hover{color:#26318F}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:10px;font-weight:600;font-size:15px;text-decoration:none;box-sizing:border-box;border:1px solid transparent;cursor:pointer;font-family:inherit}
+.btn-primary{background:#3442C9;color:#fff}.btn-primary:hover{background:#26318F;color:#fff}
+.btn-ghost{background:#fff;color:#1B1F27;border-color:#D5D9E2}.btn-ghost:hover{background:#F0F2F6;color:#1B1F27}
+.rail{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px;color:#3D4452}
+.rail:hover{background:#EEF0F4;color:#1B1F27}
+.thumb{display:flex;flex-direction:column;gap:4px;align-items:flex-start;padding:6px;border-radius:10px;border:2px solid transparent;background:#fff;cursor:pointer;font:inherit;text-align:left;min-width:0}
+</style>
+</helmet>
+<div style="min-height: 100vh; display: flex; flex-direction: column">
+  <header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 20px; background: #FFFFFF; border-bottom: 1px solid #E3E6EC">
+    <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap">
+      <a href="Main.dc.html" aria-label="Lesson Studio home" style="display: inline-flex"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="8" fill="#3442C9"></rect><path d="M8 9.5c2.5-1 5-1 7 .5 2-1.5 4.5-1.5 7-.5v11c-2.5-1-5-1-7 .5-2-1.5-4.5-1.5-7-.5z" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"></path><path d="M15 10v11" stroke="#fff" stroke-width="1.8"></path></svg></a>
+      <nav aria-label="Breadcrumb" style="font-size: 14px; color: #5A6272"><a href="Main.dc.html" style="color: #5A6272; text-decoration: none">Investing 101</a> <span aria-hidden="true">/</span> <span style="color: #1B1F27; font-weight: 600">How index funds work</span></nav>
+    </div>
+    <ol aria-label="Lesson stages" style="display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0; padding: 0; font-size: 14px">
+      <li><a href="Maya-Sources.dc.html" style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px; border-radius: 999px; background: #DDF3EF; color: #0B5A53; text-decoration: none; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg>Sources</a></li>
+      <li><a href="Maya-Plan.dc.html" style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px; border-radius: 999px; background: #DDF3EF; color: #0B5A53; text-decoration: none; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg>Plan</a></li>
+      <li><span style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px; border-radius: 999px; background: #3442C9; color: #FFFFFF; font-weight: 600"><span style="width: 20px; height: 20px; border-radius: 50%; background: #FFFFFF; color: #3442C9; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">3</span>Preview</span></li>
+      <li><span style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px; border-radius: 999px; background: #EEF0F4; color: #5A6272"><span style="width: 20px; height: 20px; border-radius: 50%; background: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">4</span>Final</span></li>
+    </ol>
+    <span style="width: 34px; height: 34px; border-radius: 50%; background: #2A9D8F; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px" aria-label="Maya">M</span>
+  </header>
+
+  <div style="display: flex; flex-wrap: wrap; flex: 1">
+    <nav aria-label="Main" style="flex: 0 0 64px; padding: 16px 10px; background: #FFFFFF; border-right: 1px solid #E3E6EC; display: flex; flex-direction: column; align-items: center; gap: 6px">
+      <a class="rail" href="Main.dc.html" aria-label="Home"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg></a>
+      <a class="rail" href="Templates.dc.html" aria-label="Templates"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1"></rect><rect x="13" y="3" width="8" height="8" rx="1"></rect><rect x="3" y="13" width="8" height="8" rx="1"></rect><rect x="13" y="13" width="8" height="8" rx="1"></rect></svg></a>
+      <a class="rail" href="Settings.dc.html" aria-label="Settings"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"></path></svg></a>
+    </nav>
+
+    <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-wrap: wrap; align-items: flex-start">
+      <section aria-label="Video preview" style="flex: 999 1 560px; min-width: 0; padding: 24px 28px 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px">
+        <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px">
+          <h1 style="margin: 0; font-size: 26px; letter-spacing: -0.3px">Preview</h1>
+          <span style="font-size: 14px; color: #5A6272">2 min 35 sec · 7 slides</span>
+        </div>
+
+        <div style="border-radius: 16px; overflow: hidden; background: #264653; display: flex; flex-direction: column">
+          <div role="img" aria-label="{{frameLabel}}" style="aspect-ratio: 16 / 9; position: relative; background: {{frame.bg}}; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; padding: 32px; box-sizing: border-box; font-family: 'Nunito', 'Plus Jakarta Sans', sans-serif">
+            <sc-if value="{{art.haystack}}" hint-placeholder-val="{{ true }}">
+              <svg width="260" height="150" viewBox="0 0 260 150" aria-hidden="true"><path d="M30 140 Q130 -10 230 140 Z" fill="#E9C46A"></path><path d="M60 140 Q130 30 200 140" fill="none" stroke="#D4A84B" stroke-width="3"></path><path d="M95 140 Q130 60 165 140" fill="none" stroke="#D4A84B" stroke-width="3"></path><line x1="150" y1="80" x2="178" y2="62" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"></line><circle cx="180" cy="61" r="4" fill="#FFFFFF"></circle></svg>
+            </sc-if>
+            <sc-if value="{{art.basket}}" hint-placeholder-val="{{ false }}">
+              <svg width="300" height="150" viewBox="0 0 300 150" aria-hidden="true"><g fill="#2A9D8F"><rect x="10" y="10" width="34" height="22" rx="5"></rect><rect x="52" y="10" width="34" height="22" rx="5"></rect><rect x="10" y="40" width="34" height="22" rx="5"></rect><rect x="52" y="40" width="34" height="22" rx="5"></rect><rect x="10" y="70" width="34" height="22" rx="5"></rect><rect x="52" y="70" width="34" height="22" rx="5"></rect></g><path d="M100 50 H170" stroke="#264653" stroke-width="4" stroke-linecap="round"></path><path d="M160 40 L172 50 L160 60" fill="none" stroke="#264653" stroke-width="4" stroke-linecap="round"></path><path d="M190 40 H290 L278 130 H202 Z" fill="#E76F51"></path></svg>
+            </sc-if>
+            <sc-if value="{{art.lines}}" hint-placeholder-val="{{ false }}">
+              <svg width="320" height="160" viewBox="0 0 320 160" aria-hidden="true"><line x1="10" y1="150" x2="310" y2="150" stroke="#264653" stroke-width="2"></line><polyline points="10,140 80,120 150,90 220,55 300,15" fill="none" stroke="#2A9D8F" stroke-width="6" stroke-linecap="round"></polyline><polyline points="10,140 80,125 150,105 220,85 300,60" fill="none" stroke="#E76F51" stroke-width="6" stroke-linecap="round"></polyline></svg>
+            </sc-if>
+            <sc-if value="{{art.receipt}}" hint-placeholder-val="{{ false }}">
+              <svg width="200" height="160" viewBox="0 0 200 160" aria-hidden="true"><path d="M30 5 H170 V155 L155 145 L140 155 L125 145 L110 155 L95 145 L80 155 L65 145 L50 155 L30 145 Z" fill="#FFFFFF"></path><g stroke="#C9D3D6" stroke-width="6" stroke-linecap="round"><line x1="50" y1="30" x2="150" y2="30"></line><line x1="50" y1="55" x2="130" y2="55"></line><line x1="50" y1="105" x2="140" y2="105"></line></g><rect x="42" y="70" width="116" height="22" rx="4" fill="#F4C7B8"></rect><line x1="50" y1="81" x2="150" y2="81" stroke="#E76F51" stroke-width="6" stroke-linecap="round"></line></svg>
+            </sc-if>
+            <sc-if value="{{art.phone}}" hint-placeholder-val="{{ false }}">
+              <svg width="260" height="170" viewBox="0 0 260 170" aria-hidden="true"><rect x="20" y="10" width="90" height="150" rx="14" fill="#264653"></rect><rect x="30" y="28" width="70" height="110" rx="6" fill="#FFFFFF"></rect><rect x="42" y="70" width="46" height="24" rx="6" fill="#2A9D8F"></rect><g fill="#E76F51"><rect x="140" y="20" width="22" height="16" rx="4"></rect><rect x="170" y="40" width="22" height="16" rx="4"></rect><rect x="200" y="22" width="22" height="16" rx="4"></rect><rect x="150" y="70" width="22" height="16" rx="4"></rect><rect x="185" y="90" width="22" height="16" rx="4"></rect><rect x="220" y="66" width="22" height="16" rx="4"></rect><rect x="160" y="120" width="22" height="16" rx="4"></rect><rect x="205" y="130" width="22" height="16" rx="4"></rect></g></svg>
+            </sc-if>
+            <sc-if value="{{art.bumpy}}" hint-placeholder-val="{{ false }}">
+              <svg width="320" height="160" viewBox="0 0 320 160" aria-hidden="true"><polyline points="10,140 50,110 80,125 120,80 150,120 190,70 230,95 270,40 310,20" fill="none" stroke="#2A9D8F" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"></polyline><circle cx="150" cy="120" r="12" fill="none" stroke="#E76F51" stroke-width="4"></circle><text x="150" y="152" text-anchor="middle" font-size="16" font-weight="800" fill="#E76F51">hold on</text></svg>
+            </sc-if>
+            <sc-if value="{{art.recap}}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; flex-direction: column; gap: 10px; font-size: 22px; font-weight: 800; color: #FFFFFF">
+                <span>1. Buy the haystack</span><span>2. Keep costs low</span><span>3. Stay in</span>
+              </div>
+            </sc-if>
+            <div style="font-size: 34px; font-weight: 800; color: {{frame.fg}}; text-align: center; line-height: 1.15; max-width: 80%">{{frame.title}}</div>
+            <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 24px; background: rgba(20,32,38,0.82); color: #FFFFFF; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; line-height: 1.45; text-align: center">{{frame.caption}}</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px; padding: 10px 16px; background: #1D333D">
+            <button type="button" onClick="{{toggle}}" aria-label="{{playLabel}}" style="width: 44px; height: 44px; border-radius: 50%; border: 0; background: #FFFFFF; color: #264653; display: inline-flex; align-items: center; justify-content: center; cursor: pointer">
+              <sc-if value="{{playing}}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"></rect><rect x="14" y="5" width="4" height="14" rx="1"></rect></svg></sc-if>
+              <sc-if value="{{paused}}" hint-placeholder-val="{{ true }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5l12 7-12 7z"></path></svg></sc-if>
+            </button>
+            <div style="flex: 1; height: 6px; border-radius: 3px; background: #3C5560; overflow: hidden"><div style="height: 6px; width: {{progressPct}}; background: #E76F51"></div></div>
+            <span style="font-size: 14px; color: #FFFFFF; font-variant-numeric: tabular-nums">{{clock}}</span>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px">
+          <sc-for list="{{thumbs}}" as="t" hint-placeholder-count="7">
+            <button class="thumb" type="button" onClick="{{t.pick}}" aria-label="Slide {{t.n}}: {{t.part}}" style="{{t.style}}">
+              <span style="display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 6px; background: {{t.bg}}"></span>
+              <span style="font-size: 12px; font-weight: 600; color: #3D4452; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%">{{t.n}}. {{t.part}}</span>
+            </button>
+          </sc-for>
+        </div>
+      </section>
+
+      <aside aria-label="Assistant" style="flex: 1 1 320px; max-width: 400px; padding: 24px 20px; box-sizing: border-box; background: #FFFFFF; border-left: 1px solid #E3E6EC; align-self: stretch; display: flex; flex-direction: column; gap: 18px">
+        <h2 style="margin: 0; font-size: 15px">Assistant</h2>
+        <div style="background: #E8EAFB; border-radius: 12px; padding: 12px 14px; font-size: 14px; line-height: 1.5; color: #1B1F27">This is a draft. Every slide is still editable: pick a slide below the player, then change its words or its visual here. Nothing is final until you finish the video.</div>
+
+        <h3 style="margin: 0; font-size: 16px">Slide {{sel.n}}: {{sel.part}}</h3>
+
+        <div style="border: 1px solid #E3E6EC; border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+          <label for="line" style="font-size: 14px; font-weight: 700">Narrative</label>
+          <textarea id="line" rows="4" value="{{lineText}}" onChange="{{onLine}}" style="font-family: inherit; font-size: 14px; line-height: 1.5; padding: 10px 12px; border: 1px solid #D5D9E2; border-radius: 10px; resize: vertical; color: #1B1F27"></textarea>
+          <span style="font-size: 13px; line-height: 1.45; color: #5A6272">Change the words and I'll re-record the narration for this slide only, in the same voice.</span>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+            <button class="btn btn-ghost" type="button" onClick="{{rerecord}}" disabled="{{rerecordDisabled}}" style="font-size: 14px">Re-record this slide</button>
+            <span style="font-size: 13px; color: #0B5A53; font-weight: 600">{{rerecordNote}}</span>
+          </div>
+        </div>
+
+        <div style="border: 1px solid #E3E6EC; border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+          <span style="font-size: 14px; font-weight: 700">Visual</span>
+          <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #3D4452">{{sel.sees}}</p>
+          <div role="group" aria-label="Versions of this visual" style="display: flex; flex-wrap: wrap; gap: 6px">
+            <sc-for list="{{versions}}" as="v" hint-placeholder-count="1">
+              <button type="button" onClick="{{v.pick}}" aria-pressed="{{v.pressed}}" style="{{v.style}}"><span aria-hidden="true" style="display: block; width: 48px; height: 27px; border-radius: 4px; background: {{v.bg}}"></span><span style="font-size: 12px; font-weight: 600">{{v.label}}</span></button>
+            </sc-for>
+          </div>
+          <label for="vnote" style="font-size: 13px; font-weight: 600; color: #5A6272">What should change? (optional)</label>
+          <input id="vnote" placeholder="e.g. “warmer colors, no needle”" value="{{vnote}}" onChange="{{onVnote}}" style="font-family: inherit; font-size: 14px; padding: 10px 12px; border: 1px solid #D5D9E2; border-radius: 10px; min-height: 44px; box-sizing: border-box">
+          <div style="display: flex; flex-wrap: wrap; gap: 8px">
+            <button class="btn btn-ghost" type="button" onClick="{{newVersion}}" style="font-size: 14px">Make a new version</button>
+            <button class="btn btn-ghost" type="button" style="font-size: 14px">Use my own image or clip</button>
+          </div>
+          <span style="font-size: 13px; line-height: 1.45; color: #5A6272">Every version is kept, so you can switch back any time.</span>
+        </div>
+
+        <div style="background: #F6F7F9; border-radius: 12px; padding: 12px 14px; font-size: 14px; line-height: 1.5; color: #3D4452">Captions are on, and every fact on screen still points to your sources.</div>
+
+        <a class="btn btn-primary" href="Maya-Final.dc.html">Looks good, finish the video</a>
+      </aside>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1250}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { t: 0, playing: false, sel: 0, takes: {} };
+    this.scenes = [
+      { n: 1, part: 'Hook', start: 0, art: 'haystack', bg: '#F7E7CE', fg: '#264653', title: 'Stop hunting for the needle.', caption: 'What if the smarter move is to buy the whole haystack?', said: 'Most people think investing means finding the next big stock. What if the smarter move is to stop hunting for the needle and buy the whole haystack?' },
+      { n: 2, part: 'What it is', start: 15, art: 'basket', bg: '#FFF8F1', fg: '#264653', title: 'One fund. A slice of everything on the list.', caption: 'An index fund buys everything on the list.', said: 'An index is just a list, like the biggest companies in a market. An index fund buys everything on the list, so you own a small slice of all of them.' },
+      { n: 3, part: 'Low fees', start: 40, art: 'lines', bg: '#FFF8F1', fg: '#264653', title: 'Small costs add up.', caption: 'Small yearly costs add up over decades.', said: 'Nobody is paid to pick stocks, so index funds usually cost less to run. Small yearly costs add up over decades.' },
+      { n: 4, part: 'Expense ratio', start: 70, art: 'receipt', bg: '#2A9D8F', fg: '#FFFFFF', title: 'Expense ratio', caption: 'A percentage of what you have invested, taken out each year.', said: 'That yearly cost has a name: the expense ratio. It is a percentage of what you have invested, taken out each year.' },
+      { n: 5, part: 'Example', start: 90, art: 'phone', bg: '#FFF8F1', fg: '#264653', title: 'One purchase. Hundreds of companies.', caption: 'One purchase made me a part-owner of hundreds of companies.', said: 'When I bought my first index fund, one purchase made me a part-owner of hundreds of companies.' },
+      { n: 6, part: 'The mistake', start: 115, art: 'bumpy', bg: '#FFF8F1', fg: '#264653', title: "Don't sell the dip.", caption: 'Index investing works because you stay in for the long run.', said: 'The most common mistake? Selling when the market drops. Index investing works because you stay in for the long run.' },
+      { n: 7, part: 'Recap', start: 135, art: 'recap', bg: '#264653', fg: '#F4A261', title: 'Investing 101 · link in the description', caption: 'Education, not individual investment advice.', said: 'Buy the haystack, keep costs low, stay in. My Investing 101 course walks you through your first purchase.' }
+    ];
+    this.total = 155;
+  }
+  componentWillUnmount() { if (this.timer) clearInterval(this.timer); }
+  toggle() {
+    if (this.state.playing) {
+      clearInterval(this.timer); this.timer = null;
+      this.setState({ playing: false });
+    } else {
+      this.timer = setInterval(() => {
+        const t = this.state.t + 1;
+        if (t >= this.total) { clearInterval(this.timer); this.timer = null; this.setState({ t: 0, playing: false }); }
+        else this.setState({ t });
+      }, 120);
+      this.setState({ playing: true });
+    }
+  }
+  renderVals() {
+    const cur = this.scenes.reduce((acc, s, i) => (this.state.t >= s.start ? i : acc), 0);
+    const frame = this.scenes[cur];
+    const art = { haystack: false, basket: false, lines: false, receipt: false, phone: false, bumpy: false, recap: false };
+    art[frame.art] = true;
+    const fmt = (s) => Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+    const seesList = [
+      'A haystack with one glinting needle. The view pulls back to reveal the whole field.',
+      'A diagram: company tiles flowing into one basket.',
+      'Two growth lines that start together and slowly drift apart.',
+      'A receipt with one highlighted line: expense ratio.',
+      'A phone screen where one purchase splits into many small tiles.',
+      'A bumpy line that still climbs, with a “hold on” marker at the dip.',
+      'Your logo, a three-point recap, then the disclaimer card.'
+    ];
+    const sel = { ...this.scenes[this.state.sel], sees: seesList[this.state.sel] };
+    const i = this.state.sel;
+    const count = this.state.takes[i] || 1;
+    const chosen = (this.state.chosen && this.state.chosen[i]) ?? (count - 1);
+    const edited = this.state.lines && this.state.lines[i] !== undefined && this.state.lines[i] !== sel.said;
+    const rec = this.state.rerecorded && this.state.rerecorded[i];
+    const shades = [sel.bg, '#EADBC2', '#DCEFEA', '#F3D9CF'];
+    const versions = Array.from({ length: count }, (_, k) => ({
+      label: 'Version ' + (k + 1),
+      bg: shades[k % shades.length],
+      pressed: k === chosen ? 'true' : 'false',
+      style: 'display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px; border-radius: 8px; cursor: pointer; font-family: inherit; background: #FFFFFF; ' + (k === chosen ? 'border: 2px solid #3442C9' : 'border: 1px solid #D5D9E2'),
+      pick: () => this.setState({ chosen: { ...(this.state.chosen || {}), [i]: k } })
+    }));
+    return {
+      frame, art,
+      frameLabel: 'Slide ' + frame.n + ': ' + frame.title,
+      playing: this.state.playing, paused: !this.state.playing,
+      playLabel: this.state.playing ? 'Pause' : 'Play',
+      toggle: () => this.toggle(),
+      progressPct: Math.round((this.state.t / this.total) * 100) + '%',
+      clock: fmt(this.state.t) + ' / ' + fmt(this.total),
+      thumbs: this.scenes.map((s, i) => ({
+        n: s.n, part: s.part, bg: s.bg,
+        style: i === this.state.sel ? 'border-color: #3442C9' : 'border-color: transparent',
+        pick: () => this.setState({ sel: i, t: s.start })
+      })),
+      sel,
+      lineText: (this.state.lines && this.state.lines[this.state.sel]) ?? sel.said,
+      onLine: (e) => this.setState({ lines: { ...(this.state.lines || {}), [this.state.sel]: e.target.value } }),
+      rerecordDisabled: !edited,
+      rerecordNote: rec ? 'Re-recorded. Play the slide to hear it.' : (edited ? '' : 'Edit the words to re-record.'),
+      rerecord: () => this.setState({ rerecorded: { ...(this.state.rerecorded || {}), [i]: true } }),
+      versions,
+      vnote: (this.state.vnotes && this.state.vnotes[i]) || '',
+      onVnote: (e) => this.setState({ vnotes: { ...(this.state.vnotes || {}), [i]: e.target.value } }),
+      newVersion: () => this.setState({ takes: { ...this.state.takes, [i]: count + 1 }, chosen: { ...(this.state.chosen || {}), [i]: count }, vnotes: { ...(this.state.vnotes || {}), [i]: '' } })
+    };
+  }
+}
+</script>
+</body>
+</html>

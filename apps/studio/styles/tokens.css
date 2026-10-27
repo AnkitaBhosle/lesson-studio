@@ -1,0 +1,45 @@
+:root {
+  --ground: #f6f7f9;
+  --surface: #ffffff;
+  --text: #1b1f27;
+  --text-2: #3d4452;
+  --muted: #5a6272;
+  --line: #e3e6ec;
+  --line-strong: #d5d9e2;
+  --chip: #eef0f4;
+  --accent: #3442c9;
+  --accent-hover: #26318f;
+  --accent-soft: #e8eafb;
+  --success: #0f766e;
+  --success-text: #0b5a53;
+  --success-soft: #ddf3ef;
+  --warning-soft: #fef3c7;
+  --warning-text: #7c4a03;
+  --warning-strong: #4a2c02;
+  --danger-text: #9a3412;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --font: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--text);
+  font-family: var(--font);
+}
+
+a { color: var(--accent); }
+a:hover { color: var(--accent-hover); }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
