@@ -25,7 +25,8 @@ const source = z.object({
   inline: z.string().optional(),
   file: z.string().optional(),
   url: z.string().url().optional(),
-}).refine((s) => (s.kind === "text" ? s.inline : s.kind === "pdf" ? s.file : s.url), { message: "text needs inline, pdf needs file, url needs url" });
+  license: z.string().optional(),     // e.g. "CC BY 4.0 (OpenStax)", "public domain (CDC)"
+}).refine((s) => (s.kind === "text" ? s.inline : s.kind === "pdf" ? s.file || s.url : s.url), { message: "text needs inline, pdf needs file or url, url needs url" });
 const starter = z.enum(["detailed_explainer", "live_lecture"]);
 
 export const CaseSchema = z.discriminatedUnion("task", [
