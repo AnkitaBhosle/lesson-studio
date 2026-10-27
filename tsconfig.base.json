@@ -12,15 +12,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "baseUrl": ".",
     "paths": {
-      "@ls/schema": ["packages/schema/src/index.ts"],
-      "@ls/schema/*": ["packages/schema/src/*"],
-      "@ls/orchestrator": ["packages/orchestrator/src/index.ts"],
-      "@ls/agents": ["packages/agents/src/index.ts"],
-      "@ls/models": ["packages/models/src/index.ts"],
-      "@ls/media": ["packages/media/src/index.ts"],
-      "@ls/fixtures": ["fixtures/seed/index.ts"]
+      "@ls/schema": ["./packages/schema/src/index.ts"],
+      "@ls/schema/*": ["./packages/schema/src/*"],
+      "@ls/orchestrator": ["./packages/orchestrator/src/index.ts"],
+      "@ls/agents": ["./packages/agents/src/index.ts"],
+      "@ls/models": ["./packages/models/src/index.ts"],
+      "@ls/media": ["./packages/media/src/index.ts"],
+      "@ls/fixtures": ["./fixtures/seed/index.ts"]
     }
   }
 }
