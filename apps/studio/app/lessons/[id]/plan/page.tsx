@@ -43,7 +43,7 @@ export default async function PlanPage({ params }: { params: Promise<{ id: strin
   };
 
   return (
-    <LessonFrame user={d.user} course={d.course} lesson={d.lesson} stage="plan">
+    <LessonFrame mode={d.mode} user={d.user} course={d.course} lesson={d.lesson} stage="plan">
       <PlanEditor view={view} />
     </LessonFrame>
   );

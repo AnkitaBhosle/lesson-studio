@@ -1,5 +1,6 @@
-// Clicks through both hero flows in a real browser against a running studio.
-// Usage: node scripts/walkthrough.mjs [baseUrl] [screenshotDir]
+// Clicks through the app in a real browser: the access code, a live lesson from scratch,
+// and both guided-demo hero flows.
+// Usage: ACCESS_CODE=... node scripts/walkthrough.mjs [baseUrl] [screenshotDir]   (code defaults to LOCAL)
 import { createRequire } from "node:module";
 import fs from "node:fs";
 
@@ -31,9 +32,32 @@ async function step(name, fn) {
   catch (e) { console.log(`FAIL ${name}: ${e.message.split("\n")[0]}`); errors.push(name); }
 }
 
-// ---------- Maya ----------
+const code = process.env.ACCESS_CODE ?? "LOCAL";
+
+// ---------- Access ----------
+await step("no code: sent to the Enter screen", async () => { await page.goto(base); await page.waitForURL(/\/enter/); await shot("enter"); });
+await step("wrong code is refused", async () => { await page.getByLabel("Access code").fill("NOPE-NOPE"); await click("Open Lesson Studio"); await page.getByText(/didn't work/).waitFor(); });
+errors.splice(errors.findIndex((e) => e.includes("/api/access")), 1);
+await step("right code opens the studio", async () => { await page.getByLabel("Access code").fill(code); await click("Open Lesson Studio"); await page.getByText("What are you teaching?").waitFor(); await shot("live-home"); });
+
+// ---------- Live: start from scratch ----------
+await step("live: start a lesson", async () => {
+  await page.getByLabel("Topic and audience").fill("Hand hygiene, for first-year nursing students");
+  await click("Start lesson"); await page.waitForURL(/sources/);
+});
+await step("live: paste notes", async () => {
+  await click("Paste text");
+  await page.getByLabel(/Your notes, an outline/).fill("Hand hygiene is the most important way to stop infections spreading in hospital. Use alcohol rub unless hands look dirty, then use soap and water. Rub for twenty to thirty seconds, until your hands are dry. Rings and long nails trap bacteria, so keep nails short. Clean your hands before and after touching a patient.");
+  await page.getByRole("button", { name: "Add", exact: true }).click();
+  await page.getByRole("heading", { name: "Your notes" }).waitFor(); await shot("live-sources");
+});
+await step("live: plan the lesson", async () => { await click("Plan the lesson"); await page.waitForURL(/plan/); await page.getByText("Teaching plan").waitFor(); await shot("live-plan"); });
+
+// ---------- Guided demo: Maya ----------
+await page.goto(`${base}/switch?to=usr_maya`); await settle();
 await page.request.post(`${base}/reset`);
-await page.goto(`${base}/switch?to=usr_maya`); await settle(); await shot("maya-home");
+await page.goto(`${base}/`); await settle(); await shot("maya-home");
+await step("guided banner shows", async () => { await page.getByText(/guided demo/).first().waitFor(); });
 await step("open sources", async () => { await click("Start lesson", "link"); await page.waitForURL(/sources/); await shot("maya-sources"); });
 await step("cite the outline", async () => { await page.getByRole("switch", { name: /Index funds outline/ }).click(); });
 await step("plan", async () => { await click("Plan the lesson", "link"); await page.waitForURL(/plan/); await shot("maya-plan"); });
@@ -72,6 +96,7 @@ await step("finish the deck", async () => { await click("Looks good, finish the 
 
 for (const p of ["/templates", "/settings"]) { await page.goto(base + p); await settle(); await shot(p.slice(1)); }
 await step("edit a preference", async () => { await click("Edit"); await page.getByLabel("Edit preference").fill("Short speaker notes, in full sentences"); await click("Save"); });
+await step("back to my lessons keeps the live lesson", async () => { await click("Back to my lessons"); await page.getByText("Hand hygiene").first().waitFor(); });
 
 await browser.close();
 console.log(errors.length ? `\n${errors.length} problem(s):\n${errors.join("\n")}` : "\nBoth flows passed.");

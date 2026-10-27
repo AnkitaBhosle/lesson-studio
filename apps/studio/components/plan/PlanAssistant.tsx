@@ -11,21 +11,24 @@ function questionsFor(view: PlanView): Question[] {
   if (view.format === "lecture_deck") {
     return [
       { label: "How long is the lecture?", options: ["50 minutes", "75 minutes"], initial: 0 },
-      { label: "Where do students usually get stuck?", options: ["Light vs. Calvin cycle", "Where the oxygen comes from", "Following the carbon"], initial: 1 },
+      // Topic-specific questions come from the real Planning agent (M5); the guided lecture keeps its own.
+      ...(view.lessonId === "lsn_photo" ? [{ label: "Where do students usually get stuck?", options: ["Light vs. Calvin cycle", "Where the oxygen comes from", "Following the carbon"], initial: 1 }] : []),
     ];
   }
   const tones = ["Warm and encouraging", "Straight to the point", "Playful"];
   const t = tones.findIndex((x) => x.toLowerCase() === view.tone?.toLowerCase());
   return [
-    { label: "Who's watching?", options: ["Total beginners", "Know some basics", "Already investing"], initial: 0 },
+    { label: "Who's watching?", options: ["Total beginners", "Know some basics", view.lessonId === "lsn_index" ? "Already investing" : "Already familiar"], initial: 0 },
     { label: "How long?", options: ["About 90 seconds", "2–3 minutes", "About 5 minutes"], initial: 1 },
     { label: "What tone?", options: tones, initial: t >= 0 ? t : 0 },
   ];
 }
 
-const SUGGESTIONS = {
-  explainer_video: ["Make it shorter", "Add an example about fees", "Punchier hook"],
-  lecture_deck: ["Shorter Calvin cycle section", "More questions for the class", "Add a hands-on demo"],
+const SUGGESTIONS: Record<string, string[]> = {
+  lsn_index: ["Make it shorter", "Add an example about fees", "Punchier hook"],
+  lsn_photo: ["Shorter Calvin cycle section", "More questions for the class", "Add a hands-on demo"],
+  explainer_video: ["Make it shorter", "Add an example", "Punchier hook"],
+  lecture_deck: ["Make it shorter", "More questions for the class", "Add a hands-on demo"],
   podcast_audio: ["Make it shorter"],
 };
 
@@ -64,7 +67,7 @@ export function PlanAssistant({ view, api, ask, setAsk, via, dictation }: { view
         <textarea id="change" className="field" rows={3} value={ask} onChange={(e) => setAsk(e.target.value)}
           placeholder={deck ? "e.g. “Spend less time on the Calvin cycle and add a demo with a leaf in water”" : "e.g. “Make the hook punchier and add an example about fees”"} />
         <div className="row" style={{ gap: 6 }}>
-          {SUGGESTIONS[view.format].map((s) => <button key={s} className="chip chip-sm" type="button" onClick={() => setAsk(ask ? `${ask}. ${s}` : s)}>{s}</button>)}
+          {(SUGGESTIONS[view.lessonId] ?? SUGGESTIONS[view.format]!).map((s) => <button key={s} className="chip chip-sm" type="button" onClick={() => setAsk(ask ? `${ask}. ${s}` : s)}>{s}</button>)}
         </div>
         {dictation.listening && (
           <div className="listening" role="status"><span aria-hidden="true" className="dot" />Listening…<button className="act" type="button" onClick={dictation.stop}>Stop</button></div>

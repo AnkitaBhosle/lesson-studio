@@ -1,5 +1,7 @@
 import Link from "next/link";
 import type { Course, Lesson, User } from "@ls/schema";
+import type { Mode } from "@ls/orchestrator";
+import { GuidedBanner } from "./ModeSwitch";
 import { Avatar } from "./Avatar";
 import { Gear, Grid, Home, Logo, Tick } from "./icons";
 
@@ -17,11 +19,12 @@ export function reachable(lesson: Lesson): Set<Stage> {
   return s;
 }
 
-export function LessonFrame({ user, course, lesson, stage, children }: { user: User; course: Course; lesson: Lesson; stage: Stage; children: React.ReactNode }) {
+export function LessonFrame({ user, course, lesson, stage, mode, children }: { user: User; course: Course; lesson: Lesson; stage: Stage; mode: Mode; children: React.ReactNode }) {
   const can = reachable(lesson);
   const at = STAGES.findIndex((s) => s.key === stage);
   return (
     <div className="frame">
+      {mode === "guided" && <GuidedBanner />}
       <header className="topbar">
         <div className="row" style={{ gap: 12 }}>
           <Link href="/" aria-label="Lesson Studio home" style={{ display: "inline-flex" }}><Logo /></Link>

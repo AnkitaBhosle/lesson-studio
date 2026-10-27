@@ -1,14 +1,19 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { verifySignedCode } from "@ls/orchestrator/signing";
 
-/** Gives every visitor their own copy of the demo (see packages/orchestrator/src/store.ts). */
+/**
+ * Nothing but the Enter screen (and the owner's admin page) is reachable without a
+ * genuine access-code cookie. Whether the code is still active is checked per request
+ * in lib/server.ts, where storage is available.
+ */
+const OPEN = [/^\/enter$/, /^\/api\/access$/, /^\/admin$/, /^\/api\/admin(\/|$)/];
+
 export function proxy(request: NextRequest) {
-  if (request.cookies.get("ls_vid")) return NextResponse.next();
-  const id = crypto.randomUUID();
-  const headers = new Headers(request.headers);
-  headers.set("cookie", [request.headers.get("cookie"), `ls_vid=${id}`].filter(Boolean).join("; "));
-  const res = NextResponse.next({ request: { headers } });
-  res.cookies.set("ls_vid", id, { httpOnly: true, sameSite: "lax", path: "/", maxAge: 60 * 60 * 24 * 30 });
-  return res;
+  const { pathname } = request.nextUrl;
+  if (OPEN.some((re) => re.test(pathname))) return NextResponse.next();
+  if (verifySignedCode(request.cookies.get("ls_code")?.value)) return NextResponse.next();
+  if (pathname.startsWith("/api/")) return NextResponse.json({ error: "Enter your access code first." }, { status: 401 });
+  return NextResponse.redirect(new URL("/enter", request.url));
 }
 
 export const config = { matcher: ["/((?!_next/|favicon.ico).*)"] };

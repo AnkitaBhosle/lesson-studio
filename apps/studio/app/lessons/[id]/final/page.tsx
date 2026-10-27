@@ -23,7 +23,7 @@ export default async function FinalPage({ params }: { params: Promise<{ id: stri
   const total = slides.reduce((n, s) => n + (s.estDurationSec ?? 0), 0);
 
   return (
-    <LessonFrame user={d.user} course={d.course} lesson={d.lesson} stage="final">
+    <LessonFrame mode={d.mode} user={d.user} course={d.course} lesson={d.lesson} stage="final">
       <main className="page" style={{ padding: "32px 28px 64px" }}>
         <div className="row" style={{ alignItems: "flex-start", gap: 24, maxWidth: 1180, margin: "0 auto" }}>
           <section aria-label={deck ? "Your deck" : "Your video"} className="stack" style={{ flex: "999 1 520px", gap: 18 }}>

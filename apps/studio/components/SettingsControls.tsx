@@ -63,9 +63,9 @@ export function AppsList({ apps }: { apps: { id: string; name: string; color: st
             <span aria-hidden="true" className="avatar" style={{ background: a.color, borderRadius: 8, width: 32, height: 32 }}>{a.name[0]}</span>
             <span style={{ fontWeight: 600, fontSize: 15 }}>{a.name}</span>
           </span>
-          <button className="lnk" type="button" disabled={pending} onClick={() => call("PUT", `/api/integrations/${a.id}`, { connected: !a.connected })}>
+          {a.id.startsWith("none_") ? <span className="muted" style={{ fontSize: 14 }}>Coming soon</span> : <button className="lnk" type="button" disabled={pending} onClick={() => call("PUT", `/api/integrations/${a.id}`, { connected: !a.connected })}>
             {a.connected ? "Connected · Disconnect" : "Connect"}
-          </button>
+          </button>}
         </div>
       ))}
     </div>

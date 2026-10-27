@@ -30,7 +30,7 @@ export default async function PreviewPage({ params }: { params: Promise<{ id: st
   const props = { lessonId: id, slides: d.plan.slides, template: d.template, versions, editable: d.lesson.status === "preview_review" };
 
   return (
-    <LessonFrame user={d.user} course={d.course} lesson={d.lesson} stage="preview">
+    <LessonFrame mode={d.mode} user={d.user} course={d.course} lesson={d.lesson} stage="preview">
       {d.lesson.format === "lecture_deck"
         ? <DeckPreview {...props} cite={cite} courseLabel={`${d.course.title.split(" · ")[0]} · ${d.lesson.title.split(" · ")[0]}`} />
         : <VideoPreview {...props} takes={takes} />}

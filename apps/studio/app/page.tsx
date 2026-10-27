@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AppFrame } from "@/components/AppFrame";
 import { StartLesson } from "@/components/StartLesson";
+import { LiveHome } from "@/components/LiveHome";
 import { coursesOf, session } from "@/lib/server";
 import { lessonHref, statusLabel } from "@/lib/labels";
 
@@ -20,8 +21,20 @@ const STARTER_BLURB: Record<string, string> = {
 };
 
 export default async function HomePage() {
-  const { repo, user } = await session();
+  const { repo, user, mode } = await session();
   const courses = coursesOf(repo, user.id);
+  if (mode === "live") {
+    const ids = new Set(courses.map((c) => c.id));
+    const starters = repo.list("starters").map((s) => {
+      const [kind, color] = KIND_LABEL[s.format]!;
+      const tpl = s.suggestedTemplateIds.map((id) => repo.get("templates", id)).find(Boolean) ?? repo.list("templates")[0]!;
+      return { id: s.id, name: s.name, kind: STARTER_KIND[s.id] ?? kind, color, blurb: STARTER_BLURB[s.id] ?? "", buildable: s.buildable,
+        audience: s.defaultAudience.context === "live_lecture" ? "Students in a live lecture" : "Learners new to the topic",
+        template: { name: tpl.name, primary: tpl.colors.primary, accent: tpl.colors.accent } };
+    });
+    const lessons = repo.list("lessons", (l) => ids.has(l.courseId)).reverse().map((l) => ({ id: l.id, title: l.title, href: lessonHref(l), status: statusLabel(l) }));
+    return <AppFrame mode={mode} user={user} courses={courses} current="home"><LiveHome starters={starters} lessons={lessons} /></AppFrame>;
+  }
   const course = courses[0]!;
   const ids = new Set(courses.map((c) => c.id));
   const lessons = repo.list("lessons", (l) => ids.has(l.courseId)).sort((a, b) => Number(a.status === "ready") - Number(b.status === "ready"));
@@ -32,7 +45,7 @@ export default async function HomePage() {
   const heroStarter = hero ? repo.get("starters", hero.starterId) : undefined;
 
   return (
-    <AppFrame user={user} courses={courses} current="home">
+    <AppFrame mode={mode} user={user} courses={courses} current="home">
       <section className="stack" style={{ gap: 16 }}>
         <h1 style={{ fontSize: 34 }}>What are you teaching?</h1>
         <p className="muted" style={{ margin: 0, fontSize: 16 }}>Tell me the topic and who it&apos;s for. I&apos;ll set up the rest, and you can change anything.</p>
@@ -83,7 +96,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <form action="/reset" method="post"><button className="lnk" type="submit" style={{ color: "var(--muted)", fontWeight: 500 }}>Reset demo</button></form>
+      <form action="/reset" method="post"><button className="lnk" type="submit" style={{ color: "var(--muted)", fontWeight: 500 }}>Reset the guided demo</button></form>
     </AppFrame>
   );
 }

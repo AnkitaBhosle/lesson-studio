@@ -317,6 +317,32 @@ export const CostEvent = Base.extend({ // the ledger; the Lab app reads only thi
   cached: z.boolean(),
   originalCredits: z.number().int().optional(),
   outcome: z.enum(["kept", "new_version", "re_recorded", "failed"]).default("kept"),
+  code: z.string().optional(),        // access code, so the Lab can show spend per code
+});
+
+// ---------- Access and spend (site-level, outside workspaces) ----------
+export const AccessCode = z.object({
+  code: z.string(),                   // stored upper-case; also the workspace key
+  label: z.string(),
+  capCredits: z.number().int(),       // per-code cap; default 1500 (= $15)
+  active: z.boolean(),
+  createdAt: z.string(),
+  firstSeenAt: z.string().optional(),
+  lastSeenAt: z.string().optional(),
+});
+
+export const SiteLimits = z.object({
+  totalCredits: z.number().int(),
+  dailyCredits: z.number().int(),
+  warnAtFraction: z.number(),
+  liveEnabled: z.boolean(),
+  clipsPerLesson: z.number().int(),
+});
+
+export const SpendCounters = z.object({
+  totalCredits: z.number(),
+  byDay: z.record(z.string(), z.number()),
+  byCode: z.record(z.string(), z.number()),
 });
 
 // ---------- Evals & bakeoff (internal; Lab app only) ----------
@@ -392,6 +418,9 @@ export type Approval = z.infer<typeof Approval>;
 export type AgentRun = z.infer<typeof AgentRun>;
 export type CostEvent = z.infer<typeof CostEvent>;
 export type EvalTask = z.infer<typeof EvalTask>;
+export type AccessCode = z.infer<typeof AccessCode>;
+export type SiteLimits = z.infer<typeof SiteLimits>;
+export type SpendCounters = z.infer<typeof SpendCounters>;
 export type EvalCase = z.infer<typeof EvalCase>;
 export type EvalRun = z.infer<typeof EvalRun>;
 export type BakeoffResult = z.infer<typeof BakeoffResult>;

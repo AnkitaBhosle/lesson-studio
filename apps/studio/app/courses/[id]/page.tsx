@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 
 export default async function CoursePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const { repo, user } = await session();
+  const { repo, user, mode } = await session();
   const course = repo.get("courses", id);
   if (!course || course.ownerId !== user.id) notFound();
   const lessons = repo.list("lessons", (l) => l.courseId === id);
@@ -31,7 +31,7 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
   };
 
   return (
-    <AppFrame user={user} courses={coursesOf(repo, user.id)} current="courses" courseId={id}>
+    <AppFrame mode={mode} user={user} courses={coursesOf(repo, user.id)} current="courses" courseId={id}>
       <div className="row-between" style={{ alignItems: "flex-end" }}>
         <div className="stack" style={{ gap: 4 }}>
           <span className="eyebrow">Course · {course.description.split(",")[0]}</span>

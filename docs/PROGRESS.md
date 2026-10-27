@@ -2,6 +2,13 @@
 
 One short entry per milestone. Newest first.
 
+## M4 · Access codes and modes
+- Enter screen; the request proxy lets nothing through without a signed `ls_code` cookie (signed with `ACCESS_COOKIE_SECRET`); each request also checks the code is still active. Wrong codes are rate limited per IP.
+- One workspace per code and mode in Redis: `live` starts empty (one teacher, Starters, curated Templates), `guided` starts as the Maya / Dr. Ortiz seed. "Try the guided demo" / "Back to my lessons" in the top bar; a banner marks the guided demo; Reset only touches the guided demo.
+- Owner page at `/admin` (sign in with `ADMIN_TOKEN`): create codes (label, prefix, cap), turn them off and on, see first and last use. Moves into the Lab in M10. Locally the code `LOCAL` always works.
+- Live mode starts from scratch: Home creates a real lesson (first one creates the course), Sources takes pasted text and links, "Plan the lesson" makes a first draft with the stub planner. Real planning is M5, reading links and files is M6.
+- Walkthrough covers the Enter screen, a live lesson from scratch, and both guided flows. 27 unit tests.
+
 ## Golden set template (owner work in parallel)
 - `fixtures/golden/`: README (how to write cases, targets, difficulty guide), `RUBRIC.md` (draft), `DECISION-RULE.md` (to fill in before the bakeoff), templates for the five tasks, and one original example case per task.
 - `npm run golden:check` validates every case and prints coverage against targets (15 / 20 / 8 / 8 / 6); it also runs in `npm test`.

@@ -4,7 +4,7 @@ import { useCall } from "@/lib/client";
 import { sourceKind } from "@/lib/labels";
 import { Switch } from "./Switch";
 
-export function SourceCard({ source: s, audience }: { source: Source; audience: "viewers" | "students" }) {
+export function SourceCard({ source: s, audience, lessonId }: { source: Source; audience: "viewers" | "students"; lessonId?: string }) {
   const { call, error } = useCall();
   const cited = s.visibility === "cited";
   const facts = s.digest?.quotableFacts.length ?? 0;
@@ -14,9 +14,11 @@ export function SourceCard({ source: s, audience }: { source: Source; audience: 
     <article className="card">
       <div className="row-between">
         <div className="row" style={{ gap: 10 }}><span className="tag">{kind}</span><h3>{s.title}</h3></div>
-        <span className="ok-text" style={{ fontSize: 13 }}>{facts} facts{figures ? ` · ${figures} figures` : ""}</span>
+        {s.digest ? <span className="ok-text" style={{ fontSize: 13 }}>{facts} facts{figures ? ` · ${figures} figures` : ""}</span>
+          : <span className="muted" style={{ fontSize: 13 }}>Saved</span>}
       </div>
-      {s.digest && <p style={{ margin: 0, fontSize: 15, lineHeight: 1.55, color: "var(--text-2)" }}>{s.digest.summary}</p>}
+      {s.digest ? <p style={{ margin: 0, fontSize: 15, lineHeight: 1.55, color: "var(--text-2)" }}>{s.digest.summary}</p>
+        : s.kind === "url" && <p className="muted" style={{ margin: 0, fontSize: 14 }}>I can&apos;t read web pages yet. For now, paste the part you need as text too.</p>}
       {s.kind === "voice_memo" && s.digest?.quotableFacts[0] && <blockquote className="note-box" style={{ margin: 0 }}>“{s.digest.quotableFacts[0].text}”</blockquote>}
       <div className="card-foot">
         <span style={{ fontSize: 13, lineHeight: 1.45, fontWeight: 600, color: cited ? "var(--accent-hover)" : "var(--muted)" }}>
@@ -24,6 +26,7 @@ export function SourceCard({ source: s, audience }: { source: Source; audience: 
         </span>
         <Switch checked={cited} label={`Cite ${s.title} in the lesson`} onChange={(v) => call("PUT", `/api/sources/${s.id}/visibility`, { visibility: v ? "cited" : "private" })}>Cite in the lesson</Switch>
       </div>
+      {lessonId && <button className="lnk" type="button" style={{ alignSelf: "flex-start", paddingLeft: 0 }} onClick={() => call("DELETE", `/api/lessons/${lessonId}/sources/${s.id}`)}>Remove</button>}
       {error && <p className="error" role="alert">{error}</p>}
     </article>
   );

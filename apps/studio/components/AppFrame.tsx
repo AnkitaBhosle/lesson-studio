@@ -1,20 +1,23 @@
 import Link from "next/link";
 import type { Course, User } from "@ls/schema";
+import type { Mode } from "@ls/orchestrator";
+import { GuidedBanner, ModeSwitch } from "./ModeSwitch";
 import { Avatar } from "./Avatar";
 import { Courses, Gear, Grid, Home, Logo } from "./icons";
 
 type Section = "home" | "courses" | "templates" | "settings";
 
 /** Frame for Home, Course, Templates and Settings: top bar plus the full side nav. */
-export function AppFrame({ user, courses, current, courseId, children }: { user: User; courses: Course[]; current: Section; courseId?: string; children: React.ReactNode }) {
+export function AppFrame({ user, courses, current, courseId, mode, children }: { user: User; courses: Course[]; current: Section; courseId?: string; mode: Mode; children: React.ReactNode }) {
   const other = user.id === "usr_maya" ? { id: "usr_ortiz", label: "Switch demo to Dr. Ortiz" } : { id: "usr_maya", label: "Switch demo to Maya" };
   const cur = (s: Section) => (s === current && !courseId ? "page" : undefined);
   return (
     <div className="frame">
+      {mode === "guided" && <GuidedBanner />}
       <header className="topbar" style={{ padding: "12px 24px" }}>
         <Link href="/" className="brand"><Logo />Lesson Studio</Link>
         <div className="row" style={{ gap: 16 }}>
-          <a href={`/switch?to=${other.id}`} style={{ fontSize: 14 }}>{other.label}</a>
+          {mode === "guided" ? <a href={`/switch?to=${other.id}`} style={{ fontSize: 14 }}>{other.label}</a> : <ModeSwitch mode="live" />}
           <Avatar user={user} withName />
         </div>
       </header>

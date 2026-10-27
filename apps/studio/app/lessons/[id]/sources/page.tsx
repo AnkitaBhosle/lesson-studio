@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { LessonFrame } from "@/components/LessonFrame";
 import { SourceCard, SuggestedSource } from "@/components/SourceCards";
+import { AddSources, PlanButton } from "@/components/AddSources";
 import { Arrow, Check, Drive, LinkIcon, Mic, Paste, Upload } from "@/components/icons";
 import { loadLesson } from "@/lib/lesson";
 import { needsCheck, wasChecked } from "@/lib/labels";
@@ -22,9 +23,10 @@ export default async function SourcesPage({ params }: { params: Promise<{ id: st
   const learn = d.plan?.slides.filter((s) => s.role === "context" || s.role === "concept") ?? [];
 
   return (
-    <LessonFrame user={d.user} course={d.course} lesson={d.lesson} stage="sources">
+    <LessonFrame mode={d.mode} user={d.user} course={d.course} lesson={d.lesson} stage="sources">
       <section aria-label="Add sources" className="side-col">
         <h2>Add what you have</h2>
+        {d.mode === "live" ? <AddSources lessonId={id} /> : (<>
         {(deck
           ? [[<Upload key="u" />, "Upload a file"], [<LinkIcon key="l" />, "Add a link"], [<Paste key="p" />, "Last term's slides"], [<Drive key="d" />, "From Canvas"]]
           : [[<Paste key="p" />, "Paste text"], [<Upload key="u" />, "Upload a file"], [<LinkIcon key="l" />, "Add a link"], [<Mic key="m" size={18} />, "Record a voice memo"], [<Drive key="d" />, "From Google Drive"]]
@@ -32,6 +34,7 @@ export default async function SourcesPage({ params }: { params: Promise<{ id: st
           <button key={label as string} className="addsrc" type="button" disabled title="Adding new sources arrives in a later version of the demo">{icon}{label}</button>
         ))}
         <p className="muted" style={{ margin: "6px 0 0", fontSize: 13, lineHeight: 1.5 }}>{deck ? "Notes, readings, old slides, recorded lectures." : "Notes, readings, slides, videos, voice memos. Messy is fine."}</p>
+        </>)}
       </section>
 
       <section aria-label="Your sources" className="main-col" style={{ flex: "999 1 460px", padding: "24px 20px" }}>
@@ -42,7 +45,8 @@ export default async function SourcesPage({ params }: { params: Promise<{ id: st
         <p style={{ margin: 0, fontSize: 14, lineHeight: 1.5, color: "var(--text-2)" }}>
           Everything here shapes the lesson. You decide which sources {deck ? "students" : "viewers"} see cited. Notes and voice memos stay private unless you say otherwise.
         </p>
-        {usable.map((s) => <SourceCard key={s.id} source={s} audience={deck ? "students" : "viewers"} />)}
+        {usable.length === 0 && <div className="card"><p className="muted" style={{ margin: 0 }}>Nothing yet. Paste your notes or an outline on the left: that&apos;s all I need to start.</p></div>}
+        {usable.map((s) => <SourceCard key={s.id} source={s} audience={deck ? "students" : "viewers"} lessonId={d.mode === "live" && !d.plan ? id : undefined} />)}
       </section>
 
       <aside aria-label="Assistant" className="assistant" style={{ maxWidth: 380 }}>
@@ -84,7 +88,8 @@ export default async function SourcesPage({ params }: { params: Promise<{ id: st
           </div>
         )}
 
-        {d.plan && <Link className="btn btn-primary" href={`/lessons/${id}/plan`}>{deck ? "Plan the lecture" : "Plan the lesson"} <Arrow /></Link>}
+        {d.plan ? <Link className="btn btn-primary" href={`/lessons/${id}/plan`}>{deck ? "Plan the lecture" : "Plan the lesson"} <Arrow /></Link>
+          : <PlanButton lessonId={id} label={deck ? "Plan the lecture" : "Plan the lesson"} ready={facts > 0} />}
       </aside>
     </LessonFrame>
   );
