@@ -57,8 +57,15 @@ function sectionsOf(body: string): Record<string, string> {
   return out;
 }
 
-/** Every case file, parsed; problems are returned rather than thrown so the check can list them all. */
-export function loadGolden(root = ROOT): { cases: GoldenCase[]; problems: string[] } {
+export type Split = "dev" | "sealed";
+
+/**
+ * Every case file in a split, parsed; problems are returned rather than thrown so the check can list them all.
+ * dev: cases the builder may read while building. sealed: the real golden set, written by a separate agent;
+ * the builder never opens these files, and runs report only aggregate scores on them.
+ */
+export function loadGolden(split: Split, base = ROOT): { cases: GoldenCase[]; problems: string[] } {
+  const root = path.join(base, split);
   const cases: GoldenCase[] = [];
   const problems: string[] = [];
   const ids = new Set<string>();

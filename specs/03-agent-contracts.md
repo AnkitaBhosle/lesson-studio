@@ -260,8 +260,8 @@ Preferences and polling
 - Resolution order for every agent: Template and Starter defaults → general → course → edits within the lesson.
 
 ## 5. Model bakeoff (Lab)
-- **Golden set:** `fixtures/golden/`, 57 cases written by Claude from an owner-reviewed list (`CASES.md`): 15 extraction, 20 planning, 8 revision, 8 self-check, 6 preference learning, about a third each easy/medium/hard, beyond the two heroes, including hard cases (dense PDF, messy notes, conflicting sources, real gaps, a vague revision note).
-- **Metrics per model:** must-pass (schema valid on first try, grounding), repair rate, rubric score from a fixed judge, calibrated against the owner's blind Good/OK/Bad ratings of 15 outputs (judge must agree on at least 12), p50/p95 latency, credits per successful output including retries. Overall and by difficulty.
+- **Golden set:** `fixtures/golden/sealed/`, 57 cases (15 extraction, 20 planning, 8 revision, 8 self-check, 6 preference learning; about a third each easy/medium/hard) written by a separate agent from the owner-reviewed list in `CASES.md`, using public sources first. The builder never opens sealed cases; runs report aggregates only. A small `dev/` set is for debugging prompts and never used for decisions.
+- **Metrics per model:** must-pass (schema valid on first try, grounding), repair rate, rubric score from a judge of a different model family than the output, calibrated against the owner's blind Good/OK/Bad ratings of 15 outputs (judge must agree on at least 12), p50/p95 latency, credits per successful output including retries. Overall and by difficulty.
 - **Decision rule, written before the run:** per task, the cheapest model that loses no more than 1 point on valid-first-try or grounding, with a rubric score within ~5% of the best. Recorded in BakeoffResult.
 - **Outputs:** routing config per task, cascades where a cheap model is good but not reliable, and `routerRecommended` when results split by difficulty.
 - **Scope:** LLM tasks only. Media and speech models are a separate, later bakeoff.

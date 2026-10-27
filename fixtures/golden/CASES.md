@@ -1,8 +1,8 @@
 # Golden set: case list for review
 
-Claude writes every case from this list. Your only job here: skim it once and edit, strike or add lines. Mark anything that doesn't sound like a real teacher with ✗, and add a line if you know a real situation that's missing.
+A separate agent writes every sealed case from this list, using public sources wherever possible (see README). The five cases marked "example already written" are now dev cases; the sealed set gets fresh cases of the same kind with different material. Your only job here: skim it once and edit, strike or add lines. Mark anything that doesn't sound like a real teacher with ✗, and add a line if you know a real situation that's missing.
 
-Difficulty: E easy · M medium · H hard. Sources are written for this project or openly licensed (OpenStax, CC BY), never copied.
+Difficulty: E easy · M medium · H hard. Subjects are a guide: the agent may swap a topic for one with a better public source of the same kind.
 
 ## Source extraction (15)
 1. E · Nursing instructor's hand-hygiene notes (example already written)
