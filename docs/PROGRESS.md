@@ -27,5 +27,8 @@ One short entry per milestone. Newest first.
 - Vercel installs only the app's own dependencies, so `apps/studio` declares the `@ls/*` workspace packages, `zod` and `typescript` directly.
 - Per-visitor in-memory state does not survive across serverless instances (walkthrough failed on the live site). Moved demo state to Redis via the Upstash REST API (`KV_REST_API_URL`/`KV_REST_API_TOKEN` or `UPSTASH_REDIS_REST_*`), one key per visitor, one-week expiry. Without those variables it falls back to in-memory.
 
+- Upstash Redis connected. A prefetched link to `/switch` was silently changing the demo user; switch links are now plain anchors and the route ignores prefetches.
+- `npm run walkthrough -- https://lesson-studio-murex.vercel.app` passes against the live site.
+
 ## Blocked
-- Redis for the live demo: needs an Upstash Redis store connected to the Vercel project (owner action in the Vercel dashboard).
+- Nothing right now. Before M4: add `ANTHROPIC_API_KEY` and `ADMIN_TOKEN` in Vercel; before M8: `RUNWAYML_API_SECRET` and the cache-spend go-ahead.
