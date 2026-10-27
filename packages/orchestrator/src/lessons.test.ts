@@ -85,3 +85,14 @@ describe("sources and preferences", () => {
     expect(ids).not.toContain("pi_tone");
   });
 });
+
+describe("settings", async () => {
+  const { updatePreferences } = await import("./settings");
+  it("a removed preference is remembered, and an edit becomes the teacher's", () => {
+    const repo = fresh();
+    updatePreferences(repo, "usr_maya", { op: "edit", itemId: "pi_bullets", value: "Bullets under 6 words" });
+    const p = updatePreferences(repo, "usr_maya", { op: "remove", itemId: "pi_photos" });
+    expect(p.items.find((i) => i.itemId === "pi_bullets")?.origin).toBe("teacher");
+    expect(p.removedItemValues).toContain("Prefer real photos over illustrations");
+  });
+});

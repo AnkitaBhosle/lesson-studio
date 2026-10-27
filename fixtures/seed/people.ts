@@ -102,9 +102,11 @@ export const preferences: Preferences[] = [
   ] },
 ];
 
-export const integrations: Integration[] = (["google_drive", "youtube", "canvas", "google_classroom", "kajabi", "teachable", "dropbox", "notion"] as const).map((provider) => ({
-  ...base(`int_maya_${provider}`), ownerId: "usr_maya", provider, status: provider === "google_drive" || provider === "youtube" ? "connected" : "not_connected",
-}));
+const providers = ["google_drive", "youtube", "canvas", "google_classroom", "kajabi", "teachable", "dropbox", "notion"] as const;
+const connectedFor: Record<string, string[]> = { usr_maya: ["google_drive", "youtube"], usr_ortiz: ["google_drive", "canvas"] };
+export const integrations: Integration[] = Object.entries(connectedFor).flatMap(([ownerId, on]) => providers.map((provider) => ({
+  ...base(`int_${ownerId.slice(4)}_${provider}`), ownerId, provider, status: on.includes(provider) ? "connected" as const : "not_connected" as const,
+})));
 
 export const scheduledTasks: ScheduledTask[] = [
   { ...base("sch_maya_draft"), ownerId: "usr_maya", courseId: "crs_inv101", name: "Draft next week's lesson", cadence: "Every Friday at 9am", action: "draft_next_lesson", enabled: true },
