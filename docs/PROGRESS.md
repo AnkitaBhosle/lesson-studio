@@ -2,6 +2,10 @@
 
 One short entry per milestone. Newest first.
 
+## Golden set template (owner work in parallel)
+- `fixtures/golden/`: README (how to write cases, targets, difficulty guide), `RUBRIC.md` (draft), `DECISION-RULE.md` (to fill in before the bakeoff), templates for the five tasks, and one original example case per task.
+- `npm run golden:check` validates every case and prints coverage against targets (15 / 20 / 8 / 8 / 6); it also runs in `npm test`.
+
 ## Scope change · live product by default (Oct 26)
 - The shared link becomes the real product behind access codes: one code per recipient, one workspace per code, start from scratch with live planning and media. The seeded Maya / Dr. Ortiz flows become an optional guided demo from the top bar (zero live calls).
 - Spending limits: $15 per code, $40 per day, $200 total for the site (warning at 75%, live generation pauses at 100% until raised in Lab). Media per lesson: images, diagrams, narration, up to 2 clips.
