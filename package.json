@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "description": "Lesson Studio: turn a teacher's notes, readings and voice memos into finished explainer videos and lecture decks.",
+  "type": "module",
   "workspaces": [
     "apps/*",
     "packages/*",

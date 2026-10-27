@@ -1,1 +1,1 @@
-export const PACKAGE = "@ls/orchestrator";
+export * from "./store";
