@@ -61,6 +61,8 @@ export default async function HomePage() {
               {!s.buildable && <span className="muted" style={{ fontSize: 13, fontWeight: 600 }}>Coming soon</span>}
             </>);
             const target = s.buildable ? (heroStarter?.id === s.id && hero ? `/lessons/${hero.id}/sources` : `/switch?to=${s.persona === "lecturer" ? "usr_ortiz" : "usr_maya"}`) : null;
+            // Plain <a> for /switch: a prefetched Link would switch the demo user without a click.
+            if (target?.startsWith("/switch")) return <a key={s.id} className="starter" href={target}>{inner}</a>;
             return target ? <Link key={s.id} className="starter" href={target}>{inner}</Link> : <div key={s.id} className="starter" aria-disabled="true">{inner}</div>;
           })}
         </div>
