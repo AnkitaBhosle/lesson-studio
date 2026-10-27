@@ -10,8 +10,11 @@ const base = process.argv[2] ?? "http://localhost:3000";
 const shots = process.argv[3];
 if (shots) fs.mkdirSync(shots, { recursive: true });
 
-const browser = await chromium.launch();
-const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+// Behind a proxy (as in the build sandbox), route the browser through it.
+const proxy = process.env.HTTPS_PROXY ? { server: process.env.HTTPS_PROXY } : undefined;
+const browser = await chromium.launch({ proxy });
+const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, ignoreHTTPSErrors: Boolean(proxy) });
+const page = await context.newPage();
 const errors = [];
 page.on("pageerror", (e) => errors.push(e.message));
 page.on("response", (r) => { if (r.url().includes("/api/") && r.status() >= 400) errors.push(`${r.status()} ${r.url()}`); });
@@ -21,7 +24,8 @@ async function shot(name) {
   if (shots) await page.screenshot({ path: `${shots}/${String(++n).padStart(2, "0")}-${name}.png`, fullPage: true });
 }
 const click = (name, role = "button") => page.getByRole(role, { name, exact: false }).first().click();
-const settle = () => page.waitForLoadState("networkidle");
+// "networkidle" never settles on some hosts (analytics beacons), so wait for load plus a short pause.
+const settle = async () => { await page.waitForLoadState("load"); await page.waitForTimeout(600); };
 async function step(name, fn) {
   try { await fn(); await settle(); console.log(`ok  ${name}`); }
   catch (e) { console.log(`FAIL ${name}: ${e.message.split("\n")[0]}`); errors.push(name); }

@@ -22,5 +22,10 @@ One short entry per milestone. Newest first.
 - Specs, diagrams and the locked mock's artboard files are in `specs/`.
 - Decision: no ESLint for now. `tsc --noEmit` and `next build` cover type and build errors; a linter can be added later without changing code.
 
+## Deploy
+- Live at https://lesson-studio-murex.vercel.app (Vercel project `lesson-studio`, root `apps/studio`, `DEMO_MODE=true`).
+- Vercel installs only the app's own dependencies, so `apps/studio` declares the `@ls/*` workspace packages, `zod` and `typescript` directly.
+- Per-visitor in-memory state does not survive across serverless instances (walkthrough failed on the live site). Moved demo state to Redis via the Upstash REST API (`KV_REST_API_URL`/`KV_REST_API_TOKEN` or `UPSTASH_REDIS_REST_*`), one key per visitor, one-week expiry. Without those variables it falls back to in-memory.
+
 ## Blocked
-- Vercel project creation: the Vercel connector can't reach the "ankita-bhosle" team yet (403). Needs the connector re-authorized with access to that team.
+- Redis for the live demo: needs an Upstash Redis store connected to the Vercel project (owner action in the Vercel dashboard).

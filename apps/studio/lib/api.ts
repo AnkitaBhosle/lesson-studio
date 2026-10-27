@@ -9,10 +9,11 @@ type Ctx<P> = { params: Promise<P> };
 export function route<P>(fn: (repo: Repo, params: P, body: Record<string, unknown>, userId: string) => unknown) {
   return async (req: Request, ctx: Ctx<P>) => {
     try {
-      const { repo, user } = await session();
+      const { repo, save, user } = await session();
       const text = req.method === "GET" ? "" : await req.text();
       const body = text ? (JSON.parse(text) as Record<string, unknown>) : {};
       const result = await fn(repo, await ctx.params, body, user.id);
+      await save();
       return NextResponse.json(result ?? { ok: true });
     } catch (e) {
       if (e instanceof FlowError) return NextResponse.json({ error: e.message }, { status: e.status });
