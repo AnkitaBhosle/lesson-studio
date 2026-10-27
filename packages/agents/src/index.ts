@@ -1,1 +1,1 @@
-export const PACKAGE = "@ls/agents";
+export * from "./stubs";
