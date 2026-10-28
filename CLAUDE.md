@@ -37,7 +37,7 @@ If two of these disagree, the higher one wins. If something isn't covered, choos
 - **Guided demo** makes zero live provider calls, whatever the environment. **Live mode** calls providers only through `packages/models` and `packages/media`, which check the spend gate before every call (Spec 03).
 - **Spend messages** to visitors never show amounts or the words cost, credits or budget.
 - **Secrets:** never read, print, commit or log API keys. Never create `.env` files with real values. Keys exist only in Vercel.
-- **Content:** no copied text from books, articles or websites in fixtures or prompts. Write original content or reference by URL.
+- **Content:** no copied text from books, articles or websites in fixtures or prompts. Write original content or reference by URL. Exception: openly licensed (CC BY) source files used only as eval inputs in `fixtures/golden/*/files/`, with attribution in `SOURCES.md`.
 - **OpenStax:** openstax.org books are now CC BY-NC-SA and forbid loading them into LLMs or AI products without written permission. Never fetch openstax.org content into a model (intake, evals, suggested sources). Use CC BY 4.0 copies of earlier editions (LibreTexts, Lumen) or other sources.
 - Keep files small and named for what they do. No dead code, no TODO comments left behind; put open items in `docs/PROGRESS.md`.
 

@@ -3,7 +3,7 @@ id: pl-116-memory-chapter-lecture
 task: planning
 difficulty: hard
 persona: "Intro psychology instructor at a community college; one 50-minute lecture is all the syllabus gives memory"
-why_hard: "Dense, long source: a roughly 30-page chapter with four sections and dozens of studies must fit one 50-minute lecture. The plan has to choose, say what it left out, and keep section locators right. The chapter also holds graphic sexual-assault and abuse case material that should be the teacher's call."
+why_hard: "Dense, long source: a 21-page chapter with four sections and dozens of studies must fit one 50-minute lecture. The plan has to choose, say what it left out, and keep section locators right. The chapter also holds graphic sexual-assault and abuse case material that should be the teacher's call."
 teacher:
   starter: live_lecture
   audience: "First-year students in Intro Psych, many of them working adults; this is their only class on memory"
@@ -15,9 +15,10 @@ request: "One lecture on memory from chapter 8. I can't cover all of it, so pick
 sources:
   - title: "Psychology 2e, Chapter 8: Memory (OpenStax, via LibreTexts)"
     kind: pdf
+    file: files/psychology-2e-ch8-memory.pdf
     url: "https://socialsci.libretexts.org/@api/deki/pages/76922/pdf/8%253A%2bMemory.pdf"
     visibility: cited
-    license: "CC BY 4.0 (OpenStax Psychology 2e, LibreTexts copy)"
+    license: "CC BY 4.0 (OpenStax Psychology 2e by Spielman, Jenkins, Lovett et al., via LibreTexts; stored in repo with attribution)"
 already_known: []
 expect:
   slides_min: 17
@@ -37,5 +38,5 @@ expect:
   should_flag:
     - "Any study, statistic or claim not in chapter 8"
   recap_expected: false
-notes: "Owner to fetch: the chapter PDF (see SOURCES.md)."
+notes: "Stored file: chapter intro plus sections 8.1–8.4, merged in order (21 pages); the URL is the original LibreTexts chapter PDF."
 ---

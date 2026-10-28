@@ -38,7 +38,7 @@ const code = process.env.ACCESS_CODE ?? "LOCAL";
 await step("no code: sent to the Enter screen", async () => { await page.goto(base); await page.waitForURL(/\/enter/); await shot("enter"); });
 await step("wrong code is refused", async () => { await page.getByLabel("Access code").fill("NOPE-NOPE"); await click("Open Lesson Studio"); await page.getByText(/didn't work/).waitFor(); });
 errors.splice(errors.findIndex((e) => e.includes("/api/access")), 1);
-await step("right code opens the studio", async () => { await page.getByLabel("Access code").fill(code); await click("Open Lesson Studio"); await page.getByText("What are you teaching?").waitFor(); await shot("live-home"); });
+await step("right code opens the studio", async () => { await page.getByLabel("Access code").fill(code); await click("Open Lesson Studio"); await page.getByRole("heading", { name: "What are you teaching?" }).waitFor(); await shot("live-home"); });
 
 // ---------- Live: start from scratch ----------
 await step("live: start a lesson", async () => {

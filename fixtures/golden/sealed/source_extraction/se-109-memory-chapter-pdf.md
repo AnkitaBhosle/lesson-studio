@@ -3,13 +3,14 @@ id: se-109-memory-chapter-pdf
 task: source_extraction
 difficulty: hard
 persona: "Intro psychology instructor at a community college; assigned the whole memory chapter and wants a digest with exact section locators"
-why_hard: "Dense, roughly 30-page chapter with four sections, dozens of named studies and many figures; the digest must keep every fact tied to the right section (8.1 How Memory Functions, 8.2 Parts of the Brain Involved with Memory, 8.3 Problems with Memory, 8.4 Ways to Enhance Memory) and keep the dated and the updated short-term-memory capacity figures straight."
+why_hard: "Dense, 21-page chapter with four sections, dozens of named studies and many figures; the digest must keep every fact tied to the right section (8.1 How Memory Functions, 8.2 Parts of the Brain Involved with Memory, 8.3 Problems with Memory, 8.4 Ways to Enhance Memory) and keep the dated and the updated short-term-memory capacity figures straight."
 source:
   kind: pdf
   title: "Psychology 2e, Chapter 8: Memory (OpenStax, via LibreTexts)"
+  file: files/psychology-2e-ch8-memory.pdf
   url: "https://socialsci.libretexts.org/@api/deki/pages/76922/pdf/8%253A%2bMemory.pdf"
   visibility: cited
-  license: "CC BY 4.0 (OpenStax Psychology 2e, LibreTexts copy)"
+  license: "CC BY 4.0 (OpenStax Psychology 2e by Spielman, Jenkins, Lovett et al., via LibreTexts; stored in repo with attribution)"
 expect:
   must_extract:
     - "Memory is encoding, storage and retrieval; encoding can be automatic or effortful, and of three encoding types (semantic, visual, acoustic) Craik and Tulving (1975) found semantic encoding gave the best recall, helped further by the self-reference effect (8.1, Encoding)"
@@ -20,5 +21,5 @@ expect:
     - "Ways to enhance memory: rehearsal, chunking, elaborative rehearsal, mnemonic devices, distributed practice instead of cramming, enough sleep, and regular aerobic exercise (8.4)"
   should_flag_gaps: []
   reading_level: intermediate
-notes: "Owner to fetch: the LibreTexts chapter PDF rate-limited automated download. Section numbers inside this copy match OpenStax (8.1–8.4) even though the LibreTexts page URLs use 8.02–8.05. The chapter includes detailed sexual-assault and abuse case material (8.3); the digest may mention it as sensitive, but must not be judged on doing so."
+notes: "Stored file: chapter intro plus sections 8.1–8.4, merged in order (21 pages); the URL is the original LibreTexts chapter PDF. The chapter includes detailed sexual-assault and abuse case material (8.3); the digest may mention it as sensitive, but must not be judged on doing so."
 ---
