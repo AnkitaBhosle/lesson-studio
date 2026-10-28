@@ -44,7 +44,7 @@ export function draftSchema(deck: boolean) {
     story: z.string().describe("2–3 sentences: how this lesson is told"),
     angles: z.array(z.object({ label: z.string(), story: z.string() })).describe("Exactly three: the first is the chosen story; two genuinely different alternatives"),
     learningObjectives: z.array(z.string()).describe("1 to 5 objectives"),
-    assumptions: z.array(z.string()).describe("Defaults you chose without asking, written as 'I assumed…' completions"),
+    assumptions: z.array(z.string()).describe("Defaults you chose without asking. Each finishes the sentence 'I assumed …' without repeating those words, e.g. 'your learners are new to hospital work'"),
     slides: z.array(S),
     recap: z.object({ fromLessonId: z.string(), summary: z.string(), slides: z.array(S) }).nullable()
       .describe("Only if an earlier lesson in COURSE KNOWLEDGE sets this one up; otherwise null"),

@@ -111,6 +111,9 @@ function toSlide(s: SlideOut, slideId: string, order: number, facts: ReturnType<
   };
 }
 
+/** The page shows each assumption after "I assumed", so drop a repeated lead-in and the closing period. */
+export const tidyAssumption = (a: string) => a.trim().replace(/^i (have )?assumed( that)?\s+/i, "").replace(/\.+$/, "");
+
 function failed(e: unknown, finish: (s: AgentRun["status"], x?: Partial<AgentRun>) => unknown): never {
   if (e instanceof SpendPaused) { finish("failed", { error: `paused: ${e.reason}` }); throw new FlowError(e.message, 429); }
   console.error("[planning]", e instanceof Error ? `${e.name}: ${e.message}`.slice(0, 1000) : e);
@@ -141,7 +144,7 @@ export async function draftPlanLive(repo: Repo, lessonId: string, code: string, 
   const slides = out.slides.map((s, i) => toSlide(s, sid(i), i + 1, facts, deck));
   const plan = repo.put("plans", {
     id: planId, createdAt: t, updatedAt: t, lessonId, version: 1, format: c.lesson.format,
-    story: out.story, chosenAngleId: angles[0]!.angleId, angles, learningObjectives: out.learningObjectives, assumptions: out.assumptions,
+    story: out.story, chosenAngleId: angles[0]!.angleId, angles, learningObjectives: out.learningObjectives, assumptions: out.assumptions.map(tidyAssumption),
     recap: out.recap ? { fromLessonId: out.recap.fromLessonId, summary: out.recap.summary, decision: "pending",
       slides: out.recap.slides.map((s, i) => ({ ...toSlide(s, `${sid(i)}_recap`, 0, facts, deck), section: deck ? "Recap" : undefined, fromRecap: { lessonId: out.recap!.fromLessonId } })) } : undefined,
     slides,

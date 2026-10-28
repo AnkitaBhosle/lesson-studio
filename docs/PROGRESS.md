@@ -3,10 +3,13 @@
 One short entry per milestone. Newest first.
 
 ## M5 · Model layer and real Planning
-- `packages/models`: per-task routing (planning on Sonnet 5.5; extraction, self-check and preference learning on Haiku 5.5 with escalation to Sonnet), prices in one place, the only Anthropic SDK call, and structured output via a forced tool call validated with zod: one repair, then one escalation.
+- `packages/models`: per-task routing (planning on Sonnet 5.5; extraction, self-check and preference learning on Haiku 5.5 with escalation to Sonnet), prices in one place, the only Anthropic SDK call, and structured output (the API's JSON-schema output format; forced tool choice isn't supported on Sonnet 5.5) validated with zod: one repair, then one escalation. The model gets format-specific slide shapes (narration for videos, bullets for decks) so required fields are enforced by the schema.
 - Spend gate (`packages/orchestrator/src/spend.ts`): site switch, $200 total, $40 daily and per-code caps checked before every paid call; counters in Redis move after each call. Defaults are stored limits, editable later in Lab.
 - Real Planning for live workspaces: first drafts and revisions (whole plan or one slide). The model returns only changed, removed and inserted slides; the orchestrator merges, so untouched slides are carried over exactly. Every claim must cite a real fact ID or be flagged; clips are capped; recaps must point at an earlier lesson. Each call writes an AgentRun and CostEvents (with the access code).
 - Guided demo and environments without a model key still use the stub planner.
+- Planning runs in the background (Oct 28): a single request that waits about a minute was cut off by proxies in testing and would be fragile on phones. "Plan" and "Revise" record a running AgentRun, return at once, and do the work after the response (`after()`, 300 s limit); the page polls `/api/lessons/:id/plan/runs/:runId` for ready or failed. A run with no word for 6 minutes counts as failed and the lesson goes back to Sources.
+- Known limit: the background work saves the whole workspace when it finishes, so an edit made elsewhere in the same workspace during that minute can be lost. Fine while one teacher waits on the plan; revisit with per-record writes if it bites.
+- Verified on the live site with the test code: a real plan from pasted notes in about 50 s, then a revision that changed only the named slides. `walkthrough.mjs` now sends a debug header and prints API error bodies.
 - Deviation: the planning prompt lives in `packages/agents/src/planning.ts` rather than `prompts/planning.md`, so prompt and output schema change together. Story-angle switching still swaps the story text only; rewriting slides to a new angle comes with the next planning pass.
 
 ## Sealed golden set done (Oct 27)
@@ -61,4 +64,4 @@ One short entry per milestone. Newest first.
 - `npm run walkthrough -- https://lesson-studio-murex.vercel.app` passes against the live site.
 
 ## Blocked
-- Before M5: `ANTHROPIC_API_KEY`, `ADMIN_TOKEN` and `ACCESS_COOKIE_SECRET` in Vercel. Before M7: `RUNWAYML_API_SECRET` and a Vercel Blob store.
+- Before M6: a Vercel Blob store connected to the project (file uploads). Before M7: `RUNWAYML_API_SECRET` in Vercel.

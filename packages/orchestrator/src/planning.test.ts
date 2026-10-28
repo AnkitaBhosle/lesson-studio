@@ -126,3 +126,11 @@ describe("planning in the background", () => {
     expect(planningStatus(repo, lesson.id, runId)).toMatchObject({ state: "ready", summary: expect.stringMatching(/Draft 2 is ready. I shortened slide 2/) });
   });
 });
+
+describe("assumptions", () => {
+  it("drop a repeated 'I assumed' and the closing period", async () => {
+    const { tidyAssumption } = await import("./planning");
+    expect(tidyAssumption("I assumed that your learners are new.")).toBe("your learners are new");
+    expect(tidyAssumption("a hospital setting..")).toBe("a hospital setting");
+  });
+});
