@@ -28,7 +28,7 @@ const { getSpend } = await import("./spend");
 
 const NOTES = "Hand hygiene stops infections spreading in hospital wards every day. Use alcohol rub unless hands look dirty, then wash with soap. Rub for twenty to thirty seconds until your hands are dry.";
 const slide = (title: string, factIds: string[], extra: Partial<SlideOut> = {}): SlideOut => ({
-  role: "concept", title, narrative: `About ${title}.`, estDurationSec: 20, bullets: [], visual: "A diagram", visualType: "diagram", whyThisVisual: "clear",
+  role: "concept", title, narrative: `About ${title}.`, estDurationSec: 20, visual: "A diagram", visualType: "diagram", whyThisVisual: "clear",
   claims: factIds.length ? [{ text: title, factIds, status: "grounded" }] : [], ...extra,
 });
 
@@ -48,7 +48,7 @@ describe("real planning (orchestrator side)", () => {
     const { repo, lesson, f } = setup();
     const draft: DraftOut = {
       story: "Start with a question.", angles: [{ label: "A", story: "a" }, { label: "B", story: "b" }, { label: "C", story: "c" }],
-      learningObjectives: ["Clean hands correctly"], assumptions: ["this is for new students"], guidelineChecks: [],
+      learningObjectives: ["Clean hands correctly"], assumptions: ["this is for new students"], guidelineChecks: [], recap: null,
       slides: [slide("Why it matters", [f[0]!], { role: "hook" }), slide("Rub or wash", [f[1]!]), slide("How long", [f[2]!])],
     };
     answers.push(draft);
@@ -63,7 +63,7 @@ describe("real planning (orchestrator side)", () => {
 
   it("rejects an answer that cites a fact that doesn't exist", async () => {
     const { repo, lesson } = setup();
-    answers.push({ story: "s", angles: [{ label: "A", story: "a" }, { label: "B", story: "b" }, { label: "C", story: "c" }], learningObjectives: ["x"], assumptions: [], guidelineChecks: [],
+    answers.push({ story: "s", angles: [{ label: "A", story: "a" }, { label: "B", story: "b" }, { label: "C", story: "c" }], learningObjectives: ["x"], assumptions: [], guidelineChecks: [], recap: null,
       slides: [slide("One", ["made_up"]), slide("Two", [])] });
     await expect(draftPlanLive(repo, lesson.id, "LOCAL")).rejects.toThrow(/couldn't finish the plan/);
     expect(repo.get("lessons", lesson.id)?.status).toBe("sourcing");
@@ -71,11 +71,11 @@ describe("real planning (orchestrator side)", () => {
 
   it("a revision changes only the slides it names; the rest are carried over exactly", async () => {
     const { repo, lesson, f } = setup();
-    answers.push({ story: "s", angles: [{ label: "A", story: "a" }, { label: "B", story: "b" }, { label: "C", story: "c" }], learningObjectives: ["x"], assumptions: [], guidelineChecks: [],
+    answers.push({ story: "s", angles: [{ label: "A", story: "a" }, { label: "B", story: "b" }, { label: "C", story: "c" }], learningObjectives: ["x"], assumptions: [], guidelineChecks: [], recap: null,
       slides: [slide("One", [f[0]!]), slide("Two", [f[1]!]), slide("Three", [f[2]!])] });
     const d1 = await draftPlanLive(repo, lesson.id, "LOCAL");
     const target = d1.slides[1]!.slideId;
-    const rev: ReviseOut = { summary: "I rewrote slide 2.", changes: [{ slideId: target, slide: slide("Two, shorter", [f[1]!]) }], removeSlideIds: [], insert: [] };
+    const rev: ReviseOut = { summary: "I rewrote slide 2.", story: null, changes: [{ slideId: target, slide: slide("Two, shorter", [f[1]!]) }], removeSlideIds: [], insert: [] };
     answers.push(rev);
     const { plan, summary } = await revisePlanLive(repo, lesson.id, "LOCAL", { text: "Shorter slide 2", via: "typed" });
     expect(plan.version).toBe(2);

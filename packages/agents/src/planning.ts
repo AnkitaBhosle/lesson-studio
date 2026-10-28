@@ -13,41 +13,57 @@ const ClaimOut = z.object({
   status: z.enum(["grounded", "general_knowledge_flagged"]),
 });
 const VisualTypeOut = z.enum(["title_card", "diagram", "still_image", "generated_clip"]);
-export const SlideOut = z.object({
-  role: z.enum(["hook", "context", "concept", "example", "misconception", "recap", "cta", "title", "question"]),
-  section: z.string().optional().describe("Deck section name; omit for explainer videos"),
+const Role = z.enum(["hook", "context", "concept", "example", "misconception", "recap", "cta", "title", "question"]);
+const common = {
+  role: Role,
   title: z.string(),
-  narrative: z.string().optional().describe("Explainer video only: exactly what is said on this slide"),
-  estDurationSec: z.number().optional().describe("Explainer video only"),
-  bullets: z.array(z.string()).describe("Deck only: the text on the slide, short. Empty for explainer videos"),
-  speakerNotes: z.string().optional().describe("Deck only"),
   visual: z.string().describe("What the viewer sees, described for the teacher in one plain sentence"),
   visualType: VisualTypeOut,
   whyThisVisual: z.string().describe("Internal: why this visual type teaches best here"),
   claims: z.array(ClaimOut),
+};
+/** Explainer video slide: what is said, and for how long. */
+export const VideoSlideOut = z.object({
+  ...common,
+  narrative: z.string().describe("Exactly what is said on this slide, as the teacher would say it"),
+  estDurationSec: z.number().describe("Seconds this slide is on screen"),
 });
-export type SlideOut = z.infer<typeof SlideOut>;
+/** Lecture deck slide: section, on-slide text and speaker notes. */
+export const DeckSlideOut = z.object({
+  ...common,
+  section: z.string().describe("The section this slide belongs to"),
+  bullets: z.array(z.string()).describe("The short text on the slide (a title slide may have one line)"),
+  speakerNotes: z.string().describe("What the teacher says while this slide is up"),
+});
+export type SlideOut = z.infer<typeof VideoSlideOut> | z.infer<typeof DeckSlideOut>;
 
-export const DraftOut = z.object({
-  story: z.string().describe("2–3 sentences: how this lesson is told"),
-  angles: z.array(z.object({ label: z.string(), story: z.string() })).length(3).describe("The first is the chosen story; two genuinely different alternatives"),
-  learningObjectives: z.array(z.string()).min(1).max(5),
-  assumptions: z.array(z.string()).describe("Defaults you chose without asking, written as 'I assumed…' completions"),
-  slides: z.array(SlideOut).min(2),
-  recap: z.object({ fromLessonId: z.string(), summary: z.string(), slides: z.array(SlideOut).min(1).max(3) }).optional()
-    .describe("Only if an earlier lesson in COURSE KNOWLEDGE sets this one up"),
-  guidelineChecks: z.array(z.object({ guidelineId: z.string(), passed: z.boolean(), note: z.string() })),
-});
-export type DraftOut = z.infer<typeof DraftOut>;
+/** Output shapes depend on the format, so every required field really is required. */
+export function draftSchema(deck: boolean) {
+  const S = deck ? DeckSlideOut : VideoSlideOut;
+  return z.object({
+    story: z.string().describe("2–3 sentences: how this lesson is told"),
+    angles: z.array(z.object({ label: z.string(), story: z.string() })).describe("Exactly three: the first is the chosen story; two genuinely different alternatives"),
+    learningObjectives: z.array(z.string()).describe("1 to 5 objectives"),
+    assumptions: z.array(z.string()).describe("Defaults you chose without asking, written as 'I assumed…' completions"),
+    slides: z.array(S),
+    recap: z.object({ fromLessonId: z.string(), summary: z.string(), slides: z.array(S) }).nullable()
+      .describe("Only if an earlier lesson in COURSE KNOWLEDGE sets this one up; otherwise null"),
+    guidelineChecks: z.array(z.object({ guidelineId: z.string(), passed: z.boolean(), note: z.string() })),
+  });
+}
+export type DraftOut = z.infer<ReturnType<typeof draftSchema>>;
 
-export const ReviseOut = z.object({
-  summary: z.string().describe("One or two plain sentences for the teacher, e.g. 'I changed slides 3 and 6 and marked them.'"),
-  story: z.string().optional().describe("Only if the note changes how the lesson is told"),
-  changes: z.array(z.object({ slideId: z.string(), slide: SlideOut })).describe("Slides you rewrote, by slideId. Leave every other slide out"),
-  removeSlideIds: z.array(z.string()),
-  insert: z.array(z.object({ afterSlideId: z.string().nullable(), slide: SlideOut })).describe("New slides; afterSlideId null = at the start"),
-});
-export type ReviseOut = z.infer<typeof ReviseOut>;
+export function reviseSchema(deck: boolean) {
+  const S = deck ? DeckSlideOut : VideoSlideOut;
+  return z.object({
+    summary: z.string().describe("One or two plain sentences for the teacher, e.g. 'I changed slides 3 and 6 and marked them.'"),
+    story: z.string().nullable().describe("A new story only if the note changes how the lesson is told; otherwise null"),
+    changes: z.array(z.object({ slideId: z.string(), slide: S })).describe("Slides you rewrote, by slideId. Leave every other slide out"),
+    removeSlideIds: z.array(z.string()),
+    insert: z.array(z.object({ afterSlideId: z.string().nullable(), slide: S })).describe("New slides; afterSlideId null = at the start"),
+  });
+}
+export type ReviseOut = z.infer<ReturnType<typeof reviseSchema>>;
 
 // ---------- Context ----------
 export interface PlanningContext {
@@ -122,9 +138,8 @@ export function checkSlides(slides: SlideOut[], facts: Map<string, unknown>, dec
       if (c.status === "grounded" && c.factIds.length === 0) return `slide ${i + 1} has a grounded claim with no fact IDs; cite one or flag it`;
       if (c.status === "general_knowledge_flagged" && c.factIds.length) return `slide ${i + 1} has a flagged claim with fact IDs; flagged claims cite nothing`;
     }
-    if (!deck && !s.narrative?.trim()) return `slide ${i + 1} needs narration`;
-    if (deck && s.role !== "title" && s.bullets.length === 0) return `slide ${i + 1} needs bullets`;
-    if (/\bscenes?\b/i.test(JSON.stringify(s))) return `slide ${i + 1} uses the word "scene"; say "slide"`;
+    if (!deck && !("narrative" in s && s.narrative.trim())) return `slide ${i + 1} needs narration`;
+    if (deck && s.role !== "title" && !("bullets" in s && s.bullets.length)) return `slide ${i + 1} needs bullets`;
   }
   return null;
 }
@@ -132,6 +147,9 @@ export function checkSlides(slides: SlideOut[], facts: Map<string, unknown>, dec
 export function checkDraft(d: DraftOut, c: PlanningContext): string | null {
   const facts = factIndex(c.sources);
   const deck = c.lesson.format === "lecture_deck";
+  if (d.angles.length !== 3) return `give exactly three angles (you gave ${d.angles.length})`;
+  if (d.learningObjectives.length < 1 || d.learningObjectives.length > 5) return "give 1 to 5 learning objectives";
+  if (d.slides.length < 2) return "a plan needs at least two slides";
   const problem = checkSlides([...d.slides, ...(d.recap?.slides ?? [])], facts, deck);
   if (problem) return problem;
   const clips = d.slides.filter((s) => s.visualType === "generated_clip").length;

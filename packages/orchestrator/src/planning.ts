@@ -1,7 +1,8 @@
 import { randomUUID } from "node:crypto";
+import type { ZodType } from "zod";
 import type { AgentRun, Repo, Slide, Source, TeachingPlan } from "@ls/schema";
 import {
-  checkDraft, checkRevision, DraftOut, draftPrompt, factIndex, PLANNING_SYSTEM, ReviseOut, revisePrompt,
+  checkDraft, checkRevision, draftSchema, draftPrompt, reviseSchema, type DraftOut, type ReviseOut, factIndex, PLANNING_SYSTEM, revisePrompt,
   type PlanningContext, type SlideOut,
 } from "@ls/agents";
 import { callStructured, ROUTING, StructuredOutputError, type CallLog } from "@ls/models";
@@ -41,12 +42,14 @@ function runLogger(repo: Repo, lessonId: string, code: string, task: "planning")
 }
 
 function toSlide(s: SlideOut, slideId: string, order: number, facts: ReturnType<typeof factIndex>, deck: boolean): Slide {
+  const video = "narrative" in s ? s : undefined;
+  const lecture = "bullets" in s ? s : undefined;
   return {
-    slideId, order, role: s.role, section: deck ? s.section : undefined, title: s.title,
-    narrative: deck ? undefined : s.narrative, estDurationSec: deck ? undefined : s.estDurationSec,
-    bullets: deck ? s.bullets : [], speakerNotes: deck ? s.speakerNotes : undefined,
+    slideId, order, role: s.role, section: deck ? lecture?.section : undefined, title: s.title,
+    narrative: deck ? undefined : video?.narrative, estDurationSec: deck ? undefined : video?.estDurationSec,
+    bullets: deck ? lecture?.bullets ?? [] : [], speakerNotes: deck ? lecture?.speakerNotes : undefined,
     layout: deck ? (s.role === "title" ? "title" : s.role === "question" ? "question" : s.visualType === "generated_clip" ? "clip" : "image_left") : undefined,
-    visual: s.visual, visualType: s.visualType, visualPrompt: s.visual, whyThisVisual: s.whyThisVisual,
+    visual: s.visual.replace(/\bscene\b/gi, "picture").replace(/\bscenes\b/gi, "pictures"), visualType: s.visualType, visualPrompt: s.visual, whyThisVisual: s.whyThisVisual,
     claims: s.claims.map((c) => ({
       text: c.text, status: c.status,
       citations: c.factIds.map((id) => { const f = facts.get(id)!; return { sourceId: f.sourceId, factId: id, locator: f.locator }; }),
@@ -70,7 +73,7 @@ export async function draftPlanLive(repo: Repo, lessonId: string, code: string):
   repo.put("lessons", { ...c.lesson, status: "planning", updatedAt: now() });
   let out: DraftOut;
   try {
-    out = (await callStructured({ task: "planning", system: PLANNING_SYSTEM, user: draftPrompt(c), schema: DraftOut,
+    out = (await callStructured({ task: "planning", system: PLANNING_SYSTEM, user: draftPrompt(c), schema: draftSchema(c.lesson.format === "lecture_deck") as unknown as ZodType<DraftOut>,
       gate, log, validate: (d) => checkDraft(d, c) })).value;
   } catch (e) {
     repo.put("lessons", { ...c.lesson, status: "sourcing", updatedAt: now() });
@@ -107,7 +110,7 @@ export async function revisePlanLive(repo: Repo, lessonId: string, code: string,
   const { log, finish, gate } = runLogger(repo, lessonId, code, "planning");
   let out: ReviseOut;
   try {
-    out = (await callStructured({ task: "planning", system: PLANNING_SYSTEM, user: revisePrompt(c, plan, input.text, input.slideId), schema: ReviseOut,
+    out = (await callStructured({ task: "planning", system: PLANNING_SYSTEM, user: revisePrompt(c, plan, input.text, input.slideId), schema: reviseSchema(c.lesson.format === "lecture_deck") as unknown as ZodType<ReviseOut>,
       gate, log, validate: (r) => checkRevision(r, plan, c, input.slideId) })).value;
   } catch (e) {
     failed(e, finish);
@@ -133,7 +136,7 @@ export async function revisePlanLive(repo: Repo, lessonId: string, code: string,
   repo.put("plans", { ...plan, status: "superseded", updatedAt: now() });
   const next = repo.put("plans", {
     ...plan, id: newId("pln"), version, parentPlanId: plan.id, createdAt: now(), updatedAt: now(), status: "awaiting_approval",
-    revisionRequest: { text: input.text, via: input.via, scopeSlideId: input.slideId }, story: out.story ?? plan.story, slides,
+    revisionRequest: { text: input.text, via: input.via, scopeSlideId: input.slideId }, story: out.story || plan.story, slides,
   });
   finish("succeeded", { outputRef: `plan:${next.id}` });
   repo.put("lessons", { ...repo.get("lessons", lessonId)!, currentPlanId: next.id, updatedAt: now() });
