@@ -57,6 +57,7 @@ function toSlide(s: SlideOut, slideId: string, order: number, facts: ReturnType<
 
 function failed(e: unknown, finish: (s: AgentRun["status"], x?: Partial<AgentRun>) => unknown): never {
   if (e instanceof SpendPaused) { finish("failed", { error: `paused: ${e.reason}` }); throw new FlowError(e.message, 429); }
+  console.error("[planning]", e instanceof Error ? `${e.name}: ${e.message}`.slice(0, 1000) : e);
   finish(e instanceof StructuredOutputError ? "needs_user" : "failed", { error: String(e).slice(0, 500) });
   throw new FlowError("I couldn't finish the plan. Try again, or shorten your notes.", 502);
 }
