@@ -6,7 +6,8 @@ const now = () => new Date().toISOString();
 const newId = (prefix: string) => `${prefix}_${randomUUID().replace(/-/g, "").slice(0, 10)}`;
 
 export class FlowError extends Error {
-  constructor(message: string, public status = 400) { super(message); }
+  /** detail: internal reason, returned only to requests that ask for debugging (never shown in the UI). */
+  constructor(message: string, public status = 400, public detail?: string) { super(message); }
 }
 
 // ---------- Reading ----------

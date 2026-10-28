@@ -62,7 +62,7 @@ function failed(e: unknown, finish: (s: AgentRun["status"], x?: Partial<AgentRun
   if (e instanceof SpendPaused) { finish("failed", { error: `paused: ${e.reason}` }); throw new FlowError(e.message, 429); }
   console.error("[planning]", e instanceof Error ? `${e.name}: ${e.message}`.slice(0, 1000) : e);
   finish(e instanceof StructuredOutputError ? "needs_user" : "failed", { error: String(e).slice(0, 500) });
-  throw new FlowError("I couldn't finish the plan. Try again, or shorten your notes.", 502);
+  throw new FlowError("I couldn't finish the plan. Try again, or shorten your notes.", 502, String(e).slice(0, 500));
 }
 
 export async function draftPlanLive(repo: Repo, lessonId: string, code: string): Promise<TeachingPlan> {
