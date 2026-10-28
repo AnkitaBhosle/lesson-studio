@@ -11,8 +11,10 @@ const onVercel = () => Boolean(process.env.VERCEL);
 export const DEFAULT_LIMITS: Limits = { totalCredits: 20000, dailyCredits: 4000, warnAtFraction: 0.75, liveEnabled: true, clipsPerLesson: 2 };
 
 export type PauseReason = "switched_off" | "total" | "daily" | "code";
+export const PAUSED_MESSAGE = "Lesson Studio isn't making new lessons right now. You can keep editing, or try the guided demo.";
+
 export class SpendPaused extends Error {
-  constructor(public reason: PauseReason) { super("Lesson Studio isn't making new lessons right now. You can keep editing, or try the guided demo."); }
+  constructor(public reason: PauseReason) { super(PAUSED_MESSAGE); }
 }
 
 const today = () => new Date().toISOString().slice(0, 10);

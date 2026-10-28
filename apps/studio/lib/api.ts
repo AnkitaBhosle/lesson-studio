@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
-import { FlowError } from "@ls/orchestrator";
+import { after, NextResponse } from "next/server";
+import { FlowError, openRepo } from "@ls/orchestrator";
 import type { Repo } from "@ls/schema";
 import { loadSession, NoAccess, type Session } from "./server";
 
@@ -16,6 +16,8 @@ export function route<P>(fn: Handler<P>, opts: { liveOnly?: boolean } = {}) {
       const body = text ? (JSON.parse(text) as Record<string, unknown>) : {};
       const result = await fn(s.repo, await ctx.params, body, s.user.id, s);
       await s.save();
+      // Failure details are for debugging only.
+      if (result && typeof result === "object" && "detail" in result && !req.headers.get("x-ls-debug")) delete (result as { detail?: unknown }).detail;
       return NextResponse.json(result ?? { ok: true });
     } catch (e) {
       if (e instanceof NoAccess) return NextResponse.json({ error: "Enter your access code first." }, { status: 401 });
@@ -24,6 +26,15 @@ export function route<P>(fn: Handler<P>, opts: { liveOnly?: boolean } = {}) {
       return NextResponse.json({ error: "Something went wrong. Please try again." }, { status: 500 });
     }
   };
+}
+
+/** Runs work after the response is sent, on a fresh copy of the workspace, then saves it. */
+export function inBackground(s: Session, work: (repo: Repo) => Promise<unknown>) {
+  after(async () => {
+    const w = await openRepo({ code: s.code, mode: s.mode });
+    await work(w.repo);
+    await w.save();
+  });
 }
 
 export const str = (v: unknown) => (typeof v === "string" ? v : "");

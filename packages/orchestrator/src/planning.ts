@@ -7,7 +7,7 @@ import {
 } from "@ls/agents";
 import { callStructured, ROUTING, StructuredOutputError, type CallLog } from "@ls/models";
 import { FlowError, getLessonContext } from "./lessons";
-import { checkSpend, getLimits, recordSpend, SpendPaused } from "./spend";
+import { checkSpend, getLimits, PAUSED_MESSAGE, recordSpend, SpendPaused } from "./spend";
 
 /** Real Planning (Spec 03 §2) for live workspaces: first drafts and revisions. */
 const now = () => new Date().toISOString();
@@ -24,11 +24,63 @@ async function contextFor(repo: Repo, lessonId: string): Promise<PlanningContext
   };
 }
 
+function newRun(repo: Repo, lessonId: string): AgentRun {
+  return repo.put("agentRuns", { id: newId("run"), createdAt: now(), updatedAt: now(), agent: "planning", lessonId, inputRef: `lesson:${lessonId}`, status: "running", steps: [],
+    routing: { task: "planning", chosenModel: ROUTING.planning.model, reason: "fixed_config" } });
+}
+
+/**
+ * Planning takes up to a couple of minutes, so it runs in the background: this records a running AgentRun
+ * (saved with the request), and the work picks it up by id. The page polls `planningStatus`.
+ */
+export async function startPlanning(repo: Repo, lessonId: string, kind: "draft" | "revise", input?: { text: string }): Promise<string> {
+  const c = await contextFor(repo, lessonId);
+  const busy = latestRun(repo, lessonId);
+  if (busy?.status === "running" && !stale(busy)) throw new FlowError("I'm already working on this plan");
+  if (kind === "draft") {
+    if (c.lesson.currentPlanId) throw new FlowError("This lesson already has a plan");
+    if (!c.sources.some((s) => s.digest?.quotableFacts.length)) throw new FlowError("Add your notes first, so the plan is built from what you know");
+    repo.put("lessons", { ...c.lesson, status: "planning", updatedAt: now() });
+  } else {
+    if (!c.lesson.currentPlanId) throw new FlowError("This lesson has no plan yet");
+    if (c.lesson.status !== "plan_review") throw new FlowError("The plan can only be changed before it is approved");
+    if (!input?.text.trim()) throw new FlowError("Tell me what to change");
+  }
+  return newRun(repo, lessonId).id;
+}
+
+const STALE_MS = 6 * 60_000;
+const stale = (r: AgentRun) => Date.now() - Date.parse(r.updatedAt) > STALE_MS;
+const latestRun = (repo: Repo, lessonId: string) =>
+  repo.list("agentRuns", (r) => r.lessonId === lessonId && r.agent === "planning").sort((a, b) => b.createdAt.localeCompare(a.createdAt))[0];
+
+export type PlanningStatus =
+  | { state: "working" }
+  | { state: "ready"; planId: string; summary?: string }
+  | { state: "failed"; error: string; detail?: string };
+
+/** What the page shows while it waits: still working, ready (with the plan), or a plain-language failure. */
+export function planningStatus(repo: Repo, lessonId: string, runId: string): PlanningStatus {
+  const run = repo.get("agentRuns", runId);
+  if (!run || run.lessonId !== lessonId) throw new FlowError("Couldn't find that planning request", 404);
+  if (run.status === "running") {
+    if (!stale(run)) return { state: "working" };
+    const lesson = repo.get("lessons", lessonId);
+    if (lesson?.status === "planning") repo.put("lessons", { ...lesson, status: "sourcing", updatedAt: now() });
+    repo.put("agentRuns", { ...run, status: "failed", error: "timed out", updatedAt: now() });
+    return { state: "failed", error: "That took too long. Please try again.", detail: "timed out" };
+  }
+  if (run.status === "succeeded" && run.outputRef?.startsWith("plan:")) {
+    const summary = run.steps.find((s) => s.kind === "handoff")?.detail;
+    return { state: "ready", planId: run.outputRef.slice(5), summary };
+  }
+  const paused = run.error?.startsWith("paused:");
+  return { state: "failed", error: paused ? PAUSED_MESSAGE : "I couldn't finish the plan. Try again, or shorten your notes.", detail: run.error };
+}
+
 /** One AgentRun per call, plus a CostEvent and spend counters for every paid model call. */
-function runLogger(repo: Repo, lessonId: string, code: string, task: "planning") {
-  const run: AgentRun = { id: newId("run"), createdAt: now(), updatedAt: now(), agent: "planning", lessonId, inputRef: `lesson:${lessonId}`, status: "running", steps: [],
-    routing: { task, chosenModel: ROUTING[task].model, reason: "fixed_config" } };
-  repo.put("agentRuns", run);
+function runLogger(repo: Repo, lessonId: string, code: string, runId?: string) {
+  const run: AgentRun = (runId && repo.get("agentRuns", runId)) || newRun(repo, lessonId);
   const log: CallLog = {
     step: (kind, detail) => run.steps.push({ at: now(), kind, detail }),
     cost: async (e) => {
@@ -38,7 +90,8 @@ function runLogger(repo: Repo, lessonId: string, code: string, task: "planning")
     },
   };
   const finish = (status: AgentRun["status"], extra: Partial<AgentRun> = {}) => repo.put("agentRuns", { ...run, ...extra, status, updatedAt: now() });
-  return { log, finish, gate: () => checkSpend(code) };
+  const handoff = (detail: string) => run.steps.push({ at: now(), kind: "handoff", detail });
+  return { log, finish, handoff, gate: () => checkSpend(code) };
 }
 
 function toSlide(s: SlideOut, slideId: string, order: number, facts: ReturnType<typeof factIndex>, deck: boolean): Slide {
@@ -65,11 +118,11 @@ function failed(e: unknown, finish: (s: AgentRun["status"], x?: Partial<AgentRun
   throw new FlowError("I couldn't finish the plan. Try again, or shorten your notes.", 502, String(e).slice(0, 500));
 }
 
-export async function draftPlanLive(repo: Repo, lessonId: string, code: string): Promise<TeachingPlan> {
+export async function draftPlanLive(repo: Repo, lessonId: string, code: string, runId?: string): Promise<TeachingPlan> {
   const c = await contextFor(repo, lessonId);
   if (c.lesson.currentPlanId) return repo.get("plans", c.lesson.currentPlanId)!;
   if (!c.sources.some((s) => s.digest?.quotableFacts.length)) throw new FlowError("Add your notes first, so the plan is built from what you know");
-  const { log, finish, gate } = runLogger(repo, lessonId, code, "planning");
+  const { log, finish, gate } = runLogger(repo, lessonId, code, runId);
   repo.put("lessons", { ...c.lesson, status: "planning", updatedAt: now() });
   let out: DraftOut;
   try {
@@ -101,13 +154,13 @@ export async function draftPlanLive(repo: Repo, lessonId: string, code: string):
   return plan;
 }
 
-export async function revisePlanLive(repo: Repo, lessonId: string, code: string, input: { text: string; via: "typed" | "dictated"; slideId?: string }) {
+export async function revisePlanLive(repo: Repo, lessonId: string, code: string, input: { text: string; via: "typed" | "dictated"; slideId?: string }, runId?: string) {
   const c = await contextFor(repo, lessonId);
   const plan = c.lesson.currentPlanId ? repo.get("plans", c.lesson.currentPlanId) : undefined;
   if (!plan) throw new FlowError("This lesson has no plan yet");
   if (c.lesson.status !== "plan_review") throw new FlowError("The plan can only be changed before it is approved");
   if (!input.text.trim()) throw new FlowError("Tell me what to change");
-  const { log, finish, gate } = runLogger(repo, lessonId, code, "planning");
+  const { log, finish, handoff, gate } = runLogger(repo, lessonId, code, runId);
   let out: ReviseOut;
   try {
     out = (await callStructured({ task: "planning", system: PLANNING_SYSTEM, user: revisePrompt(c, plan, input.text, input.slideId), schema: reviseSchema(c.lesson.format === "lecture_deck") as unknown as ZodType<ReviseOut>,
@@ -138,10 +191,25 @@ export async function revisePlanLive(repo: Repo, lessonId: string, code: string,
     ...plan, id: newId("pln"), version, parentPlanId: plan.id, createdAt: now(), updatedAt: now(), status: "awaiting_approval",
     revisionRequest: { text: input.text, via: input.via, scopeSlideId: input.slideId }, story: out.story || plan.story, slides,
   });
+  const summary = `Draft ${version} is ready. ${out.summary} Your earlier draft is saved.`;
+  handoff(summary);
   finish("succeeded", { outputRef: `plan:${next.id}` });
   repo.put("lessons", { ...repo.get("lessons", lessonId)!, currentPlanId: next.id, updatedAt: now() });
-  return { plan: next, summary: `Draft ${version} is ready. ${out.summary} Your earlier draft is saved.` };
+  return { plan: next, summary };
 }
 
 /** Live planning runs only in live mode with a model key configured; everything else uses the stub. */
 export { liveModelsAvailable } from "@ls/models";
+
+/** The background half of `startPlanning`. Never throws: the outcome is on the AgentRun for `planningStatus`. */
+export async function runPlanning(repo: Repo, lessonId: string, code: string, runId: string, input?: { text: string; via: "typed" | "dictated"; slideId?: string }) {
+  try {
+    if (input) await revisePlanLive(repo, lessonId, code, input, runId);
+    else await draftPlanLive(repo, lessonId, code, runId);
+  } catch (e) {
+    const run = repo.get("agentRuns", runId);
+    if (run?.status === "running") repo.put("agentRuns", { ...run, status: "failed", error: String(e).slice(0, 500), updatedAt: now() });
+    const lesson = repo.get("lessons", lessonId);
+    if (!input && lesson?.status === "planning") repo.put("lessons", { ...lesson, status: "sourcing", updatedAt: now() });
+  }
+}

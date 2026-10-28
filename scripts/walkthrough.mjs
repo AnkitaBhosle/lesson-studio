@@ -15,10 +15,16 @@ if (shots) fs.mkdirSync(shots, { recursive: true });
 const proxy = process.env.HTTPS_PROXY ? { server: process.env.HTTPS_PROXY } : undefined;
 const browser = await chromium.launch({ proxy });
 const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, ignoreHTTPSErrors: Boolean(proxy) });
+// Ask the API for failure details, so a failed step says why.
+await context.setExtraHTTPHeaders({ "x-ls-debug": "1" });
 const page = await context.newPage();
 const errors = [];
 page.on("pageerror", (e) => errors.push(e.message));
-page.on("response", (r) => { if (r.url().includes("/api/") && r.status() >= 400) errors.push(`${r.status()} ${r.url()}`); });
+page.on("response", async (r) => {
+  if (!r.url().includes("/api/") || r.status() < 400) return;
+  const body = await r.text().catch(() => "");
+  errors.push(`${r.status()} ${r.url()} ${body.slice(0, 400)}`);
+});
 
 let n = 0;
 async function shot(name) {
@@ -52,10 +58,10 @@ await step("live: paste notes", async () => {
   await page.getByRole("heading", { name: "Your notes" }).waitFor(); await shot("live-sources");
 });
 // Live planning may call the real model: allow up to two minutes per step.
-await step("live: plan the lesson", async () => { await click("Plan the lesson"); await page.waitForURL(/plan/, { timeout: 120_000 }); await page.getByText("Teaching plan").waitFor(); await shot("live-plan"); });
+await step("live: plan the lesson", async () => { await click("Plan the lesson"); await page.waitForURL(/plan/, { timeout: 170_000 }); await page.getByText("Teaching plan").waitFor(); await shot("live-plan"); });
 await step("live: revise from a note", async () => {
   await page.getByLabel("Tell me what to change").fill("Make it a little shorter and add a quick check question for students");
-  await click("Revise the plan"); await page.getByText(/Draft 2 is ready/).waitFor({ timeout: 120_000 }); await shot("live-plan-revised");
+  await click("Revise the plan"); await page.getByText(/Draft 2 is ready/).waitFor({ timeout: 170_000 }); await shot("live-plan-revised");
 });
 
 // ---------- Guided demo: Maya ----------

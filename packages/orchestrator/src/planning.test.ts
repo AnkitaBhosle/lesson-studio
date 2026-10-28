@@ -23,7 +23,7 @@ vi.mock("@ls/models", () => ({
 }));
 
 const { addSource, createLesson } = await import("./create");
-const { draftPlanLive, revisePlanLive } = await import("./planning");
+const { draftPlanLive, planningStatus, revisePlanLive, runPlanning, startPlanning } = await import("./planning");
 const { getSpend } = await import("./spend");
 
 const NOTES = "Hand hygiene stops infections spreading in hospital wards every day. Use alcohol rub unless hands look dirty, then wash with soap. Rub for twenty to thirty seconds until your hands are dry.";
@@ -84,5 +84,45 @@ describe("real planning (orchestrator side)", () => {
     expect(plan.slides[2]).toEqual(d1.slides[2]);
     expect(plan.slides[1]!.changedInVersion).toBe(2);
     expect(repo.get("plans", d1.id)?.status).toBe("superseded");
+  });
+});
+
+describe("planning in the background", () => {
+  beforeEach(() => { answers.length = 0; });
+
+  it("reports working, then ready with the plan; a second start while busy is refused", async () => {
+    const { repo, lesson, f } = setup();
+    const runId = await startPlanning(repo, lesson.id, "draft");
+    expect(repo.get("lessons", lesson.id)?.status).toBe("planning");
+    expect(planningStatus(repo, lesson.id, runId)).toEqual({ state: "working" });
+    await expect(startPlanning(repo, lesson.id, "draft")).rejects.toThrow(/already working/);
+    answers.push({ story: "s", angles: [{ label: "A", story: "a" }, { label: "B", story: "b" }, { label: "C", story: "c" }], learningObjectives: ["x"], assumptions: [], guidelineChecks: [], recap: null,
+      slides: [slide("One", [f[0]!]), slide("Two", [f[1]!])] });
+    await runPlanning(repo, lesson.id, "LOCAL", runId);
+    const st = planningStatus(repo, lesson.id, runId);
+    expect(st.state).toBe("ready");
+    expect(repo.list("agentRuns")).toHaveLength(1);
+  });
+
+  it("a failed run gives a plain message and puts the lesson back, without throwing", async () => {
+    const { repo, lesson } = setup();
+    const runId = await startPlanning(repo, lesson.id, "draft");
+    answers.push({ story: "s", angles: [], learningObjectives: ["x"], assumptions: [], guidelineChecks: [], recap: null, slides: [] });
+    await runPlanning(repo, lesson.id, "LOCAL", runId);
+    const st = planningStatus(repo, lesson.id, runId);
+    expect(st).toMatchObject({ state: "failed", error: expect.stringMatching(/couldn't finish the plan/) });
+    expect(repo.get("lessons", lesson.id)?.status).toBe("sourcing");
+  });
+
+  it("a revision's summary comes back with the status", async () => {
+    const { repo, lesson, f } = setup();
+    answers.push({ story: "s", angles: [{ label: "A", story: "a" }, { label: "B", story: "b" }, { label: "C", story: "c" }], learningObjectives: ["x"], assumptions: [], guidelineChecks: [], recap: null,
+      slides: [slide("One", [f[0]!]), slide("Two", [f[1]!])] });
+    const d1 = await draftPlanLive(repo, lesson.id, "LOCAL");
+    const input = { text: "Shorter slide 2", via: "typed" as const };
+    const runId = await startPlanning(repo, lesson.id, "revise", input);
+    answers.push({ summary: "I shortened slide 2.", story: null, changes: [{ slideId: d1.slides[1]!.slideId, slide: slide("Two", [f[1]!]) }], removeSlideIds: [], insert: [] });
+    await runPlanning(repo, lesson.id, "LOCAL", runId, input);
+    expect(planningStatus(repo, lesson.id, runId)).toMatchObject({ state: "ready", summary: expect.stringMatching(/Draft 2 is ready. I shortened slide 2/) });
   });
 });

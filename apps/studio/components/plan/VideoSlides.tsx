@@ -53,7 +53,7 @@ function VideoSlide({ slide: s, time, view, api }: { slide: Slide; time: string;
     setEditing(false);
   }
   async function rewrite() {
-    if (await api.call("POST", `${base}/plan/revise`, { text: note, via: "typed", slideId: s.slideId })) { setAsking(false); setNote(""); }
+    if (await api.plan(view.lessonId, "plan/revise", { text: note, via: "typed", slideId: s.slideId })) { setAsking(false); setNote(""); }
   }
 
   return (

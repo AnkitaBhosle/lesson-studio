@@ -48,13 +48,14 @@ export function AddSources({ lessonId }: { lessonId: string }) {
 /** Live mode: the first draft of the plan, built from the sources. */
 export function PlanButton({ lessonId, label, ready }: { lessonId: string; label: string; ready: boolean }) {
   const router = useRouter();
-  const { call, pending, error } = useCall();
+  const { plan, pending, error } = useCall();
   return (
     <div className="stack" style={{ gap: 8 }}>
       <button className="btn btn-primary" type="button" disabled={pending || !ready}
-        onClick={async () => { if (await call("POST", `/api/lessons/${lessonId}/plan`)) router.push(`/lessons/${lessonId}/plan`); }}>
+        onClick={async () => { if (await plan(lessonId, "plan")) router.push(`/lessons/${lessonId}/plan`); }}>
         {pending ? "Planning…" : label} <Arrow />
       </button>
+      {pending && <span className="muted" role="status" style={{ fontSize: 13 }}>Reading your notes and drafting the lesson. This takes about a minute.</span>}
       {!ready && <span className="muted" style={{ fontSize: 13 }}>Add your notes first, so the plan is built from what you know.</span>}
       {error && <p className="error" role="alert">{error}</p>}
     </div>

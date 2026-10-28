@@ -42,8 +42,9 @@ export function PlanAssistant({ view, api, ask, setAsk, via, dictation }: { view
   const base = `/api/lessons/${lessonId}`;
 
   async function revise() {
-    const r = await api.call<{ summary: string }>("POST", `${base}/plan/revise`, { text: ask, via });
-    if (r) { setRevised(r.summary); setAsk(""); }
+    setRevised(null);
+    const r = await api.plan(lessonId, "plan/revise", { text: ask, via });
+    if (r) { setRevised(r.summary ?? null); setAsk(""); }
   }
   async function approve() {
     if (await api.call("POST", `${base}/plan/approve`)) router.push(`/lessons/${lessonId}/preview`);
@@ -76,6 +77,7 @@ export function PlanAssistant({ view, api, ask, setAsk, via, dictation }: { view
           <button className="btn btn-ghost" type="button" aria-label="Dictate your changes" aria-pressed={dictation.listening} onClick={dictation.listening ? dictation.stop : dictation.start} style={{ padding: "0 14px" }}><Mic size={18} /></button>
           <button className="btn btn-primary" type="button" style={{ flex: 1 }} onClick={revise} disabled={api.pending || !ask.trim()}>{deck ? "Revise the outline" : "Revise the plan"}</button>
         </div>
+        {api.pending && !revised && <p className="muted" role="status" style={{ margin: 0, fontSize: 14 }}>Working on your changes. This takes about a minute.</p>}
         {revised && <p className="ok-text" role="status" style={{ margin: 0, fontSize: 14, lineHeight: 1.5, fontWeight: 500 }}>{revised}</p>}
       </div>
 
