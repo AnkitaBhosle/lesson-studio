@@ -70,8 +70,8 @@ export async function draftPlanLive(repo: Repo, lessonId: string, code: string):
   repo.put("lessons", { ...c.lesson, status: "planning", updatedAt: now() });
   let out: DraftOut;
   try {
-    out = (await callStructured({ task: "planning", system: PLANNING_SYSTEM, user: draftPrompt(c), schema: DraftOut, toolName: "write_plan",
-      toolDescription: "Write the teaching plan for this lesson", gate, log, validate: (d) => checkDraft(d, c) })).value;
+    out = (await callStructured({ task: "planning", system: PLANNING_SYSTEM, user: draftPrompt(c), schema: DraftOut,
+      gate, log, validate: (d) => checkDraft(d, c) })).value;
   } catch (e) {
     repo.put("lessons", { ...c.lesson, status: "sourcing", updatedAt: now() });
     failed(e, finish);
@@ -107,8 +107,8 @@ export async function revisePlanLive(repo: Repo, lessonId: string, code: string,
   const { log, finish, gate } = runLogger(repo, lessonId, code, "planning");
   let out: ReviseOut;
   try {
-    out = (await callStructured({ task: "planning", system: PLANNING_SYSTEM, user: revisePrompt(c, plan, input.text, input.slideId), schema: ReviseOut, toolName: "revise_plan",
-      toolDescription: "Apply the teacher's note to the plan", gate, log, validate: (r) => checkRevision(r, plan, c, input.slideId) })).value;
+    out = (await callStructured({ task: "planning", system: PLANNING_SYSTEM, user: revisePrompt(c, plan, input.text, input.slideId), schema: ReviseOut,
+      gate, log, validate: (r) => checkRevision(r, plan, c, input.slideId) })).value;
   } catch (e) {
     failed(e, finish);
   }

@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { anthropicConfigured, callTool } from "./anthropic";
+import type { z } from "zod";
+import { anthropicConfigured, callJson } from "./anthropic";
 import { creditsFor, ROUTING, type Task } from "./routing";
 
 /** What the caller records for each paid call (CostEvent) and each step (AgentRun). */
@@ -20,11 +20,10 @@ export const liveModelsAvailable = () => anthropicConfigured();
  * call → validate with zod → on failure one repair on the same model → one try on the next model up.
  */
 export async function callStructured<T>(args: {
-  task: Task; system: string; user: string; schema: z.ZodType<T>; toolName: string; toolDescription: string;
+  task: Task; system: string; user: string; schema: z.ZodType<T>;
   gate: Gate; log: CallLog; validate?: (value: T) => string | null;
 }): Promise<{ value: T; model: string; escalatedFrom?: string }> {
   const route = ROUTING[args.task];
-  const inputSchema = z.toJSONSchema(args.schema, { target: "draft-7" }) as Record<string, unknown>;
   const attempts: { model: string; repair?: string }[] = [{ model: route.model }];
   let lastError = "";
   for (let i = 0; i < 3; i++) {
@@ -32,10 +31,10 @@ export async function callStructured<T>(args: {
     if (!attempt) break;
     await args.gate();
     const user = attempt.repair ? `${args.user}\n\nYour previous answer didn't fit the required shape: ${attempt.repair}\nAnswer again, fixing only that.` : args.user;
-    const res = await callTool({ model: attempt.model, system: args.system, user, maxTokens: route.maxTokens, toolName: args.toolName, toolDescription: args.toolDescription, inputSchema });
+    const res = await callJson({ model: attempt.model, system: args.system, user, maxTokens: route.maxTokens, schema: args.schema });
     await args.log.cost({ model: attempt.model, inputTokens: res.inputTokens, outputTokens: res.outputTokens, credits: creditsFor(attempt.model, res.inputTokens, res.outputTokens) });
     args.log.step("llm", `${args.task} on ${attempt.model}: ${res.inputTokens} in, ${res.outputTokens} out${res.stopReason === "max_tokens" ? ", cut off" : ""}`);
-    const parsed = args.schema.safeParse(res.input);
+    const parsed = args.schema.safeParse(res.output);
     const problem = parsed.success ? args.validate?.(parsed.data) ?? null : parsed.error.issues.slice(0, 5).map((x) => `${x.path.join(".")}: ${x.message}`).join("; ");
     if (parsed.success && !problem) {
       args.log.step("validation", "passed");

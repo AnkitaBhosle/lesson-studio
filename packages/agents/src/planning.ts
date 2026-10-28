@@ -92,7 +92,7 @@ export function draftPrompt(c: PlanningContext): string {
     `COURSE KNOWLEDGE (earlier lessons):\n${c.knowledge?.covered.filter((k) => k.lessonId !== c.lesson.id).map((k) => `- [${k.lessonId}] ${k.lessonTitle}: ${k.concepts.join(", ")}`).join("\n") || "- none yet"}`,
     `SOURCES:\n${c.sources.map((s) => `- ${s.title} (${s.visibility})${s.digest ? `: ${s.digest.summary}` : ""}`).join("\n")}`,
     `FACTS (cite these IDs):\n${facts.map((f) => `- [${f.factId}] ${f.text} (${f.sourceTitle}, ${f.locator})`).join("\n")}`,
-    `Write the plan by calling the tool.`,
+    `Write the plan.`,
   ].join("\n\n");
 }
 
@@ -103,13 +103,13 @@ const slideForPrompt = (s: Slide) => ({
 
 export function revisePrompt(c: PlanningContext, plan: TeachingPlan, note: string, slideId?: string): string {
   return [
-    draftPrompt(c).replace(/Write the plan by calling the tool\.$/, ""),
+    draftPrompt(c).replace(/Write the plan\.$/, ""),
     `CURRENT PLAN (story): ${plan.story}`,
     `CURRENT SLIDES:\n${JSON.stringify(plan.slides.map(slideForPrompt), null, 1)}`,
     slideId
       ? `THE TEACHER'S NOTE, about slide ${slideId} only: "${note}"\nRewrite only that slide. Return it in changes; remove and insert nothing.`
       : `THE TEACHER'S NOTE: "${note}"\nChange only what the note asks for. Return just the slides you changed (by slideId), any slides to remove, and any new slides to insert. Every slide you leave out stays exactly as it is.`,
-    `Then call the tool.`,
+    `Then write the changes.`,
   ].join("\n\n");
 }
 
