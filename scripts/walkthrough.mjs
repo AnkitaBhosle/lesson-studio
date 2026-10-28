@@ -51,7 +51,12 @@ await step("live: paste notes", async () => {
   await page.getByRole("button", { name: "Add", exact: true }).click();
   await page.getByRole("heading", { name: "Your notes" }).waitFor(); await shot("live-sources");
 });
-await step("live: plan the lesson", async () => { await click("Plan the lesson"); await page.waitForURL(/plan/); await page.getByText("Teaching plan").waitFor(); await shot("live-plan"); });
+// Live planning may call the real model: allow up to two minutes per step.
+await step("live: plan the lesson", async () => { await click("Plan the lesson"); await page.waitForURL(/plan/, { timeout: 120_000 }); await page.getByText("Teaching plan").waitFor(); await shot("live-plan"); });
+await step("live: revise from a note", async () => {
+  await page.getByLabel("Tell me what to change").fill("Make it a little shorter and add a quick check question for students");
+  await click("Revise the plan"); await page.getByText(/Draft 2 is ready/).waitFor({ timeout: 120_000 }); await shot("live-plan-revised");
+});
 
 // ---------- Guided demo: Maya ----------
 await page.goto(`${base}/switch?to=usr_maya`); await settle();

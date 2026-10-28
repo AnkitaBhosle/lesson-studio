@@ -1,1 +1,2 @@
-export const PACKAGE = "@ls/models";
+export * from "./routing";
+export * from "./structured";

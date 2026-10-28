@@ -2,6 +2,13 @@
 
 One short entry per milestone. Newest first.
 
+## M5 · Model layer and real Planning
+- `packages/models`: per-task routing (planning on Sonnet 5.5; extraction, self-check and preference learning on Haiku 5.5 with escalation to Sonnet), prices in one place, the only Anthropic SDK call, and structured output via a forced tool call validated with zod: one repair, then one escalation.
+- Spend gate (`packages/orchestrator/src/spend.ts`): site switch, $200 total, $40 daily and per-code caps checked before every paid call; counters in Redis move after each call. Defaults are stored limits, editable later in Lab.
+- Real Planning for live workspaces: first drafts and revisions (whole plan or one slide). The model returns only changed, removed and inserted slides; the orchestrator merges, so untouched slides are carried over exactly. Every claim must cite a real fact ID or be flagged; clips are capped; recaps must point at an earlier lesson. Each call writes an AgentRun and CostEvents (with the access code).
+- Guided demo and environments without a model key still use the stub planner.
+- Deviation: the planning prompt lives in `packages/agents/src/planning.ts` rather than `prompts/planning.md`, so prompt and output schema change together. Story-angle switching still swaps the story text only; rewriting slides to a new angle comes with the next planning pass.
+
 ## Sealed golden set done (Oct 27)
 - 57 cases by the separate eval agent; `golden:check` passes. 71% of extraction and planning cases use real public sources; revision and self-check plans are built on real sources; preference histories are synthetic.
 - Schema now allows a clean self-check case (no planted problems), scored on false alarms only.

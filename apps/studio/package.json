@@ -9,8 +9,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.3.0",
     "@ls/agents": "*",
     "@ls/fixtures": "*",
+    "@ls/models": "*",
     "@ls/orchestrator": "*",
     "@ls/schema": "*",
     "next": "^16.4.3",

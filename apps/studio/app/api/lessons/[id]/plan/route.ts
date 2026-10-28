@@ -1,4 +1,7 @@
 import { route } from "@/lib/api";
-import { draftPlan } from "@ls/orchestrator";
+import { draftPlan, draftPlanLive, liveModelsAvailable } from "@ls/orchestrator";
 
-export const POST = route<{ id: string }>((repo, { id }) => draftPlan(repo, id), { liveOnly: true });
+export const maxDuration = 180;
+
+export const POST = route<{ id: string }>((repo, { id }, _b, _u, s) =>
+  s.mode === "live" && liveModelsAvailable() ? draftPlanLive(repo, id, s.code) : draftPlan(repo, id), { liveOnly: true });
